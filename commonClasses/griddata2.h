@@ -22,7 +22,7 @@ private:
 	int VerResolution;
 	int HorNeigh;
 	int VerNeigh;
-	TP GridRows[];
+	TP *GridRows;
 	TP *grid, *gridPrev;  
 public:
 	griddata2(int HR, int VR, TP val);

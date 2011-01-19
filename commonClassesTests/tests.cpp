@@ -1,4 +1,9 @@
+#include <iostream>
+#include <vector>
+
 #include "tests.h"
+
+using namespace std;
 
 void testGriddata2()
 {
@@ -37,3 +42,4 @@ void testGriddata2()
 	vecGridData[2]->ShowArray();
 	newVec[2]->ShowArray();
 }
+

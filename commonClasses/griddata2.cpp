@@ -360,3 +360,10 @@ griddata2<TP>::~griddata2()
 	delete []grid;
 	delete []gridPrev;
 }
+
+template class griddata2<char>;
+template class griddata2<unsigned char>;
+template class griddata2<int>;
+template class griddata2<long long>;
+template class griddata2<float>;
+template class griddata2<double>;
