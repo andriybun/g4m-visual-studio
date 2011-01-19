@@ -3,6 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "commonClasses", "commonClasses\commonClasses.vcproj", "{5026F6F5-ED44-4E1E-9D90-AF57A86E3DC0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "commonClassesTests", "commonClassesTests\commonClassesTests.vcproj", "{02F1DE38-60C2-453C-8BD9-01816E5C25AA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5026F6F5-ED44-4E1E-9D90-AF57A86E3DC0} = {5026F6F5-ED44-4E1E-9D90-AF57A86E3DC0}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -13,6 +18,10 @@ Global
 		{5026F6F5-ED44-4E1E-9D90-AF57A86E3DC0}.Debug|Win32.Build.0 = Debug|Win32
 		{5026F6F5-ED44-4E1E-9D90-AF57A86E3DC0}.Release|Win32.ActiveCfg = Release|Win32
 		{5026F6F5-ED44-4E1E-9D90-AF57A86E3DC0}.Release|Win32.Build.0 = Release|Win32
+		{02F1DE38-60C2-453C-8BD9-01816E5C25AA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{02F1DE38-60C2-453C-8BD9-01816E5C25AA}.Debug|Win32.Build.0 = Debug|Win32
+		{02F1DE38-60C2-453C-8BD9-01816E5C25AA}.Release|Win32.ActiveCfg = Release|Win32
+		{02F1DE38-60C2-453C-8BD9-01816E5C25AA}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
