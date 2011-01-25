@@ -13,7 +13,7 @@ void countryData::reset(void)
 }
 
 
-void countryData::setV(int ind, int year, double val)
+void countryData::set(int ind, int year, double val)
 {
 	countries[ind].insert(year,val);
 	count[ind].insert(year,1);
@@ -62,7 +62,7 @@ set<int> countryData::getListOfCountries()
 	return countriesToPrint;
 }
 
-void countryData::setListOfCountries(ST S)
+void countryData::setListOfCountries(set_t S)
 {
 	countriesToPrint = S;
 	if (countriesToPrint.size() > 0) printAllCountries = false;

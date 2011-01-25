@@ -15,6 +15,7 @@
 #include <string>
 #include <vector>
 #include <set>
+
 #include "ipol.h"
 
 const int countriesNum = 242;
@@ -24,11 +25,11 @@ using namespace std;
 class countryData
 {
 private:
-    typedef set<int> ST;
+    typedef set<int> set_t;
     vector< g4m::ipol<double,double> > countries;
     vector< g4m::ipol<double,int> > count;
     vector< unsigned char > regions;
-//    ST countriesToPrint;
+//    set_t countriesToPrint;
     bool printAllCountries;
     void setRegions();
 //    void PrintToFile(string, int, int, int, string);  // print array to file    
@@ -36,15 +37,15 @@ public:
     countryData();
     ~countryData();
     void reset(void);
-    void setV(int, int, double);
+    void set(int, int, double);
     void inc(int, int, double);
     double get(int, int);
     double getAvg(int, int);
     double getRegionSum(unsigned char regID, int year);
     void insertCountryToPrint(int countryID);
-    ST getListOfCountries();
-    ST countriesToPrint;    
-    void setListOfCountries(ST S);
+    set_t getListOfCountries();
+    set_t countriesToPrint;    
+    void setListOfCountries(set_t S);
     void PrintToFile(string, int, int, int, string);  // print array to file    
 };
 
