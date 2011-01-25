@@ -164,6 +164,10 @@
 				RelativePath=".\griddata2.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\ipol.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -172,6 +176,10 @@
 			>
 			<File
 				RelativePath=".\griddata2.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ipol.h"
 				>
 			</File>
 		</Filter>
