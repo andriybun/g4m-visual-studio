@@ -82,3 +82,36 @@ void testCountryData()
 	obj.PrintToFile("--del.txt",2008,2009,1, "AVG");
 }
 
+
+
+void testVector2d()
+{
+	int dimN = 10;
+
+	vector2d obj = vector2d(dimN);
+	for (int i = 0; i < 4; i++)
+	{
+		vector<double> tmp;
+		for (int j = 0; j < dimN; j++)
+		{
+			tmp.push_back( i * 10 + j );
+		}
+		obj.push(tmp);
+	}
+	obj.saveToFile("-del");
+
+	cout << "TEST: " << endl;
+	//vector2d obj = vector2d();
+	obj.readFromFile("-del.bin");
+	cout << "size of the object: " << obj.size() << endl;
+	cout << "size of the 2nd element: " << obj[2].size() << endl;
+	cout << "last vector's elements: " << endl;
+	vector<double> t = obj.pop();
+	vector<double> t1 = obj[1];
+	for (int j = 0; j < t1.size(); j++)
+	{
+		cout << t1[j] << "\t";
+	}
+	cout << endl;
+	system("del -del.bin");
+}
