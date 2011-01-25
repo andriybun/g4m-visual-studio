@@ -27,7 +27,7 @@ namespace g4m
 	void ipol<IDX, VAL>::insert(IDX i, VAL v)
 	{
 		aMap.erase(i);
-		aMap.insert(make_pair(i, v));
+		aMap.insert(std::make_pair(i, v));
 	}
 	  
 	template <class IDX, class VAL>
@@ -35,7 +35,7 @@ namespace g4m
 	{
 		v += aMap[i];
 		aMap.erase(i);
-		aMap.insert(make_pair(i, v));
+		aMap.insert(std::make_pair(i, v));
 	}
 
 	template <class IDX, class VAL>
@@ -576,20 +576,25 @@ namespace g4m
 		return(ret);
   }
 
-  /*
-  template <class IDX, class VAL>
-    void ipol<IDX, VAL>::operator*=(const double x) {
-    typename std::map<IDX,VAL>::iterator iter;
-    iter = aMap.begin();
-    while(iter != aMap.end() ) {
-      iter->second *= x;
-      ++iter;
-    }
-  }
+	//template <class IDX, class VAL>
+	//void ipol<IDX, VAL>::operator*=(const double x)
+	//{
+	//	typename std::map<IDX,VAL>::iterator iter;
+	//	iter = aMap.begin();
+	//	while(iter != aMap.end() )
+	//	{
+	//		iter->second *= x;
+	//		++iter;
+	//	}
+	//}
 
-  template <class IDX, class VAL>
-    VAL ipol<IDX, VAL>::operator[](const IDX i) {
-    return(g(i));
-  }
-  */
+	//template <class IDX, class VAL>
+	//VAL ipol<IDX, VAL>::operator[](const IDX i)
+	//{
+	//	return(g(i));
+	//}
+	
+	// Important: add explicit declarations here for the types needed
+	template class ipol<double, double>;
+	template class ipol<double, int>;
 }
