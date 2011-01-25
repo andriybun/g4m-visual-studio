@@ -172,6 +172,10 @@
 				RelativePath=".\ipol.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\vector2d.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -188,6 +192,10 @@
 			</File>
 			<File
 				RelativePath=".\ipol.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vector2d.h"
 				>
 			</File>
 		</Filter>
