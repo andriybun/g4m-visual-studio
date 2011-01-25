@@ -169,6 +169,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\griddataLite.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ipol.cpp"
 				>
 			</File>
@@ -188,6 +192,10 @@
 			</File>
 			<File
 				RelativePath=".\griddata2.h"
+				>
+			</File>
+			<File
+				RelativePath=".\griddataLite.h"
 				>
 			</File>
 			<File
