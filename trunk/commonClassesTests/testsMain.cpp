@@ -8,4 +8,3 @@ int _tmain(int argc, _TCHAR* argv[])
 	testVector2d();
 	return 0;
 }
-
