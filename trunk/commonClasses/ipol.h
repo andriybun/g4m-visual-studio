@@ -5,6 +5,8 @@
 #include <vector>
 #include <cmath>
 
+class countryData;
+
 namespace g4m
 {
 
@@ -15,6 +17,7 @@ namespace g4m
 	class ipol		//Interpolate: IDX .. Index, VAL .. Value
 	{
 	public:
+		friend class ::countryData;
 		void insert(IDX, VAL);
 		void inc(IDX, VAL);
 		VAL v(const IDX);   //returns the value

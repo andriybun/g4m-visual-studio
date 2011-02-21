@@ -597,4 +597,6 @@ namespace g4m
 	// Important: add explicit declarations here for the types needed
 	template class ipol<double, double>;
 	template class ipol<double, int>;
+	template class ipol<int, int>;
+	template class ipol<int, double>;
 }

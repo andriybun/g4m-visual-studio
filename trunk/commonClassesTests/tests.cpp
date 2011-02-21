@@ -43,43 +43,43 @@ void testGriddata2()
 	newVec[2]->ShowArray();
 }
 
-
-
 void testCountryData()
 {
 	countryData obj = countryData();
-	for (int i = 0; i < 200; i++)
-	{
-		obj.set(i, 2008, i*i-2*i);
-	}
-	for (int i = 0; i < 200; i++)
-	{
-		obj.inc(i, 2009, i*i*i-4*i);
-	}
-	for (int i = 0; i < 200; i++)
-	{
-		obj.inc(i, 2009, -i*i+2*i);
-	}
-	//  obj.set(1, 2008, 6);
-	//  obj.set(1, 2009, 5);
-	//  obj.inc(1, 2009, 4);
-	//  obj.set(2, 2008, 1);
-	//  obj.set(2, 2009, 2);
-	//  obj.inc(3, 2009, 3);
-	//  cout << obj.getRegionSum(20, 2009) << endl;
-	//  cout << obj.getRegionSum(20, 2010) << endl;
-	//  cout << obj.getRegionSum(17, 2008) << endl;
-	//  cout << obj.getRegionSum(17, 2009) << endl;
-	//  cout << "********************" << endl;
-	//  cout << obj.getAvg(1, 2008) << endl;
-	//  cout << obj.getAvg(1, 2009) << endl;
-	//  cout << obj.getAvg(2, 2008) << endl;
-	//  cout << obj.getAvg(3, 2009) << endl;
-	//  cout << "********************" << endl;
+	//for (int i = 0; i < 200; i++)
+	//{
+	//	obj.set(i, 2008, i*i-2*i);
+	//}
+	//for (int i = 0; i < 200; i++)
+	//{
+	//	obj.inc(i, 2009, i*i*i-4*i);
+	//}
+	//for (int i = 0; i < 200; i++)
+	//{
+	//	obj.inc(i, 2009, -i*i+2*i);
+	//}
+	obj.set(1, 2008, 6);
+	obj.set(1, 2009, 5);
+	obj.inc(1, 2009, 4);
+	obj.set(2, 2008, 1);
+	obj.set(2, 2009, 2);
+	obj.inc(3, 2009, 3);
+	cout << obj.getRegionSum(10, 2009) << endl;
+	cout << obj.getRegionSum(20, 2010) << endl;
+	cout << obj.getRegionSum(17, 2008) << endl;
+	cout << obj.getRegionSum(17, 2009) << endl;
+	cout << "********************" << endl;
+	cout << obj.getAvg(1, 2008) << endl;
+	cout << obj.getAvg(1, 2009) << endl;
+	cout << obj.getAvg(2, 2008) << endl;
+	cout << obj.getAvg(3, 2009) << endl;
+	cout << "********************" << endl;
+	obj.getTimeAvgM(3);
+	//obj.getTimeAvg(1, 5);
 	//  obj.insertCountryToPrint(1);
 	//  obj.insertCountryToPrint(2);
 	//  obj.insertCountryToPrint(3);
-	obj.PrintToFile("--del.txt",2008,2009,1, "AVG");
+	//  obj.PrintToFile("--del.txt",2008,2009,1, "AVG");
 }
 
 

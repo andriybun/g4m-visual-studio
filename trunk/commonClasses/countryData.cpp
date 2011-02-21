@@ -5,7 +5,7 @@ void countryData::reset(void)
 	int ind = 0;
 	do
 	{
-		countries[ind].clear();
+		values[ind].clear();
 		count[ind].clear();
 		ind++;
 	}
@@ -15,33 +15,107 @@ void countryData::reset(void)
 
 void countryData::set(int ind, int year, double val)
 {
-	countries[ind].insert(year,val);
+	values[ind].insert(year,val);
 	count[ind].insert(year,1);
 }
 
 void countryData::inc(int ind, int year, double val)
 {
-	countries[ind].inc(year,val);
+	values[ind].inc(year,val);
 	count[ind].inc(year,1);
 }
 
-double countryData::get(int ind, int year)
+double countryData::get(int countryIdx, int year)
 {
-	return(countries[ind][year]);
+	return(values[countryIdx][year]);
 }
  
-double countryData::getAvg(int ind, int year)
+double countryData::getAvg(int countryIdx, int year)
 {
-	return(countries[ind][year]/count[ind][year]);
+	return(values[countryIdx][year]/count[countryIdx][year]);
 }
 
-double countryData::getRegionSum(unsigned char regID, int year)
+countryData countryData::getTimeAvg(int countryIdx, int numYearsBack)
+{
+	countryData result;
+
+	return result;
+}
+
+countryData countryData::getTimeAvgM(int timePeriodWidth)
+{
+	countryData result;
+
+	if (timePeriodWidth % 2 != 1) 
+	{
+		cout << "Error! Please provide odd number for time period!" << endl;
+		return result;
+	}
+
+	map<int, double>::iterator valuesIter, valuesIterLastEl;
+	map<int, int>::iterator countIter, countIterLastEl;
+
+	int sumValues = 0;
+	int sumCount = 0;
+
+	for (int countryIdx = 0; countryIdx < values.size(); countryIdx++)
+	{
+		if (values[countryIdx].aMap.size() > 0)
+		{
+			valuesIter = values[countryIdx].aMap.begin();
+			valuesIterLastEl = --values[countryIdx].aMap.end();
+			countIter = count[countryIdx].aMap.begin();
+			countIterLastEl = --count[countryIdx].aMap.end();
+			int firstYear = valuesIter->first;
+			int lastYear = valuesIterLastEl->first;
+			int numYears = lastYear - firstYear + 1;
+			double *valuesByYears = new double[numYears];
+			int *countByYears = new int[numYears];
+			memset(countByYears, 0, numYears * sizeof(int));
+			
+			do
+			{
+				valuesByYears[valuesIter->first - firstYear] = valuesIter->second;
+				countByYears[countIter->first - firstYear] = countIter->second;
+			}
+			while ((valuesIter++ != valuesIterLastEl) && (countIter++ != countIterLastEl));
+			
+			for (int yearIdx = 0; yearIdx < numYears; yearIdx++)
+			{
+				if (countByYears[yearIdx] > 0)
+				{
+					result.set(countryIdx, firstYear + yearIdx, 
+						computeAvg(valuesByYears, countByYears, yearIdx, timePeriodWidth, numYears));
+				}
+			}
+
+			delete [] valuesByYears;
+			delete [] countByYears;
+		}
+	}
+	return result;
+}
+
+double countryData::computeAvg(double *values, int *count, int yearIdx, int timePeriodWidth, int numYears)
+{
+	double sum = (double)0;
+	int num = 0;
+	int timeHalfPeriodWidth = (timePeriodWidth - 1) / 2;
+	for(int idx = xmax(0, yearIdx - timeHalfPeriodWidth); idx <= xmin(numYears-1, yearIdx+timeHalfPeriodWidth); idx++)
+	{
+		num += count[idx];
+		sum += values[idx];
+	}
+	return sum / num;
+}
+
+double countryData::getRegionSum(unsigned char regIdx, int year)
 {
 	double sum = 0;
 	int ind = 0;
 	do
 	{
-		if (regions[ind] == regID)
+		if (regions[ind] == regIdx)
 		{
 			sum += get(ind, year);
 		}
@@ -51,9 +125,9 @@ double countryData::getRegionSum(unsigned char regID, int year)
 	return sum;
 }
 
-void countryData::insertCountryToPrint(int countryID)
+void countryData::insertCountryToPrint(int countryIdx)
 {
-	countriesToPrint.insert(countryID);
+	countriesToPrint.insert(countryIdx);
 	printAllCountries = false;
 }
 
@@ -90,7 +164,7 @@ void countryData::PrintToFile(string fileName, int firstYear, int lastYear, int 
 				for (int j = firstYear; j <= lastYear; j += step)
 				{
 					if (statType == "VAL")
-						f<<"\t"<<countries[i][j];
+						f<<"\t"<<values[i][j];
 					else if 
 						(statType == "AVG")
 					f << "\t" << getAvg(i,j);
@@ -110,7 +184,7 @@ void countryData::PrintToFile(string fileName, int firstYear, int lastYear, int 
 countryData::countryData()
 {
 	printAllCountries = true;
-	countries.resize(countriesNum);
+	values.resize(countriesNum);
 	regions.resize(countriesNum);
 	count.resize(countriesNum);
 	setRegions();
