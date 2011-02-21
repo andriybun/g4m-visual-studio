@@ -35,14 +35,13 @@ double countryData::getAvg(int countryIdx, int year)
 	return(values[countryIdx][year]/count[countryIdx][year]);
 }
 
-countryData countryData::getTimeAvg(int countryIdx, int numYearsBack)
+countryData countryData::getTimeAvg(int timePeriodWidth)
 {
-	countryData result;
-
+	countryData result = getSmoothAvg(timePeriodWidth, timePeriodWidth);
 	return result;
 }
 
-countryData countryData::getTimeAvgM(int timePeriodWidth)
+countryData countryData::getSmoothAvg(int timePeriodWidth, int timeStep)
 {
 	countryData result;
 
@@ -80,7 +79,7 @@ countryData countryData::getTimeAvgM(int timePeriodWidth)
 			}
 			while ((valuesIter++ != valuesIterLastEl) && (countIter++ != countIterLastEl));
 			
-			for (int yearIdx = 0; yearIdx < numYears; yearIdx++)
+			for (int yearIdx = 0; yearIdx < numYears; yearIdx += timeStep)
 			{
 				if (countByYears[yearIdx] > 0)
 				{
@@ -142,10 +141,9 @@ void countryData::setListOfCountries(set_t S)
 	if (countriesToPrint.size() > 0) printAllCountries = false;
 }
 
-void countryData::PrintToFile(string fileName, int firstYear, int lastYear, int step, string statType = "VAL")
+void countryData::printToFile(string fileName, int firstYear, int lastYear, int step, string statType)
 {
 	ofstream f;
-	fileName = fileName + ".txt";
 	f.open(fileName.c_str(),ios::out);
 	if (f.is_open())
 	{
@@ -173,6 +171,7 @@ void countryData::PrintToFile(string fileName, int firstYear, int lastYear, int 
 			}
 		}
 		f.close(); 
+		cout << "Successfully written to:" << fileName << endl;
 	}
 	else
 	{
@@ -188,6 +187,30 @@ countryData::countryData()
 	regions.resize(countriesNum);
 	count.resize(countriesNum);
 	setRegions();
+}
+
+// copy constructor
+countryData::countryData(const countryData & g)
+{
+	values = g.values;
+	count = g.count;
+	regions = g.regions;
+	countriesToPrint = g.countriesToPrint;
+	printAllCountries = g.printAllCountries;
+}
+
+// assignment operator
+countryData & countryData::operator = (const countryData & g)
+{
+	if (this != &g)
+	{
+		values = g.values;
+		count = g.count;
+		regions = g.regions;
+		countriesToPrint = g.countriesToPrint;
+		printAllCountries = g.printAllCountries;
+	}
+	return *this;
 }
 
 // destructor

@@ -46,21 +46,15 @@ void testGriddata2()
 void testCountryData()
 {
 	countryData obj = countryData();
-	//for (int i = 0; i < 200; i++)
-	//{
-	//	obj.set(i, 2008, i*i-2*i);
-	//}
-	//for (int i = 0; i < 200; i++)
-	//{
-	//	obj.inc(i, 2009, i*i*i-4*i);
-	//}
-	//for (int i = 0; i < 200; i++)
-	//{
-	//	obj.inc(i, 2009, -i*i+2*i);
-	//}
+
 	obj.set(1, 2008, 6);
 	obj.set(1, 2009, 5);
 	obj.inc(1, 2009, 4);
+	obj.set(1, 2010, 30);
+	obj.set(1, 2011, 23);
+	obj.set(1, 2012, 15);
+	obj.set(1, 2013, 11);
+
 	obj.set(2, 2008, 1);
 	obj.set(2, 2009, 2);
 	obj.inc(3, 2009, 3);
@@ -74,7 +68,19 @@ void testCountryData()
 	cout << obj.getAvg(2, 2008) << endl;
 	cout << obj.getAvg(3, 2009) << endl;
 	cout << "********************" << endl;
-	obj.getTimeAvgM(3);
+	{
+		countryData avgRes = obj.getSmoothAvg(3);
+		avgRes.printToFile("data/test.txt", 2008, 2013, 1);
+	}
+	{
+		countryData avgRes = obj.getTimeAvg(3);
+		avgRes.printToFile("data/test_t_1.txt", 2008, 2013, 1);
+	}
+	{
+		countryData avgRes = obj.getTimeAvg(3);
+		avgRes.printToFile("data/test_t_3.txt", 2008, 2013, 3);
+	}
+
 	//obj.getTimeAvg(1, 5);
 	//  obj.insertCountryToPrint(1);
 	//  obj.insertCountryToPrint(2);
