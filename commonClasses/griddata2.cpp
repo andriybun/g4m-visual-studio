@@ -340,7 +340,6 @@ griddata2<TP> & griddata2<TP>::operator = (const griddata2 & g)
 {
 	if (this != &g)
 	{
-		cout << "ASS ::>\n";
 		HorResolution = g.HorResolution;
 		VerResolution = g.VerResolution;
 		HorNeigh = g.HorNeigh;
