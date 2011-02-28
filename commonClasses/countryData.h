@@ -24,38 +24,38 @@
 #define xmin(a,b) (((a)<(b))?(a):(b))
 #define xmax(a,b) (((a)<(b))?(b):(a))
 
-const int countriesNum = 242;
+const int countriesNum = 244;
 
 using namespace std;
 
 class countryData
 {
 private:
-    typedef set<int> set_t;
-    vector< g4m::ipol<int, double> > values;
-    vector< g4m::ipol<int, int> > count;
-    vector< unsigned char > regions;
-    set_t countriesToPrint;
+	typedef set<int> set_t;
+	vector< g4m::ipol<int, double> > values;
+	vector< g4m::ipol<int, int> > count;
+	vector< unsigned char > regions;
+	set_t countriesToPrint;
 	bool printAllCountries;
 	void setRegions();
 	double computeAvg(double *values, int *count, int timeIdx, int timePeriodWidth, int numYears);
 public:
-    countryData();
+	countryData();
 	countryData(const countryData & g);
 	countryData & operator = (const countryData & g);
-    ~countryData();
-    void reset(void);
-    void set(int, int, double);
-    void inc(int, int, double);
-    double get(int countryIdx, int year);
-    double getAvg(int countryIdx, int year);
+	~countryData();
+	void reset(void);
+	void set(int, int, double);
+	void inc(int, int, double);
+	double get(int countryIdx, int year);
+	double getAvg(int countryIdx, int year);
 	countryData getTimeAvg(int timePeriodWidth);
 	countryData getSmoothAvg(int timePeriodWidth, int timeStep = 1);
-    double getRegionSum(unsigned char regIdx, int year);
-    void insertCountryToPrint(int countryIdx);
-    set_t getListOfCountries();
-    void setListOfCountries(set_t S);
-    void printToFile(string fileName, int firstYear, int lastYear, int step, string statType = "VAL");  // print array to file
+	double getRegionSum(unsigned char regIdx, int year);
+	void insertCountryToPrint(int countryIdx);
+	set_t getListOfCountries();
+	void setListOfCountries(set_t S);
+	void printToFile(string fileName, int firstYear, int lastYear, int step, string statType = "VAL");  // print array to file
 };
 
 #endif
