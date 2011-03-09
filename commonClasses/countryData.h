@@ -24,7 +24,7 @@
 #define xmin(a,b) (((a)<(b))?(a):(b))
 #define xmax(a,b) (((a)<(b))?(b):(a))
 
-const int countriesNum = 244;
+const int countriesNum = 245;
 
 using namespace std;
 
