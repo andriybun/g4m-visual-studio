@@ -10,7 +10,7 @@
 #include <vector>
 #include <cmath>
 #include "increment.h"
-#include "misc.h"
+#include "ipol.h"
 
 namespace g4m {
   

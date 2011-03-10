@@ -2,7 +2,7 @@
 #define READINPUT_CPP
 #include <algorithm>
 #include <map>
-#include "misc.h"
+#include "ipol.h"
 
 using namespace std;
 

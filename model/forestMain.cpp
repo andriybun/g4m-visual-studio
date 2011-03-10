@@ -3,7 +3,6 @@
 //   Date:      ** December, 2009
 
 // Modified: Mykola Gusti, 4 Jan 2010
-// SVN try, 10 March 2011
 
 #include <iostream>
 #include <cstdlib>
@@ -17,28 +16,24 @@
 #include <ctime>
 #include <algorithm>
 
-#include "g4m_GUI elements\IntToStr.h"
+// Classes for preparing output for GDataView
+#include "jDataViewClasses.h"
+// Some common and abstract classes
+#include "commonClasses.h"
 
-// Elements for preparing output for GDataView:
-#include "g4m_GUI elements\simUnitsMap.h"
-#include "g4m_GUI elements\simUnitsData.h"
-#include "g4m_GUI elements\tableData.h"
+// g4m interface
+#include "intf.h"
+#include "model.h"
 
 // Rest of includes:
-#include "vector2d2.h"        
 #include "readSettings_glob.h"
-#include "misc.h"                          // ipol class for interpolation
+//#include "misc.h"							// ipol class for interpolation
 #include "increment.cpp"
-#include "ageStruct.cpp"                 // max stocking degree is limited to about 1.2
-#include "dataStruct_MG.h"                 // data structures
-#include "griddata3_MG.h"                  // GridData class                       (v1.1, v1.2 or v1.3)
-#include "griddata2.h"                     // data of any type on x-y grid by Andriy Bun
-//#include "countryData3_nc.h"                   // data by countries with Poles regions and printToFile + getAve + printAvg
-#include "countryData_tw.cpp"                   // time window smoothing
-#include "forest_GUI_glob.h"                     // definitions
+#include "ageStruct.cpp"					// max stocking degree is limited to about 1.2
+#include "dataStruct_MG.h"					// data structures
+#include "forest.h"							// definitions
 #include "dima.h"
 #include "readInput_glob.cpp"                // code for reading from files
-
 
 #include "initManagedForest4_ageStruct_glob.cpp"
 #include "fm_cpol_v11_6_18_npv_glob.cpp"                             // works with "adjustManagedForestCountryGradual_fmp_v6_6.cpp"! NPV function is used instead of NPV50
@@ -46,6 +41,7 @@
 
 //#include "adjustManagedForestCountryGradual_fmp_v6_6.cpp"  // works with "fm_cpol_v11_6_5.cpp" or higher version of v11_6 !!!! used for 5_18 reults series
 #include "adjustManagedForestCountryGradual_fmp_v6_6_1_glob.cpp"  // try for Irland
+
 //------------------------------------------------------
 #include "calc_glob.cpp"
 //#include "MAI_country_mcpfe_maiMax24Dec09.cpp"   // Country average of Max mean annual increment (tC/ha) of Existing forest (with uniform age structure and managed with rotation length maximazing MAI)
@@ -64,11 +60,6 @@
 #include "countryCodes_new.cpp"
 //#include "countryCodes_old.cpp"
 #include "listsToConsider_countryNew_glob.cpp"
-
-//
-#include "model.h"
-#include "intf.h"
-
 
 //******************************************************************************
 //***********************************  MAIN  ***********************************
@@ -143,19 +134,19 @@ fff<<"\t LitterAfforHa"<<endl;
 
 //** Initializing forest cover array by gridcells **
 //**************************************************
-  griddata harvestGrid = griddata(ResLongitude,ResLatitude,0);
-  griddata maiForest = griddata(ResLongitude,ResLatitude,0);
-  griddata rotationForest = griddata(ResLongitude,ResLatitude,0);
-  griddata rotationForestNew = griddata(ResLongitude,ResLatitude,0);
-  griddata thinningForest = griddata(ResLongitude,ResLatitude,0);
-  griddata thinningForestNew = griddata(ResLongitude,ResLatitude,0);
-  griddata OforestShGrid = griddata(ResLongitude,ResLatitude,0);  
+  griddata2 harvestGrid = griddata2(ResLongitude,ResLatitude,0);
+  griddata2 maiForest = griddata2(ResLongitude,ResLatitude,0);
+  griddata2 rotationForest = griddata2(ResLongitude,ResLatitude,0);
+  griddata2 rotationForestNew = griddata2(ResLongitude,ResLatitude,0);
+  griddata2 thinningForest = griddata2(ResLongitude,ResLatitude,0);
+  griddata2 thinningForestNew = griddata2(ResLongitude,ResLatitude,0);
+  griddata2 OforestShGrid = griddata2(ResLongitude,ResLatitude,0);  
 
-  griddata2<char> decisionGrid = griddata2<char>(ResLongitude,ResLatitude,0);
-  griddata2<char> managedForest = griddata2<char>(ResLongitude,ResLatitude,0);
-  griddata2<char> manageChForest = griddata2<char>(ResLongitude,ResLatitude,0);
-  griddata2<char> rotationType = griddata2<char>(ResLongitude,ResLatitude,0);
-  griddata2<char> unmanaged = griddata2<char>(ResLongitude,ResLatitude,0);
+  griddataLite<char> decisionGrid = griddataLite<char>(ResLongitude,ResLatitude,0);
+  griddataLite<char> managedForest = griddataLite<char>(ResLongitude,ResLatitude,0);
+  griddataLite<char> manageChForest = griddataLite<char>(ResLongitude,ResLatitude,0);
+  griddataLite<char> rotationType = griddataLite<char>(ResLongitude,ResLatitude,0);
+  griddataLite<char> unmanaged = griddataLite<char>(ResLongitude,ResLatitude,0);
   
   // Setup forest increment table
   g4m::incrementTab fi(-4.25, -1.39, 0.329, 169., 81., 4.48, -1.39, 0.780,
