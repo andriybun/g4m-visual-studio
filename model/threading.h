@@ -3,6 +3,7 @@
 
 #include <cmath>
 
+// Uncomment for serial execution of program in one thread
 //#define SERIAL_EXECUTION
 
 #ifndef SERIAL_EXECUTION
@@ -26,6 +27,7 @@ struct exchangeT
 	int count;
 	inDataT * inData;
 	outDataT * outData;
+	int (*execute)(inDataT &, outDataT &);
 };
 
 template <class inDataT, class outDataT>
@@ -39,14 +41,14 @@ template <class inDataT, class outDataT>
 
 	for (int i = 0; i < localDataPtr->count; i++)
 	{
-		modelFunc<inDataT, outDataT>(localDataPtr->inData[i], localDataPtr->outData[i]);
+		localDataPtr->execute(localDataPtr->inData[i], localDataPtr->outData[i]);
 	}
 
 	return 0;
 }
 
 template <class inDataT, class outDataT>
-int modelRun(int count, inDataT * arr, outDataT * outArr)
+int parallelExecute(int (*execute)(inDataT &, outDataT &), inDataT * arr, outDataT * outArr, int count)
 {
 #ifdef PARALLEL_ON_WINDOWS
 	SYSTEM_INFO sysinfo;
@@ -66,6 +68,7 @@ int modelRun(int count, inDataT * arr, outDataT * outArr)
 		msgArray[i].count = min(itemsPerThread, count - i * itemsPerThread);
 		msgArray[i].inData = &arr[i * itemsPerThread];
 		msgArray[i].outData = &outArr[i * itemsPerThread];
+		msgArray[i].execute = execute;
 	}
 
 	DWORD threadsCreated = 0;
