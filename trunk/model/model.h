@@ -6,7 +6,7 @@
 template <class inDataT, class outDataT>
 int modelFunc(inDataT &inData, outDataT &outData)
 {
-	
+	outData = inData; // stopgap
 	return 0;
 }
 
