@@ -2,68 +2,68 @@
 #define G4M_DATASTRUCT_H
 
 #include <string>
-#include "misc.h"
+#include "ipol.h"
 
 namespace g4m{
 
 struct dataStruct
- {
+{
  
-int	x	;
-int	y	;
-int asID;  // index of corresponding data in ageStruct vector
+	int	x	;
+	int	y	;
+	int asID;  // index of corresponding data in ageStruct vector
 
-//  std::string classes;
-ipol<double,double>	COUNTRY;
-ipol<double,double>	POTVEG;
-ipol<double,double>	PROTECT;
-ipol<double,double>	USED;
-ipol<double,double>	LANDAREA	;
-ipol<double,double>	NPP	;
-ipol<double,double>	POPDENS	;
-ipol<double,double>	SAGRSUIT	;
-ipol<double,double>	AGRSUIT	;
-ipol<double,double>	PRICEINDEX	;
-ipol<double,double>	BIOMASS	;
-ipol<double,double>	FOREST	;
-ipol<double,double>	R	;
-ipol<double,double>	GDP	;
-ipol<double,double>	BUILTUP	;
-ipol<double,double>	CROP	;
-ipol<double,double>	FRACLONGPROD	;
-ipol<double,double>	CORRUPTION	;
-ipol<double,double>	SLASHBURN	;
-ipol<double,double>	SPOPDENS	; // MG: added because it's used in forest_calculations
-ipol<double,double>	BIOMASSBL	;
-ipol<double,double>	DECHERB	;
-ipol<double,double>	DECWOOD	;
-ipol<double,double>	DECSOC	;
-ipol<double,double>	CABOVEHA	;
-ipol<double,double>	CBELOWHA	;
-ipol<double,double>	CDEADHA	;
-ipol<double,double>	CLITTERHA	;
-ipol<double,double>	SOCHA	;
-ipol<double,double>	FTIMBER	;
-ipol<double,double>	IIASA_REGION	;
-ipol<double,double>	POLESREG	;
-ipol<double,double>	MAIE	;
-ipol<double,double>	MAIN	;
-ipol<double,double>	MANAGEDSHARE	;
-ipol<double,double>	MANAGEDFLAG	;
-ipol<double,double>	HARVESTCOSTS	;
-ipol<double,double>	SIMUID	;
-ipol<double,double>	COUNTRYREGMIX	;
+	//  std::string classes;
+	ipol<double,double>	COUNTRY;
+	ipol<double,double>	POTVEG;
+	ipol<double,double>	PROTECT;
+	ipol<double,double>	USED;
+	ipol<double,double>	LANDAREA	;
+	ipol<double,double>	NPP	;
+	ipol<double,double>	POPDENS	;
+	ipol<double,double>	SAGRSUIT	;
+	ipol<double,double>	AGRSUIT	;
+	ipol<double,double>	PRICEINDEX	;
+	ipol<double,double>	BIOMASS	;
+	ipol<double,double>	FOREST	;
+	ipol<double,double>	R	;
+	ipol<double,double>	GDP	;
+	ipol<double,double>	BUILTUP	;
+	ipol<double,double>	CROP	;
+	ipol<double,double>	FRACLONGPROD	;
+	ipol<double,double>	CORRUPTION	;
+	ipol<double,double>	SLASHBURN	;
+	ipol<double,double>	SPOPDENS	; // MG: added because it's used in forest_calculations
+	ipol<double,double>	BIOMASSBL	;
+	ipol<double,double>	DECHERB	;
+	ipol<double,double>	DECWOOD	;
+	ipol<double,double>	DECSOC	;
+	ipol<double,double>	CABOVEHA	;
+	ipol<double,double>	CBELOWHA	;
+	ipol<double,double>	CDEADHA	;
+	ipol<double,double>	CLITTERHA	;
+	ipol<double,double>	SOCHA	;
+	ipol<double,double>	FTIMBER	;
+	ipol<double,double>	IIASA_REGION	;
+	ipol<double,double>	POLESREG	;
+	ipol<double,double>	MAIE	;
+	ipol<double,double>	MAIN	;
+	ipol<double,double>	MANAGEDSHARE	;
+	ipol<double,double>	MANAGEDFLAG	;
+	ipol<double,double>	HARVESTCOSTS	;
+	ipol<double,double>	SIMUID	;
+	ipol<double,double>	COUNTRYREGMIX	;
 
-//ipol<double,double>	LAND	;
+	//ipol<double,double>	LAND	;
 
-// Constructor: initializing default values
-  dataStruct()
-   {
-    x=0;
-    y=0;
-//    classes = "AAA";
-   }
- };
+	// Constructor: initializing default values
+	dataStruct()
+	{
+		x=0;
+		y=0;
+		//    classes = "AAA";
+	}
+};
 
 
 struct coeffStruct

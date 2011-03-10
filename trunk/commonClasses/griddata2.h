@@ -11,7 +11,6 @@
 #include <fstream>
 #include <typeinfo>
 
-
 using namespace std;
 
 template <class TP>

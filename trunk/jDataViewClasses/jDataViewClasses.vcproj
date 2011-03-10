@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="model"
-	ProjectGUID="{34679105-80C1-47A8-BFDA-CE3552CE584F}"
-	RootNamespace="model"
+	Name="jDataViewClasses"
+	ProjectGUID="{B47747D0-7C99-4094-89DB-B64D76A1C405}"
+	RootNamespace="jDataViewClasses"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -20,7 +20,7 @@
 			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="4"
 			CharacterSet="1"
 			>
 			<Tool
@@ -41,8 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(SolutionDir)\jDataViewClasses\Source Files; $(SolutionDir)\commonClasses"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -60,18 +59,10 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="$(SolutionDir)$(ConfigurationName)\jDataViewClasses.lib"
-				LinkIncremental="2"
-				GenerateDebugInformation="true"
-				SubSystem="1"
-				TargetMachine="1"
+				Name="VCLibrarianTool"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -83,9 +74,6 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
@@ -93,7 +81,7 @@
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="4"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -116,7 +104,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
@@ -133,19 +121,10 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				LinkIncremental="1"
-				GenerateDebugInformation="true"
-				SubSystem="1"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
-				TargetMachine="1"
+				Name="VCLibrarianTool"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -155,9 +134,6 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -173,133 +149,72 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\adjustManagedForestCountryGradual_fmp_v6_6_1_glob.cpp"
+				RelativePath=".\Source Files\activeSimUnits.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\ageStruct.cpp"
+				RelativePath=".\Source Files\endianness.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\calc_glob_2001.cpp"
+				RelativePath=".\Source Files\IntToStr.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\countryCodes.cpp"
+				RelativePath=".\Source Files\MDT.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\countryCodes_new.cpp"
+				RelativePath=".\Source Files\simUnitsData.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\fm_cpol_v11_6_18_npv_glob.cpp"
+				RelativePath=".\Source Files\simUnitsMap.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\forestMain.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\forNPV.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\increment.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\initCohorts.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\initManagedForest4_ageStruct_glob.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\listsToConsider_countryNew_glob.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\MAI_countryregmix_mcpfe_maiMax26May10.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\model.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\readInput_glob.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\woodProductionIndexes_23June2010_nc_glob.cpp"
+				RelativePath=".\Source Files\tableData.cpp"
 				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\ageStruct.h"
+				RelativePath=".\Source Files\activeSimUnits.h"
 				>
 			</File>
 			<File
-				RelativePath=".\cPrices_NatDefra.h"
+				RelativePath=".\Source Files\common.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dat.h"
+				RelativePath=".\Source Files\endianness.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dataStruct_MG.h"
+				RelativePath=".\Source Files\IntToStr.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dima.h"
+				RelativePath=".\Source Files\jDataViewClasses.h"
 				>
 			</File>
 			<File
-				RelativePath=".\forest.h"
+				RelativePath=".\Source Files\MDT.h"
 				>
 			</File>
 			<File
-				RelativePath=".\griddata3_MG.h"
+				RelativePath=".\Source Files\simUnitsData.h"
 				>
 			</File>
 			<File
-				RelativePath=".\hurdle_and_deforaffor_glob_CI.h"
+				RelativePath=".\Source Files\simUnitsMap.h"
 				>
 			</File>
 			<File
-				RelativePath=".\increment.h"
-				>
-			</File>
-			<File
-				RelativePath=".\intf.h"
-				>
-			</File>
-			<File
-				RelativePath=".\IntToStr.h"
-				>
-			</File>
-			<File
-				RelativePath=".\MDT.h"
-				>
-			</File>
-			<File
-				RelativePath=".\model.h"
-				>
-			</File>
-			<File
-				RelativePath=".\readSettings_glob.h"
-				>
-			</File>
-			<File
-				RelativePath=".\threading.h"
+				RelativePath=".\Source Files\tableData.h"
 				>
 			</File>
 		</Filter>
