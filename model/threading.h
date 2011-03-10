@@ -111,6 +111,7 @@ int parallelExecute(int (*execute)(inDataT &, outDataT &), inDataT * arr, outDat
 	msgArray.count = count;
 	msgArray.inData = arr;
 	msgArray.outData = outArr;
+	msgArray.execute = execute;
 
 	ThreadFun<inDataT, outDataT>(&msgArray);
 #endif
