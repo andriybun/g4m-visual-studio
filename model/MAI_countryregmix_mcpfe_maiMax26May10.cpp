@@ -1,5 +1,9 @@
 #include "forest.h"
 
+extern double MAI_CountryUprotect[NumberOfCountries];
+extern double MAI_CountryAll[NumberOfCountries];
+extern double MAI_countryregmix_up_avg[NumberOfCountryregmix];
+
 void MAI_countryregmix(void)
 {
 // Country region mixture (EU27 countries and POLES region for the rest of the globe) 

@@ -1,5 +1,21 @@
 #include "forest.h"
 
+extern double LinPrice2050[51];
+extern float CubPrice2050[51];
+extern float MixPrice2050[51];
+extern float LinPrice2030[51];
+extern float CubPrice2030[51] ;
+extern float MixPrice2030[51];
+extern float LinPrice2020[51] ;
+extern float CubPrice2020[51] ;
+extern float MixPrice2020[51];
+extern float LinPrice2015[51] ;
+extern float CubPrice2015[51] ;
+extern float MixPrice2015[51];
+extern float LinPrice2010[51] ;
+extern float CubPrice2010[51] ;
+extern float MixPrice2010[51];
+
 void cPrices(void)
  {
 /////////////////////// MAC2050 Price functions from Nat (DEFRA)

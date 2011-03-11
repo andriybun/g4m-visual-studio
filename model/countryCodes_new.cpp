@@ -4,6 +4,11 @@
 
 #include "forest.h"
 
+extern short int countryCodeOrder[NumberOfCountries];
+extern char counrtyOrderISO[NumberOfCountries+1][4]; 
+extern string countryOrderName[NumberOfCountries+1];
+extern string countryRegName[NumberOfCountryregmix];
+
 void countryCodes()
 {
 for(int i=0;i<244;i++) {countryCodeOrder[i]=244;}

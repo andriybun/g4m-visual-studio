@@ -23,244 +23,32 @@
 #include "model.h"
 
 // Rest of includes:
-#include "readSettings_glob.h"
+#include "readSettings.h"
 #include "increment.h"
 #include "ageStruct.h"					// max stocking degree is limited to about 1.2
 #include "dataStruct.h"					// data structures
 
 #include "dat.h"
 
-#include "dima.h"
-
 using namespace std;
 
-//******************************************************************************
-// types
-//******************************************************************************
-//typedef vector< g4m::ipol<double,double> > cellCol;
-//typedef vector<cellCol> dataArray;
+#define GridStepLat		(double)0.5		// step by latitude
+#define GridStepLon		(double)0.5		// step by longitude
+#define nYears			50
+#define NumberOfCountryregmix 50		// number of POLES regions mixed with EU27 countries
+#define NumberOfCountries 244			// new country codes
+#define unitConv		(double)1e-6	// unit conversion: 1e-6 - Mt
+
+
 typedef vector<g4m::dataStruct> dataDetStruct;
-g4m::coeffStruct coeff;
-map<string, g4m::ipol<double,double> > lprice; //datamap for land price corrections for current price  scenario (GLOBIOM)
-map<string, g4m::ipol<double,double> > wprice; //datamap for wood price corrections for current price  scenario (GLOBIOM)
-map<string, g4m::ipol<double,double> > wprod;  //datamap for wood production corrections for POLES regions	(GLOBIOM)
-map<string, g4m::ipol<double,double> > cprice; // datamap for carbon price
 typedef vector<g4m::ageStruct *> ageStructVector;
 typedef vector<dat> datGlobal;
-//******************************************************************************
-// containers of data
-//******************************************************************************
-bool GUIcontainers = true;
-simUnitsMap sMap = simUnitsMap("simu.bin");
-simUnitsData ASU;
-set<int> regions;
-set<int> years;             // select years for results output
-set<int> toAdjust;          // coutry where FM to be adjusted
-set<int> doneList;          // countries already adjusted
-set<int> countriesList;      // coutry to be considered
-set<int>countryregList;      // country and region mixture to be considered
-
-//******************************************************************************
-// constants and variables
-//******************************************************************************
-#ifdef unix
-string homeDir = "./data/";
-#else
-string homeDir = "data\\";
-#endif
-int ResLatitude, ResLongitude;    // resolutions of model
-int eyear, byear;
-const double GridStepLat = 0.5;   // step by latitude
-const double GridStepLon = 0.5;   // step by longitude
-const int nYears = 50;
-const int NumberOfCountryregmix = 50; // number of POLES regions mixed with EU27 countries
-const int NumberOfCountries = 244; // new country codes
-const double unitConv = 1e-6; // unit conversion: 1e-6 - Mt
-
-double MAI_CountryUprotect[NumberOfCountries];
-double MAI_CountryAll[NumberOfCountries];
-double MAI_countryregmix_up_avg[NumberOfCountryregmix];
-//double woodHarvestStat[NumberOfCountries];
-double Hurdle_opt[NumberOfCountries];
-double afforRate_opt[NumberOfCountries];
-double deforRate_opt[NumberOfCountries];
-double EmissionsCurCountry[NumberOfCountries+1];
-double EmissionsCurAfforCountry[NumberOfCountries+1];
-//short int countryNwp[NumberOfCountries];
-short int yearNwp[11];
-double countryLosses[NumberOfCountries];
-double FM_sink_stat[NumberOfCountries];
-double FMs[NumberOfCountries];
-short int coutryRegion[NumberOfCountries+1];
-int numRecords = 0; // number of records in the input data file
-//int country_asId[210][2]; //country - asId start and end  
-//int xy_asID[3000][2]; // xi and yi correspondence to asID
-int numAgeStruct = 0;
-//int usedNumAgeStruct = 0;
-
-short int countryCodeOrder[NumberOfCountries];
-char counrtyOrderISO[NumberOfCountries+1][4]; 
-string countryOrderName[NumberOfCountries+1];
-string countryRegName[NumberOfCountryregmix];
-
-g4m::ipol<double,double> sws;  //Schnittholzanteil an Vfm // share of harvestable sawnwood per m3 (diameter, share)
-g4m::ipol<double,double> hlv;   //1-Ernteverluste Vornutzung // loosses after first prefinal cut (diameter, share of harvesting loses) ?
-g4m::ipol<double,double> hle;   //1-Ernteverluste Endnutzung // losses at final cut (diameter, share of harvesting loses)?
-g4m::ipol<double,double> dbv;  //Dekungsbeitrag vornutzung   // income per m3 for thinning (diameter,income)
-g4m::ipol<double,double> dbe;  //Dekungsbeitrag endnutzung   //  income per m3 for final harvest (diameter,income)
-
-double LinPrice2050[51];
-float CubPrice2050[51];
-float MixPrice2050[51];
-float LinPrice2030[51];
-float CubPrice2030[51] ;
-float MixPrice2030[51];
-float LinPrice2020[51] ;
-float CubPrice2020[51] ;
-float MixPrice2020[51];
-float LinPrice2015[51] ;
-float CubPrice2015[51] ;
-float MixPrice2015[51];
-float LinPrice2010[51] ;
-float CubPrice2010[51] ;
-float MixPrice2010[51];
-
-// NPV curves
-double profit = 0.;
-
-float minRotNPV[NumberOfCountries];   // country average NPV if max MAI rotation is applied to all forests
-float minMedNPV[NumberOfCountries];   // NPV at rotation between min and medium rotation
-float medRotNPV[NumberOfCountries];   // NPV at rotation between min and medium rotation
-float medMaxNPV[NumberOfCountries];     // NPV at rotation between medium and max biomass rotation
-float maxRotNPV[NumberOfCountries];  // country average NPV if max biomass rotation is applied to all forests
-float minRot[NumberOfCountries];    // country average min rotation (max harvest)
-float maxRot[NumberOfCountries];    // country average max biomass rotation
-bool forNPVcurves = false;
-bool forNPVcuvvesDyn = false;
-bool fmpol = true; // For testing FM response to C price incentive; requires bin files with BAU biomass and NPV
-bool bau = false; // Write bin files with BAU biomass and NPV
-
-//if (fmpol){
- vector2d NPVbau = vector2d(46000);
- vector2d biomass_bau = vector2d(46000);
- vector2d Profit_bau = vector2d(46000);
-//} 
- int maxDiffCountry = 0;
- double harvDiff[NumberOfCountries];
- griddata2<double> NPVcGrid = griddata2<double>(ResLongitude,ResLatitude,0);  // grid to store current NPV of forest if management is adjusted
-
-int refYear = 2009; // policies start the next year
-//---------------------
-
-// Adjusting (increasing) FM sink by disturbance management in "unmanaged" forests 
-bool adjustFMsink = true;
-//---------------------
-double exchangeRate = 1.47; // Euro -> USD exchange rate average for 2008 (all prices in the model are in USD)
-string cscenario="";
-//int PriceCiS[12] = {0,10,20,30,50,70,100,200,300,500,1000,0};
-//int PriceCiS[26] = {0,5,10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,220,250,300,1000};
-int PriceCiS[11] = {0,5,10,15,20,25,30,35,40,45,50};
-double deflator = 0.8807;
-double resUse = 0.; // share of harvest residuals that can be used for bioenergy
-double tolerance = 0.03;//0.05;//0.1; // tolerance of forest management adjustment to match domestic wood demand
-bool cellInteract = true;
-//*****************************************************************************
-// country outputs
-//*****************************************************************************
-  bool countryOutput = true;                                                                               
-
-  countryData CountriesNforCover = countryData();
-  countryData CountriesNforTotC = countryData();
-  countryData CountriesAfforHaYear = countryData();  
-
-  countryData CountriesAfforCYear = countryData();  
-  countryData CountriesAfforCYear_ab = countryData();  
-  countryData CountriesAfforCYear_bl = countryData();  
-  countryData CountriesAfforCYear_biom = countryData();  
-  countryData CountriesAfforCYear_dom = countryData();    
-  countryData CountriesAfforCYear_soil = countryData();    
-//---------  
-  countryData CountriesOforCover = countryData();
-  countryData CountriesDeforHaYear = countryData();  
-    
-  countryData CountriesOfor_abC = countryData();
-  countryData CountriesOforC_biom = countryData(); 
-  countryData CountriesDeforCYear = countryData();  
-  countryData CountriesDeforCYear_bl = countryData();   
-  countryData CountriesDeforCYear_ab = countryData(); 
-  countryData CountriesDeforCYear_biom = countryData();
-  countryData CountriesDeforCYear_dom = countryData();   
-  countryData CountriesDeforCYear_soil = countryData();     
-//---------  
-  countryData CountriesWoodHarvestM3Year = countryData();    
-  countryData CountriesWoodHarvestPlusM3Year = countryData(); 
-  countryData CountriesWoodHarvestFmM3Year = countryData();
-  countryData CountriesWoodHarvestDfM3Year = countryData();
-  countryData CountriesWoodLoosCYear = countryData();   
-  countryData CountriesHarvLossesYear = countryData();
-//---------
-  countryData CountriesManagedForHa = countryData();     
-  countryData CountriesManagedCount = countryData();  
-  
-  countryData CountriesMAI = countryData();    
-  countryData CountriesCAI = countryData();    
-  countryData CountriesCAI_new = countryData();      
-  countryData CountriesFM = countryData();   
-  countryData CountriesFMbm = countryData();     
-//---------------------------------------------------------------------------  
-  countryData CountryRotation =  countryData(); 
-//----------
-  countryData CountriesWprod =  countryData();  // test wood production input data
-//-----------
-  countryData CountriesProfit =  countryData();  // profit due to selling  harvested wood
-//---------------------------------------------------------------------------  
-  countryData CountryregWoodHarvestM3Year =  countryData(); 
-  countryData CountryregWoodHarvestFmM3Year = countryData();
-  countryData CountryregWoodHarvestDfM3Year = countryData();  
-  countryData CountryregWprod =  countryData();
-  //---------------------------------------------------------------------------  
-  countryData CountryregRotation =  countryData(); 
-
-//**************************
-//Output file  
-//**************************
-  ofstream fff;  
-  
-//******************************************************************************
-// ASCII grid output
-bool gridOutput = true; // to output maps (ascii grids)
-    griddata2<double> SD_grid_1990 = griddata2<double>(360/GridStepLon,180/GridStepLat,-9999);        
-    griddata2<double> SD_grid_00 = griddata2<double>(360/GridStepLon,180/GridStepLat,-9999);        
-    griddata2<double> SD_grid_10 = griddata2<double>(360/GridStepLon,180/GridStepLat,-9999);        
-	    
-    griddata2<double> harvestm3_grid_20 = griddata2<double>(360/GridStepLon,180/GridStepLat,-9999);     
-    griddata2<double> harvestm3_grid_30 = griddata2<double>(360/GridStepLon,180/GridStepLat,-9999); 
-    griddata2<double> harvestm3_grid_50 = griddata2<double>(360/GridStepLon,180/GridStepLat,-9999);     
-        
-    griddata2<double> bmabtC_of_grid_20 = griddata2<double>(360/GridStepLon,180/GridStepLat,-9999);         
-    griddata2<double> bmabtC_of_grid_30 = griddata2<double>(360/GridStepLon,180/GridStepLat,-9999);   
-    griddata2<double> bmabtC_of_grid_50 = griddata2<double>(360/GridStepLon,180/GridStepLat,-9999);             
-
-    griddata2<double> bmabtC_nf_grid_20 = griddata2<double>(360/GridStepLon,180/GridStepLat,-9999);         
-    griddata2<double> bmabtC_nf_grid_30 = griddata2<double>(360/GridStepLon,180/GridStepLat,-9999);   
-    griddata2<double> bmabtC_nf_grid_50 = griddata2<double>(360/GridStepLon,180/GridStepLat,-9999);
-
-    griddata2<double> fmgGco2_grid_20 = griddata2<double>(360/GridStepLon,180/GridStepLat,-9999); 
-    griddata2<double> fmgGco2_grid_30 = griddata2<double>(360/GridStepLon,180/GridStepLat,-9999);     
-    griddata2<double> fmgGco2_grid_50 = griddata2<double>(360/GridStepLon,180/GridStepLat,-9999);         
-
-    griddata2<double> mai_m3ha_grid_20 = griddata2<double>(360/GridStepLon,180/GridStepLat,-9999);        
-    griddata2<double> mai_m3ha_grid_30 = griddata2<double>(360/GridStepLon,180/GridStepLat,-9999);        
-    griddata2<double> mai_m3ha_grid_50 = griddata2<double>(360/GridStepLon,180/GridStepLat,-9999);        
-
-    griddata2<double> SD_grid_20 = griddata2<double>(360/GridStepLon,180/GridStepLat,-9999);        
-    griddata2<double> SD_grid_30 = griddata2<double>(360/GridStepLon,180/GridStepLat,-9999);        
-    griddata2<double> SD_grid_50 = griddata2<double>(360/GridStepLon,180/GridStepLat,-9999);    
-
-    griddata2<double> RL_grid_20 = griddata2<double>(360/GridStepLon,180/GridStepLat,-9999);        
-    griddata2<double> RL_grid_30 = griddata2<double>(360/GridStepLon,180/GridStepLat,-9999);        
-    griddata2<double> RL_grid_50 = griddata2<double>(360/GridStepLon,180/GridStepLat,-9999); 
-
+typedef struct
+{
+	string coeffPath, inputPath, outputPath;
+	set<string> parametersTable,parametersTableReg, parametersMap;
+	bool produceTabs, produceMaps, tabs[3], maps[3];
+} settingsT;
 
 //******************************************************************************
 // functions

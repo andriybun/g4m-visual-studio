@@ -3,7 +3,14 @@
 
 #include "forest.h"
 
-using namespace std;
+extern settingsT settings;
+
+extern map<string, g4m::ipol<double,double> > lprice;
+extern map<string, g4m::ipol<double,double> > wprice;
+extern map<string, g4m::ipol<double,double> > wprod;
+extern map<string, g4m::ipol<double,double> > cprice;
+
+extern short int yearNwp[11];
 
 pair<double, string> getNumber(string str);
 

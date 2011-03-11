@@ -1,5 +1,10 @@
 #include "forest.h"
 
+extern double countryLosses[NumberOfCountries];
+extern double FM_sink_stat[NumberOfCountries];
+extern short int yearNwp[11];
+extern short int coutryRegion[NumberOfCountries+1];
+
 void woodProductionIndexes(void)
 {
 

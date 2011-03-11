@@ -1,5 +1,17 @@
 #include "forest.h"
 
+extern g4m::coeffStruct coeff;
+
+extern set<int> regions;
+
+extern g4m::ipol<double,double> sws;
+extern g4m::ipol<double,double> hlv;
+extern g4m::ipol<double,double> hle;
+extern g4m::ipol<double,double> dbv;
+extern g4m::ipol<double,double> dbe;
+
+extern double countryLosses[NumberOfCountries];
+
 void initCohorts(dataDetStruct &data_all, g4m::incrementTab &fi, ageStructVector &cohort_all, ageStructVector &newCohort_all,
                  griddata2<double> &maiForest,griddata2<double> &thinningForest, griddata2<double> &rotationForest) 
  {

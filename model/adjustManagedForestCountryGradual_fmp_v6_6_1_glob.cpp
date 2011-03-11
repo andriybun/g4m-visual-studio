@@ -1,13 +1,37 @@
 #include "forest.h" 
 
+extern g4m::coeffStruct coeff;
+
+extern set<int> regions;
+extern set<int> toAdjust;
+extern set<int> doneList;
+extern set<int> countriesList;
+extern set<int> countryregList;
+
+extern map<string, g4m::ipol<double,double> > wprod;
+
+extern vector2d NPVbau;
+
+extern double FMs[NumberOfCountries];
+extern double FM_sink_stat[NumberOfCountries];
+extern double harvDiff[NumberOfCountries];
+
+extern double resUse;
+extern double tolerance;
+
+extern int eyear, byear, refYear;
+extern int ResLatitude, ResLongitude;
+extern int maxDiffCountry;
+
+extern bool fmpol;
+extern bool adjustFMsink;
+
 void adjustManagedForest(dataDetStruct &data_all, g4m::incrementTab &fi, ageStructVector &cohort_all, 
               ageStructVector &newCohort_all, datGlobal &dat_all, griddata2<double> &maiForest, 
               griddata2<double> &thinningForest, griddata2<double> &rotationForest, griddataLite<char> &managedForest,
               griddata2<double> &rotationForestNew, griddata2<double> &thinningForestNew, griddataLite<char> &manageChForest,
               griddataLite<char> &rotationType, griddata2<double> &harvestGrid, int year, griddataLite<char> &unmanaged, double priceC) 
- 
- 
- {
+{
 bool harvControl = true; // Additional information to control output of the fm_cpol module
 toAdjust.clear();
 //toAdjust = countriesList;     // List of considered countries
@@ -113,9 +137,9 @@ double maxDiffi[] = {0,0,0,0,0,0};
 double maxDiff0[NumberOfCountryregmix+1];
 
   set<int> useChange;
-  griddata2<double> thinningForestO = griddata2<double>(ResLongitude,ResLatitude,0.);
-  griddataLite<int> rotationForestO = griddataLite<int>(ResLongitude,ResLatitude,0);
-  griddataLite<int> rotationForestNewO = griddataLite<int>(ResLongitude,ResLatitude,0);
+  griddata2<double> thinningForestO = griddata2<double>(ResLongitude, ResLatitude,0.);
+  griddataLite<int> rotationForestO = griddataLite<int>(ResLongitude, ResLatitude,0);
+  griddataLite<int> rotationForestNewO = griddataLite<int>(ResLongitude, ResLatitude,0);
   
 fm_cpol(data_all, fi, cohort_all,
         newCohort_all, dat_all, maiForest, 

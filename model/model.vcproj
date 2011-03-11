@@ -243,6 +243,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\readSettings.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\woodProductionIndexes_23June2010_nc_glob.cpp"
 				>
 			</File>
@@ -293,7 +297,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\readSettings_glob.h"
+				RelativePath=".\readSettings.h"
 				>
 			</File>
 			<File

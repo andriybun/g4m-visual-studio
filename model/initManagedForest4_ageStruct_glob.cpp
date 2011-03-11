@@ -1,4 +1,32 @@
 #include "forest.h"
+#include "dima.h"
+
+extern g4m::coeffStruct coeff;
+extern settingsT settings;
+
+extern map<string, g4m::ipol<double,double> > wprice;
+extern map<string, g4m::ipol<double,double> > wprod;
+
+extern g4m::ipol<double,double> sws;
+extern g4m::ipol<double,double> hlv;
+extern g4m::ipol<double,double> hle;
+extern g4m::ipol<double,double> dbv;
+extern g4m::ipol<double,double> dbe;
+
+extern set<int> regions;
+
+extern double MAI_CountryUprotect[NumberOfCountries];
+extern double MAI_CountryAll[NumberOfCountries];
+extern double MAI_countryregmix_up_avg[NumberOfCountryregmix];
+
+extern double Hurdle_opt[NumberOfCountries];
+extern double countryLosses[NumberOfCountries];
+
+extern int PriceCiS[11];
+
+extern double resUse;
+
+extern int numAgeStruct;
 
 void initManagedForest(dataDetStruct &data_all, g4m::incrementTab &fi, datGlobal &dat_all,
                        ageStructVector &cohort_all, ageStructVector &newCohort_all,

@@ -1,5 +1,10 @@
 #include "forest.h"
 
+extern short int countryCodeOrder[NumberOfCountries];
+extern char counrtyOrderISO[NumberOfCountries+1][4]; 
+extern string countryOrderName[NumberOfCountries+1];
+extern string countryRegName[NumberOfCountryregmix];
+
 //******************************************************************************
 // country codes (new G4M (see ForWIKI), country order array and country ISO
 //******************************************************************************

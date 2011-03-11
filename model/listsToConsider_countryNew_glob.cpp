@@ -3,6 +3,52 @@
 
 #include "forest.h"
 
+extern set<int> regions;
+extern set<int> years;
+extern set<int> countriesList;
+extern set<int> countryregList;
+
+extern countryData CountriesNforCover;
+extern countryData CountriesNforTotC;
+extern countryData CountriesAfforHaYear;  
+extern countryData CountriesAfforCYear;  
+extern countryData CountriesAfforCYear_ab;  
+extern countryData CountriesAfforCYear_bl;  
+extern countryData CountriesAfforCYear_biom;  
+extern countryData CountriesAfforCYear_dom;    
+extern countryData CountriesAfforCYear_soil;    
+extern countryData CountriesOforCover;
+extern countryData CountriesDeforHaYear;  
+extern countryData CountriesOfor_abC;
+extern countryData CountriesOforC_biom; 
+extern countryData CountriesDeforCYear;  
+extern countryData CountriesDeforCYear_bl;   
+extern countryData CountriesDeforCYear_ab; 
+extern countryData CountriesDeforCYear_biom;
+extern countryData CountriesDeforCYear_dom;   
+extern countryData CountriesDeforCYear_soil;     
+extern countryData CountriesWoodHarvestM3Year;    
+extern countryData CountriesWoodHarvestPlusM3Year; 
+extern countryData CountriesWoodHarvestFmM3Year;
+extern countryData CountriesWoodHarvestDfM3Year;
+extern countryData CountriesWoodLoosCYear;   
+extern countryData CountriesHarvLossesYear;
+extern countryData CountriesManagedForHa;     
+extern countryData CountriesManagedCount;  
+extern countryData CountriesMAI;    
+extern countryData CountriesCAI;    
+extern countryData CountriesCAI_new;      
+extern countryData CountriesFM;   
+extern countryData CountriesFMbm;     
+extern countryData CountryRotation; 
+extern countryData CountriesWprod;
+extern countryData CountriesProfit;
+extern countryData CountryregWoodHarvestM3Year; 
+extern countryData CountryregWoodHarvestFmM3Year;
+extern countryData CountryregWoodHarvestDfM3Year;  
+extern countryData CountryregWprod;
+extern countryData CountryregRotation; 
+
 void listsToConsider(void)
 {
 // Setting years for output
