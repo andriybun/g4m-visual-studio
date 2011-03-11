@@ -1,3 +1,5 @@
+#include "forest.h"
+
 void cPrices(void)
  {
 /////////////////////// MAC2050 Price functions from Nat (DEFRA)

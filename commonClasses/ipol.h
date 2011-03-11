@@ -20,7 +20,7 @@ namespace g4m
 		friend class ::countryData;
 		void insert(IDX, VAL);
 		void inc(IDX, VAL);
-		VAL v(const IDX);   //returns the value
+		VAL v(const IDX i = 0);   //returns the value
 		ipol(const ipol<IDX, VAL> & g);
 		ipol();
 		void clear();

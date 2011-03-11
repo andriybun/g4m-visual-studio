@@ -1,8 +1,10 @@
- void adjustManagedForest(dataDetStruct &data_all, g4m::incrementTab &fi, ageStructVector &cohort_all, 
-              ageStructVector &newCohort_all, datGlobal &dat_all, griddata &maiForest, 
-              griddata &thinningForest, griddata &rotationForest, griddata2<char> &managedForest,
-              griddata &rotationForestNew, griddata &thinningForestNew, griddata2<char> &manageChForest,
-              griddata2<char> &rotationType, griddata &harvestGrid, int year, griddata2<char> &unmanaged, double priceC) 
+#include "forest.h" 
+
+void adjustManagedForest(dataDetStruct &data_all, g4m::incrementTab &fi, ageStructVector &cohort_all, 
+              ageStructVector &newCohort_all, datGlobal &dat_all, griddata2<double> &maiForest, 
+              griddata2<double> &thinningForest, griddata2<double> &rotationForest, griddataLite<char> &managedForest,
+              griddata2<double> &rotationForestNew, griddata2<double> &thinningForestNew, griddataLite<char> &manageChForest,
+              griddataLite<char> &rotationType, griddata2<double> &harvestGrid, int year, griddataLite<char> &unmanaged, double priceC) 
  
  
  {
@@ -96,10 +98,10 @@ if (year == byear) {
 //              rotationType, harvestGrid, year, unmanaged);
 
 // void fm_Cpol(dataDetStruct &data_all, g4m::incrementTab &fi, ageStructVector &cohort_all, 
-//              ageStructVector &newCohort_all, datGlobal &dat_all, griddata &maiForest, 
-//              griddata &thinningForest, griddata &rotationForest, griddata2<char> &managedForest,
-//              griddata &rotationForestNew, griddata &thinningForestNew, griddata2<char> &manageChForest,
-//              griddata2<char> &rotationType, griddata &harvestGrid, int year, griddata2<char> &unmanaged, int fm_hurdle, double &maxDiff) 
+//              ageStructVector &newCohort_all, datGlobal &dat_all, griddata2<double> &maiForest, 
+//              griddata2<double> &thinningForest, griddata2<double> &rotationForest, griddataLite<char> &managedForest,
+//              griddata2<double> &rotationForestNew, griddata2<double> &thinningForestNew, griddataLite<char> &manageChForest,
+//              griddataLite<char> &rotationType, griddata2<double> &harvestGrid, int year, griddataLite<char> &unmanaged, int fm_hurdle, double &maxDiff) 
 
 if (fmpol && priceC>0 && year>refYear)
 {
@@ -111,9 +113,9 @@ double maxDiffi[] = {0,0,0,0,0,0};
 double maxDiff0[NumberOfCountryregmix+1];
 
   set<int> useChange;
-  griddata thinningForestO = griddata(ResLongitude,ResLatitude,0.);
-  griddata2<int> rotationForestO = griddata2<int>(ResLongitude,ResLatitude,0);
-  griddata2<int> rotationForestNewO = griddata2<int>(ResLongitude,ResLatitude,0);
+  griddata2<double> thinningForestO = griddata2<double>(ResLongitude,ResLatitude,0.);
+  griddataLite<int> rotationForestO = griddataLite<int>(ResLongitude,ResLatitude,0);
+  griddataLite<int> rotationForestNewO = griddataLite<int>(ResLongitude,ResLatitude,0);
   
 fm_cpol(data_all, fi, cohort_all,
         newCohort_all, dat_all, maiForest, 

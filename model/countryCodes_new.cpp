@@ -1,8 +1,9 @@
 //******************************************************************************
 // country codes (new G4M (see ForWIKI), country order array and country ISO
 //******************************************************************************
-#ifndef countryCodes_new_cpp
-#define countryCodes_new_cpp
+
+#include "forest.h"
+
 void countryCodes()
 {
 for(int i=0;i<244;i++) {countryCodeOrder[i]=244;}
@@ -797,4 +798,3 @@ countryRegName[49]="USAReg";
 
  
 }
-#endif

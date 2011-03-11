@@ -1,7 +1,8 @@
 //Lists of countries, regions and mixed to be considered
 //
-#ifndef LISTS_TO_CONSIDER_CPP
-#define LISTS_TO_CONSIDER_CPP
+
+#include "forest.h"
+
 void listsToConsider(void)
 {
 // Setting years for output
@@ -428,6 +429,3 @@ void listsToConsider(void)
 
 
 }
-
-
-#endif

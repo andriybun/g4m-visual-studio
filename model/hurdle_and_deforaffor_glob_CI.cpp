@@ -2,6 +2,9 @@
 // The same as 24.17 except Romania. The coefficients for Romania are changed to 
 // take into account correct deforestation rate 4800 ha/year (email from Roberto Pilli (JRC) 09 Mar 2010 )
 // in the version 24.19 Romania and the Netherlands rates are correcteed
+
+#include "forest.h"
+
 void hurdle_aff_deff(void)
 {
 //double Hurdle_opt[209];

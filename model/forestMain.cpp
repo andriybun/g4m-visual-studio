@@ -4,62 +4,7 @@
 
 // Modified: Mykola Gusti, 4 Jan 2010
 
-#include <iostream>
-#include <cstdlib>
-#include <string>
-#include <sstream>
-#include <cmath>
-#include <vector>
-#include <set>
-#include <map>
-#include <fstream>
-#include <ctime>
-#include <algorithm>
-
-// Classes for preparing output for GDataView
-#include "jDataViewClasses.h"
-// Some common and abstract classes
-#include "commonClasses.h"
-
-// g4m interface
-#include "intf.h"
-#include "model.h"
-
-// Rest of includes:
-#include "readSettings_glob.h"
-//#include "misc.h"							// ipol class for interpolation
-#include "increment.cpp"
-#include "ageStruct.cpp"					// max stocking degree is limited to about 1.2
-#include "dataStruct_MG.h"					// data structures
 #include "forest.h"							// definitions
-#include "dima.h"
-#include "readInput_glob.cpp"                // code for reading from files
-
-#include "initManagedForest4_ageStruct_glob.cpp"
-#include "fm_cpol_v11_6_18_npv_glob.cpp"                             // works with "adjustManagedForestCountryGradual_fmp_v6_6.cpp"! NPV function is used instead of NPV50
-//#include "fm_cpol_v11_6_19.cpp"                             // works with "adjustManagedForestCountryGradual_fmp_v6_6.cpp"!!!!
-
-//#include "adjustManagedForestCountryGradual_fmp_v6_6.cpp"  // works with "fm_cpol_v11_6_5.cpp" or higher version of v11_6 !!!! used for 5_18 reults series
-#include "adjustManagedForestCountryGradual_fmp_v6_6_1_glob.cpp"  // try for Irland
-
-//------------------------------------------------------
-#include "calc_glob.cpp"
-//#include "MAI_country_mcpfe_maiMax24Dec09.cpp"   // Country average of Max mean annual increment (tC/ha) of Existing forest (with uniform age structure and managed with rotation length maximazing MAI)
-//#include "MAI_country_mcpfe_maiMax4Feb10.cpp"
-//#include "MAI_country_mcpfe_maiMax26May10.cpp"
-#include "MAI_countryregmix_mcpfe_maiMax26May10.cpp"
-#include "cPrices_NatDefra.h"
-//#include "hurdle_and_deforaffor_annex1_FM_JRC29May10_corine_v24_19.h"    // new defor and affor rates
-//#include "hurdle_and_deforaffor_annex1_FM_JRC29May10_corine_v24_20.h"    //defor and affor rates for Greece are changed to correspond to the "original" forest are 4.8 mil ha 
-#include "hurdle_and_deforaffor_glob_CI.h"
-//#include "woodHarvestStatCountry.cpp" // FAO stat on wood harvest by countries
-#include "woodProductionIndexes_23June2010_nc_glob.cpp" // country code and year for wood production file
-//#include "initCohorts.cpp"
-#include "forNPV.cpp"
-#include "cprice.cpp"
-#include "countryCodes_new.cpp"
-//#include "countryCodes_old.cpp"
-#include "listsToConsider_countryNew_glob.cpp"
 
 //******************************************************************************
 //***********************************  MAIN  ***********************************
@@ -134,13 +79,13 @@ fff<<"\t LitterAfforHa"<<endl;
 
 //** Initializing forest cover array by gridcells **
 //**************************************************
-  griddata2 harvestGrid = griddata2(ResLongitude,ResLatitude,0);
-  griddata2 maiForest = griddata2(ResLongitude,ResLatitude,0);
-  griddata2 rotationForest = griddata2(ResLongitude,ResLatitude,0);
-  griddata2 rotationForestNew = griddata2(ResLongitude,ResLatitude,0);
-  griddata2 thinningForest = griddata2(ResLongitude,ResLatitude,0);
-  griddata2 thinningForestNew = griddata2(ResLongitude,ResLatitude,0);
-  griddata2 OforestShGrid = griddata2(ResLongitude,ResLatitude,0);  
+  griddata2<double> harvestGrid = griddata2<double>(ResLongitude,ResLatitude,0);
+  griddata2<double> maiForest = griddata2<double>(ResLongitude,ResLatitude,0);
+  griddata2<double> rotationForest = griddata2<double>(ResLongitude,ResLatitude,0);
+  griddata2<double> rotationForestNew = griddata2<double>(ResLongitude,ResLatitude,0);
+  griddata2<double> thinningForest = griddata2<double>(ResLongitude,ResLatitude,0);
+  griddata2<double> thinningForestNew = griddata2<double>(ResLongitude,ResLatitude,0);
+  griddata2<double> OforestShGrid = griddata2<double>(ResLongitude,ResLatitude,0);  
 
   griddataLite<char> decisionGrid = griddataLite<char>(ResLongitude,ResLatitude,0);
   griddataLite<char> managedForest = griddataLite<char>(ResLongitude,ResLatitude,0);
@@ -189,8 +134,6 @@ if (GUIcontainers){
   if (settings.maps[1]) ASU.addDim("Year", years);
   if (settings.maps[2]) ASU.addDim("Parameter", settings.parametersMap);
 }
-  vector<string> point;                      // Point to be considered
-
 
  if (fmpol && PriceC>0) {biomass_bau.readFromFile("biomass_bau"); // reading BAU files
                          NPVbau.readFromFile("NPVbau");}   
@@ -215,7 +158,7 @@ string strtmp;
 if (GUIcontainers){
     // filling vector of coordinates
     strtmp = IntToStr(PriceC);
-    if (settings.maps[0]) point.push_back(strtmp);
+    if (settings.maps[0]) ASU.pointPush(strtmp);
 }
 //cout << "Price C value " << i << endl;    
 //    initLoop(i, plots, fi, cohort_all, newCohort_all, dat_all, maiForest, thinningForest, rotationForest);
@@ -279,107 +222,91 @@ cout << "starting cell calculations .."<< endl;
 //** writing to containers for GUI output **
 //******************************************
 
-if (GUIcontainers){
+if (GUIcontainers)
+{
 cout<<"writing to GUI containers"<<endl;
       if (years.find(year) != years.end()) {
         strtmp = IntToStr(year);
-        if (settings.maps[1]) point.push_back(strtmp);
+        if (settings.maps[1]) ASU.pointPush(strtmp);
         dataDetStruct::iterator it = plots.begin();
         while (it != plots.end()) {
 //          if (it->PROTECT[2000]==0) {
-          if ((it->PROTECT[2000]==0)&&((it->POTVEG[2000]<10 && it->FOREST[2000]>0 && it->MAIE[2000]>0)||(it->POTVEG[2000]<10 && (it->NPP[2000]>0)||it->MAIN[2000]>0))){                          
-            if (regions.find(it->POLESREG[2000]) != regions.end()) { // Test only some regions
-              int asID = it->asID;
-              if (settings.parametersMap.find("stocking degree") != settings.parametersMap.end()) {
-                point.push_back("stocking degree");
-                ASU.insert(dat_all[asID].simUnit, dat_all[asID].SD, point);
-                point.pop_back();
-              }
-              if (settings.parametersMap.find("em_fm_ab mtco2hayear") != settings.parametersMap.end()) {
-                point.push_back("em_fm_ab mtco2hayear");
-                ASU.insert(dat_all[asID].simUnit, dat_all[asID].FMsink*(-1), point);
-                point.pop_back();
-              }              
-              if (settings.parametersMap.find("em_fm_bm mtco2hayear") != settings.parametersMap.end()) {
-                point.push_back("em_fm_bm mtco2hayear");
-                ASU.insert(dat_all[asID].simUnit, dat_all[asID].FMsink_Bm*(-1), point);
-                point.pop_back();
-              }  
-              if (settings.parametersMap.find("area_forest_old ha") != settings.parametersMap.end()) {
-                point.push_back("area_forest_old ha");
-                ASU.insert(dat_all[asID].simUnit, dat_all[asID].OforestShare*dat_all[asID].LandAreaHa, point);
-                point.pop_back();
-              }               
-              if (settings.parametersMap.find("area_forest_new ha") != settings.parametersMap.end()) {
-                point.push_back("area_forest_new ha");
-                ASU.insert(dat_all[asID].simUnit, dat_all[asID].AforestShare*dat_all[asID].LandAreaHa, point);
-                point.pop_back();
-              }                      
-              if (settings.parametersMap.find("cai m3ha") != settings.parametersMap.end()) {
-                point.push_back("cai m3ha");
-                ASU.insert(dat_all[asID].simUnit, dat_all[asID].CAI, point);
-                point.pop_back();
-              }            
-              if (settings.parametersMap.find("area_df hayear") != settings.parametersMap.end()) {
-                point.push_back("area_df hayear");
-                ASU.insert(dat_all[asID].simUnit, dat_all[asID].deforestHaYear, point);
-                point.pop_back();
-              }  
-              if (settings.parametersMap.find("area_af hayear") != settings.parametersMap.end()) {
-                point.push_back("area_af hayear");
-                ASU.insert(dat_all[asID].simUnit, dat_all[asID].afforestHaYear, point);
-                point.pop_back();
-              }                          
-              if (settings.parametersMap.find("harvest_total m3hayear") != settings.parametersMap.end()) {
-                point.push_back("harvest_total m3hayear");
-                ASU.insert(dat_all[asID].simUnit, dat_all[asID].harvestTot, point);
-                point.pop_back();
-              }      
-              if (settings.parametersMap.find("harvest_fc m3hayear") != settings.parametersMap.end()) {
-                point.push_back("harvest_fc m3hayear");
-                ASU.insert(dat_all[asID].simUnit, dat_all[asID].harvestFcM3Ha, point);
-                point.pop_back();
-              }      
-              if (settings.parametersMap.find("harvest_th m3hayear") != settings.parametersMap.end()) {
-                point.push_back("harvest_th m3hayear");
-                ASU.insert(dat_all[asID].simUnit, dat_all[asID].harvestThM3Ha, point);
-                point.pop_back();
-              }                    
-              if (settings.parametersMap.find("biom_fm tcha") != settings.parametersMap.end()) {
-                point.push_back("biom_fm tcha");
-                ASU.insert(dat_all[asID].simUnit, dat_all[asID].oforestBm, point);
-                point.pop_back();
-              }                    
-              if (settings.parametersMap.find("biom_af tcha") != settings.parametersMap.end()) {
-                point.push_back("biom_af tcha");
-                ASU.insert(dat_all[asID].simUnit, dat_all[asID].aforestBm, point);
-                point.pop_back();
-              }  
-              if (settings.parametersMap.find("em_df_bm mtco2hayear") != settings.parametersMap.end()) {
-                point.push_back("em_df_bm mtco2hayear");
-                ASU.insert(dat_all[asID].simUnit, dat_all[asID].emissionsD_Bm, point);
-                point.pop_back();
-              }  
-              if (settings.parametersMap.find("em_df_sl mtco2hayear") != settings.parametersMap.end()) {
-                point.push_back("em_df_sl mtco2hayear");
-                ASU.insert(dat_all[asID].simUnit, dat_all[asID].emissionsD_S, point);
-                point.pop_back();
-              }  
-              if (settings.parametersMap.find("em_af_bm mtco2hayear") != settings.parametersMap.end()) {
-                point.push_back("em_af_bm mtco2hayear");
-                ASU.insert(dat_all[asID].simUnit, dat_all[asID].emissionsA_Bm, point);
-                point.pop_back();
-              }  
-              if (settings.parametersMap.find("em_af_sl mtco2hayear") != settings.parametersMap.end()) {
-                point.push_back("em_af_sl mtco2hayear");
-                ASU.insert(dat_all[asID].simUnit, dat_all[asID].emissionsA_S, point);
-                point.pop_back();
-              }  
-              if (settings.parametersMap.find("rotation year") != settings.parametersMap.end()) {
-                point.push_back("rotation year");
-                ASU.insert(dat_all[asID].simUnit, dat_all[asID].Rotation, point);
-                point.pop_back();
-              }                                             
+			if ((it->PROTECT[2000]==0)&&((it->POTVEG[2000]<10 && it->FOREST[2000]>0 && it->MAIE[2000]>0)||(it->POTVEG[2000]<10 && (it->NPP[2000]>0)||it->MAIN[2000]>0)))
+			{                          
+				if (regions.find(it->POLESREG[2000]) != regions.end()) { // Test only some regions
+					int asID = it->asID;
+					if (settings.parametersMap.find("stocking degree") != settings.parametersMap.end())
+					{
+						ASU.insert(dat_all[asID].x, dat_all[asID].y, dat_all[asID].SD, "stocking degree", DISTRIBUTE_PROPORTIONALLY);
+					}
+					if (settings.parametersMap.find("em_fm_ab mtco2hayear") != settings.parametersMap.end())
+					{
+						ASU.insert(dat_all[asID].x, dat_all[asID].y, dat_all[asID].FMsink*(-1), "em_fm_ab mtco2hayear", DISTRIBUTE_PROPORTIONALLY);
+					}              
+					if (settings.parametersMap.find("em_fm_bm mtco2hayear") != settings.parametersMap.end())
+					{
+						ASU.insert(dat_all[asID].x, dat_all[asID].y, dat_all[asID].FMsink_Bm*(-1), "em_fm_bm mtco2hayear", DISTRIBUTE_PROPORTIONALLY);
+					}  
+					if (settings.parametersMap.find("area_forest_old ha") != settings.parametersMap.end())
+					{
+						ASU.insert(dat_all[asID].x, dat_all[asID].y, dat_all[asID].OforestShare*dat_all[asID].LandAreaHa, "area_forest_old ha", DISTRIBUTE_PROPORTIONALLY);
+					}               
+					if (settings.parametersMap.find("area_forest_new ha") != settings.parametersMap.end())
+					{
+						ASU.insert(dat_all[asID].x, dat_all[asID].y, dat_all[asID].AforestShare*dat_all[asID].LandAreaHa, "area_forest_new ha", DISTRIBUTE_PROPORTIONALLY);
+					}                      
+					if (settings.parametersMap.find("cai m3ha") != settings.parametersMap.end())
+					{
+						ASU.insert(dat_all[asID].x, dat_all[asID].y, dat_all[asID].CAI, "cai m3ha", DISTRIBUTE_PROPORTIONALLY);
+					}            
+					if (settings.parametersMap.find("area_df hayear") != settings.parametersMap.end())
+					{
+						ASU.insert(dat_all[asID].x, dat_all[asID].y, dat_all[asID].deforestHaYear, "area_df hayear", DISTRIBUTE_PROPORTIONALLY);
+					}  
+					if (settings.parametersMap.find("area_af hayear") != settings.parametersMap.end())
+					{
+						ASU.insert(dat_all[asID].x, dat_all[asID].y, dat_all[asID].afforestHaYear, "area_af hayear", DISTRIBUTE_PROPORTIONALLY);
+					}                          
+					if (settings.parametersMap.find("harvest_total m3hayear") != settings.parametersMap.end())
+					{
+						ASU.insert(dat_all[asID].x, dat_all[asID].y, dat_all[asID].harvestTot, "harvest_total m3hayear", DISTRIBUTE_PROPORTIONALLY);
+					}      
+					if (settings.parametersMap.find("harvest_fc m3hayear") != settings.parametersMap.end())
+					{
+						ASU.insert(dat_all[asID].x, dat_all[asID].y, dat_all[asID].harvestFcM3Ha, "harvest_fc m3hayear", DISTRIBUTE_PROPORTIONALLY);
+					}      
+					if (settings.parametersMap.find("harvest_th m3hayear") != settings.parametersMap.end())
+					{
+						ASU.insert(dat_all[asID].x, dat_all[asID].y, dat_all[asID].harvestThM3Ha, "harvest_th m3hayear", DISTRIBUTE_PROPORTIONALLY);
+					}                    
+					if (settings.parametersMap.find("biom_fm tcha") != settings.parametersMap.end())
+					{
+						ASU.insert(dat_all[asID].x, dat_all[asID].y, dat_all[asID].oforestBm, "biom_fm tcha", DISTRIBUTE_PROPORTIONALLY);
+					}                    
+					if (settings.parametersMap.find("biom_af tcha") != settings.parametersMap.end())
+					{
+						ASU.insert(dat_all[asID].x, dat_all[asID].y, dat_all[asID].aforestBm, "biom_af tcha", DISTRIBUTE_PROPORTIONALLY);
+					}  
+					if (settings.parametersMap.find("em_df_bm mtco2hayear") != settings.parametersMap.end())
+					{
+						ASU.insert(dat_all[asID].x, dat_all[asID].y, dat_all[asID].emissionsD_Bm, "em_df_bm mtco2hayear", DISTRIBUTE_PROPORTIONALLY);
+					}  
+					if (settings.parametersMap.find("em_df_sl mtco2hayear") != settings.parametersMap.end())
+					{
+						ASU.insert(dat_all[asID].x, dat_all[asID].y, dat_all[asID].emissionsD_S, "em_df_sl mtco2hayear", DISTRIBUTE_PROPORTIONALLY);
+					}  
+					if (settings.parametersMap.find("em_af_bm mtco2hayear") != settings.parametersMap.end())
+					{
+						ASU.insert(dat_all[asID].x, dat_all[asID].y, dat_all[asID].emissionsA_Bm, "em_af_bm mtco2hayear", DISTRIBUTE_PROPORTIONALLY);
+					}  
+					if (settings.parametersMap.find("em_af_sl mtco2hayear") != settings.parametersMap.end())
+					{
+						ASU.insert(dat_all[asID].x, dat_all[asID].y, dat_all[asID].emissionsA_S, "em_af_sl mtco2hayear", DISTRIBUTE_PROPORTIONALLY);
+					}  
+					if (settings.parametersMap.find("rotation year") != settings.parametersMap.end())
+					{
+						ASU.insert(dat_all[asID].x, dat_all[asID].y, dat_all[asID].Rotation, "rotation year", DISTRIBUTE_PROPORTIONALLY);
+					}                                           
 // Add parameters you want to output here as for "Forest area":
 // The parameters you may want to output must be defined in listOfParameters.txt
 // file used by the GUI. The parameters for output must be defined in settings.ini 
@@ -388,7 +315,7 @@ cout<<"writing to GUI containers"<<endl;
           }                        // End if not protected
           it++;
         }
-        if (settings.maps[1]) point.pop_back();            // clearing year from vector of coordinates                          // End loop by plots
+        if (settings.maps[1]) ASU.pointPop();            // clearing year from vector of coordinates                          // End loop by plots
       }                            // End loop by years
 }
       year++;
@@ -421,7 +348,7 @@ itn++;
 }
 cout<<"start writing to GUI table"<<endl;		   
     // Clearing vector of coordinates:
-    if (settings.maps[0]) point.pop_back();
+    if (settings.maps[0]) ASU.pointPop();
 //  }                                // End loop by prices
 //  cout << "> Working time is " << difftime(time(NULL),start) << " sec." << endl;
 //  system("pause");
@@ -481,12 +408,12 @@ cout<<"start writing to GUI table"<<endl;
   countryData CountryregRotation_tw =  CountryregRotation.getSmoothAvg(5); 
   //---------------------------------------------------------------------------  
   tableData obj;
+  vector<string> point;
   if (settings.produceTabs) {
     if (settings.tabs[0]) obj.addDim("Scenario", IntToStr(0));
     if (settings.tabs[1]) obj.addDim("Year", years);
     if (settings.tabs[2]) obj.addDim("Country", countriesNameList);
     /*if (settings.tabs[3])*/ obj.addDim("Parameter", settings.parametersTable);
-    point.clear();
     for (int prc = 0; prc < 1; prc++) {
       if (settings.tabs[0]) point.push_back(IntToStr(prc));
       for (int year = byear; year <= eyear; year++) {
@@ -714,19 +641,21 @@ cout << "written to GUI files"<<endl;
       if (f.is_open()) {
          f << "CountryN/Rotation\t minRot\t minMed\t medRot\t medMax\t maxRot\t\t rotMinYears\t rotMaxYears"<<endl; 
 
-        for (int i=0;i<209;i++){
-//        if (minRotNPV[i]>0 && minMedNPV[i]>0 && medRotNPV[i]>0 && medMaxNPV[i]>0 && maxRotNPV[i]>0)
-         if (CountriesNforCover.countriesToPrint.find(i+1) != CountriesNforCover.countriesToPrint.end()){
-            f<<i+1<<"\t";
-            f<<minRotNPV[i]<<"\t";
-            f<<minMedNPV[i]<<"\t";
-            f<<medRotNPV[i]<<"\t";
-            f<<medMaxNPV[i]<<"\t";
-            f<<maxRotNPV[i]<<"\t\t";
-            f<<minRot[i]<<"\t";
-            f<<maxRot[i]<<endl;                                            
-         }
-       }
+        for (int i=0;i<209;i++)
+		{
+			set<int> countriesToPrint = CountriesNforCover.getListOfCountries();
+			if (countriesToPrint.find(i+1) != countriesToPrint.end())
+			{
+				f<<i+1<<"\t";
+				f<<minRotNPV[i]<<"\t";
+				f<<minMedNPV[i]<<"\t";
+				f<<medRotNPV[i]<<"\t";
+				f<<medMaxNPV[i]<<"\t";
+				f<<maxRotNPV[i]<<"\t\t";
+				f<<minRot[i]<<"\t";
+				f<<maxRot[i]<<endl;                                            
+			}
+		}
        f.close();
     }
   }

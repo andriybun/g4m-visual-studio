@@ -55,7 +55,7 @@ namespace g4m
 	}
 
 	template <class IDX, class VAL>
-	VAL ipol<IDX, VAL>::v(const IDX i = 0)
+	VAL ipol<IDX, VAL>::v(const IDX i)
 	{
 		typename std::map<IDX,VAL>::iterator lo, up;
 		VAL y = 0;

@@ -1,5 +1,7 @@
+#include "forest.h"
+
 void initCohorts(dataDetStruct &data_all, g4m::incrementTab &fi, ageStructVector &cohort_all, ageStructVector &newCohort_all,
-                 griddata &maiForest,griddata &thinningForest, griddata &rotationForest) 
+                 griddata2<double> &maiForest,griddata2<double> &thinningForest, griddata2<double> &rotationForest) 
  {
 
 

@@ -47,7 +47,7 @@ void griddata2<TP>::ShowArrayPrev()
 }
 
 template <class TP>
-void griddata2<TP>::PrintToFile(string fileName, string rastrType = "ESRI")
+void griddata2<TP>::PrintToFile(string fileName, string rastrType)
 {
 	TP val;
 	int isChar = 0;
@@ -105,7 +105,7 @@ void griddata2<TP>::PrintToFile(string fileName, string rastrType = "ESRI")
 }
 
 template <class TP>
-void griddata2<TP>::PrintToFilePrev(string fileName, string rastrType = "ESRI")
+void griddata2<TP>::PrintToFilePrev(string fileName, string rastrType)
 {
 	TP val;
 	int isChar = 0;

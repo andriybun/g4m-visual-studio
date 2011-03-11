@@ -1,8 +1,9 @@
+#include "forest.h"
+
 //******************************************************************************
 // country codes (new G4M (see ForWIKI), country order array and country ISO
 //******************************************************************************
-#ifndef countryCodes_cpp
-#define countryCodes_cpp
+
 void countryCodes()
 {
 
@@ -496,7 +497,6 @@ strcpy(counrtyOrderISO[240],"ESH");
 strcpy(counrtyOrderISO[241],"YEM");
 strcpy(counrtyOrderISO[242],"ZMB");
 strcpy(counrtyOrderISO[243],"ZWE");
-
  
 }
-#endif
+
