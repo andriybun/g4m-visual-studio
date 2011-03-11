@@ -1,4 +1,105 @@
 #include "forest.h"
+#include "dima.h"
+
+extern g4m::coeffStruct coeff;
+extern ofstream fff;
+
+extern map<string, g4m::ipol<double,double> > lprice;
+extern map<string, g4m::ipol<double,double> > wprice;
+extern map<string, g4m::ipol<double,double> > wprod;
+
+extern set<int> countriesList;
+
+extern double Hurdle_opt[NumberOfCountries];
+extern double afforRate_opt[NumberOfCountries];
+extern double deforRate_opt[NumberOfCountries];
+extern double EmissionsCurCountry[NumberOfCountries+1];
+extern double EmissionsCurAfforCountry[NumberOfCountries+1];
+
+extern float minRotNPV[NumberOfCountries];
+extern float minMedNPV[NumberOfCountries];
+extern float medRotNPV[NumberOfCountries];
+extern float medMaxNPV[NumberOfCountries];
+extern float maxRotNPV[NumberOfCountries];
+extern float minRot[NumberOfCountries];
+extern float maxRot[NumberOfCountries];
+
+extern int byear, refYear;
+
+extern double resUse;
+extern double deflator;
+
+extern bool cellInteract;
+extern bool forNPVcurves;
+extern bool forNPVcuvvesDyn;
+extern bool gridOutput;
+
+extern countryData CountriesNforCover;
+extern countryData CountriesNforTotC;
+extern countryData CountriesAfforHaYear;  
+extern countryData CountriesAfforCYear;  
+extern countryData CountriesAfforCYear_ab;  
+extern countryData CountriesAfforCYear_bl;  
+extern countryData CountriesAfforCYear_biom;  
+extern countryData CountriesAfforCYear_dom;    
+extern countryData CountriesAfforCYear_soil;    
+extern countryData CountriesOforCover;
+extern countryData CountriesDeforHaYear;  
+extern countryData CountriesOfor_abC;
+extern countryData CountriesOforC_biom; 
+extern countryData CountriesDeforCYear;  
+extern countryData CountriesDeforCYear_bl;   
+extern countryData CountriesDeforCYear_ab; 
+extern countryData CountriesDeforCYear_biom;
+extern countryData CountriesDeforCYear_dom;   
+extern countryData CountriesDeforCYear_soil;     
+extern countryData CountriesWoodHarvestM3Year;    
+extern countryData CountriesWoodHarvestPlusM3Year; 
+extern countryData CountriesWoodHarvestFmM3Year;
+extern countryData CountriesWoodHarvestDfM3Year;
+extern countryData CountriesWoodLoosCYear;   
+extern countryData CountriesHarvLossesYear;
+extern countryData CountriesManagedForHa;     
+extern countryData CountriesManagedCount;  
+extern countryData CountriesMAI;    
+extern countryData CountriesCAI;    
+extern countryData CountriesCAI_new;      
+extern countryData CountriesFM;   
+extern countryData CountriesFMbm;     
+extern countryData CountryRotation; 
+extern countryData CountriesWprod;
+extern countryData CountriesProfit;
+extern countryData CountryregWoodHarvestM3Year; 
+extern countryData CountryregWoodHarvestFmM3Year;
+extern countryData CountryregWoodHarvestDfM3Year;  
+extern countryData CountryregWprod;
+extern countryData CountryregRotation; 
+
+extern griddata2<double> SD_grid_1990;        
+extern griddata2<double> SD_grid_00;        
+extern griddata2<double> SD_grid_10;        
+extern griddata2<double> harvestm3_grid_20;     
+extern griddata2<double> harvestm3_grid_30; 
+extern griddata2<double> harvestm3_grid_50;     
+extern griddata2<double> bmabtC_of_grid_20;         
+extern griddata2<double> bmabtC_of_grid_30;   
+extern griddata2<double> bmabtC_of_grid_50;             
+extern griddata2<double> bmabtC_nf_grid_20;         
+extern griddata2<double> bmabtC_nf_grid_30;   
+extern griddata2<double> bmabtC_nf_grid_50;
+extern griddata2<double> fmgGco2_grid_20; 
+extern griddata2<double> fmgGco2_grid_30;     
+extern griddata2<double> fmgGco2_grid_50;         
+extern griddata2<double> mai_m3ha_grid_20;        
+extern griddata2<double> mai_m3ha_grid_30;        
+extern griddata2<double> mai_m3ha_grid_50;        
+extern griddata2<double> SD_grid_20;        
+extern griddata2<double> SD_grid_30;        
+extern griddata2<double> SD_grid_50;    
+extern griddata2<double> RL_grid_20;        
+extern griddata2<double> RL_grid_30;        
+extern griddata2<double> RL_grid_50; 
+
 
 void calc(g4m::dataStruct &it, g4m::incrementTab &fi, g4m::ageStruct &cohort, g4m::ageStruct &newCohort,
           dat &singleCell, griddataLite<char> &managedForest, griddata2<double> &maiForest, griddata2<double> &rotationForest,
@@ -89,6 +190,7 @@ void calc(g4m::dataStruct &it, g4m::incrementTab &fi, g4m::ageStruct &cohort, g4
 
 	double CurPlantPhytBmGr;
 	double CurPlantPhytBlGr;
+	double plantingCosts;
 
 	//----------Initialise cohorts-----------------
 	int rotationTimeCurr;
@@ -1038,6 +1140,7 @@ void calc(g4m::dataStruct &it, g4m::incrementTab &fi, g4m::ageStruct &cohort, g4
 				}
 			}
 		}
+		plantingCosts = decision.plantingCosts();
 
 		/*
 		// MG: Writing to file at specified time points
@@ -1274,8 +1377,8 @@ void calc(g4m::dataStruct &it, g4m::incrementTab &fi, g4m::ageStruct &cohort, g4
 	CountriesFM.inc(Country,year,FMsink_ab*OforestShare*singleCell.LandAreaHa);
 	CountriesFMbm.inc(Country,year,FMsink_bm*OforestShare*singleCell.LandAreaHa);
 
-	profit = harvestTotM3 * TimberPrice - decision.plantingCosts() * cohort.getArea(0) * OforestShare * singleCell.LandAreaHa;
-	CountriesProfit.inc(Country,year,profit);
+	double profit = harvestTotM3 * TimberPrice - plantingCosts * cohort.getArea(0) * OforestShare * singleCell.LandAreaHa;
+	CountriesProfit.inc(Country, year, profit);
 
 	CountryRotation.inc(Country,year,rotationTimeCurr);
 

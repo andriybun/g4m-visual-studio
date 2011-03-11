@@ -5,6 +5,10 @@
 
 #include "forest.h"
 
+extern double Hurdle_opt[NumberOfCountries];
+extern double afforRate_opt[NumberOfCountries];
+extern double deforRate_opt[NumberOfCountries];
+
 void hurdle_aff_deff(void)
 {
 //double Hurdle_opt[209];

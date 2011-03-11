@@ -3,8 +3,24 @@
 //******************************************************************************
 
 #include "forest.h"
-//#include <cmath>
 
+extern g4m::coeffStruct coeff;
+
+extern map<string, g4m::ipol<double,double> > wprice;
+
+extern vector2d biomass_bau;
+
+extern float minRotNPV[NumberOfCountries];
+extern float minMedNPV[NumberOfCountries];
+extern float medRotNPV[NumberOfCountries];
+extern float medMaxNPV[NumberOfCountries];
+extern float maxRotNPV[NumberOfCountries];
+extern float minRot[NumberOfCountries];
+extern float maxRot[NumberOfCountries];
+
+extern double resUse;
+
+extern int refYear;
 
 // Value of Forestry during multiple rotation
 //double forVal(double * compr, double &rotInt, double &priceW, double &forValNC)

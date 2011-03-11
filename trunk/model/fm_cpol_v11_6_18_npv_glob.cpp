@@ -1,5 +1,24 @@
 #include "forest.h"
 
+extern g4m::coeffStruct coeff;
+
+extern set<int> regions;
+extern set<int> toAdjust;
+
+extern map<string, g4m::ipol<double,double> > wprod;
+
+extern vector2d NPVbau;
+extern griddata2<double> NPVcGrid;
+
+extern double harvDiff[NumberOfCountries];
+extern short int coutryRegion[NumberOfCountries+1];
+
+extern double resUse;
+extern double tolerance;
+
+extern int refYear;
+extern int maxDiffCountry;
+
  void fm_cpol(dataDetStruct &data_all, g4m::incrementTab &fi, ageStructVector &cohort_all, 
               ageStructVector &newCohort_all, datGlobal &dat_all, griddata2<double> &maiForest, 
               griddata2<double> &thinningForest, griddata2<double> &rotationForest, griddataLite<char> &managedForest,
