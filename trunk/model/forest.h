@@ -1,7 +1,38 @@
-using namespace std;
+#ifndef FOREST_H_
+#define FOREST_H_
 
-//#include "interpol.h"
+#include <iostream>
+#include <cstdlib>
+#include <string>
+#include <sstream>
+#include <cmath>
+#include <vector>
+#include <set>
+#include <map>
+#include <fstream>
+#include <ctime>
+#include <algorithm>
+
+// Classes for preparing output for GDataView
+#include "jDataViewClasses.h"
+// Some common and abstract classes
+#include "commonClasses.h"
+
+// g4m interface
+#include "intf.h"
+#include "model.h"
+
+// Rest of includes:
+#include "readSettings_glob.h"
+#include "increment.h"
+#include "ageStruct.h"					// max stocking degree is limited to about 1.2
+#include "dataStruct.h"					// data structures
+
 #include "dat.h"
+
+#include "dima.h"
+
+using namespace std;
 
 //******************************************************************************
 // types
@@ -235,25 +266,17 @@ bool gridOutput = true; // to output maps (ascii grids)
 // functions
 //******************************************************************************
 int readInputDet(dataDetStruct &);
+void readCoeff(g4m::coeffStruct &coeff);
+
 vector<double> procPlots(g4m::dataStruct &,double,int,double, double,double, double, double);
 vector<double> calcPlots(double [],int);
 vector<double> plotsData(g4m::dataStruct &,int);
-void initManagedForest(dataDetStruct &, g4m::incrementTab &, datGlobal &,
-                       ageStructVector &, ageStructVector &,              
-                       griddata2<double> &, griddataLite<char> &, griddataLite<char> &, 
-                       griddata2<double> &, griddata2<double> &,griddata2<double> &);
-// void adjustManagedForest(dataDetStruct &data_all, g4m::incrementTab &fi, ageStructVector &cohort_all, 
-//              ageStructVector &newCohort_all, datGlobal &dat_all, griddata2<double> &maiForest, 
-//              griddata2<double> &thinningForest, griddata2<double> &rotationForest, griddataLite<char> &managedForest,
-//              griddata2<double> &rotationForestNew, griddata2<double> &thinningForestNew, griddataLite<char> &manageChForest,
-//              griddataLite<char> &rotationType, griddata2<double> &harvestGrid, int year); 
 
-// void adjustManagedForest(dataDetStruct &data_all, g4m::incrementTab &fi, ageStructVector &cohort_all, 
-//              ageStructVector &newCohort_all, datGlobal &dat_all, griddata2<double> &maiForest, 
-//              griddata2<double> &thinningForest, griddata2<double> &rotationForest, griddataLite<char> &managedForest,
-//              griddata2<double> &rotationForestNew, griddata2<double> &thinningForestNew, griddataLite<char> &manageChForest,
-//              griddataLite<char> &rotationType, griddata2<double> &harvestGrid, int year, griddataLite<char> &unmanaged);
-
+void initManagedForest(dataDetStruct &data_all, g4m::incrementTab &fi, datGlobal &dat_all,
+					   ageStructVector &cohort_all, ageStructVector &newCohort_all,
+					   griddata2<double> &maiForest, griddata2<double> &thinningForest,
+					   griddataLite<char> &rotationType, griddataLite<char> &managedForest,
+					   griddata2<double> &rotationForest, griddata2<double> &harvestGrid, griddata2<double> &OforestShGrid);
 
 void adjustManagedForest(dataDetStruct &data_all, g4m::incrementTab &fi, ageStructVector &cohort_all, 
               ageStructVector &newCohort_all, datGlobal &dat_all, griddata2<double> &maiForest, 
@@ -261,12 +284,6 @@ void adjustManagedForest(dataDetStruct &data_all, g4m::incrementTab &fi, ageStru
               griddata2<double> &rotationForestNew, griddata2<double> &thinningForestNew, griddataLite<char> &manageChForest,
               griddataLite<char> &rotationType, griddata2<double> &harvestGrid, int year, griddataLite<char> &unmanaged, double);
 
-//void fm_cpol(dataDetStruct &, g4m::incrementTab &, ageStructVector &, 
-//              ageStructVector &, datGlobal &, griddata2<double> &, 
-//              griddata2<double> &, griddata2<double> &, griddataLite<char> &,
-//              griddata2<double> &, griddata2<double> &, griddataLite<char> &,
-//              griddataLite<char> &, griddata2<double> &, int , griddataLite<char> &, double,double &,double);
-              
 void fm_cpol(dataDetStruct &, g4m::incrementTab &, ageStructVector &, 
               ageStructVector &, datGlobal &, griddata2<double> &, 
               griddata2<double> &, griddata2<double> &, griddataLite<char> &,
@@ -277,26 +294,11 @@ void fm_cpol(dataDetStruct &, g4m::incrementTab &, ageStructVector &,
 void initLoop(int, dataDetStruct &, g4m::incrementTab &, ageStructVector &, 
               ageStructVector &, datGlobal &, griddata2<double> &, griddata2<double> &, griddata2<double> &);
 
-//void initLoop(int, dataDetStruct &, g4m::incrementTab &, 
-//              datGlobal &, griddata2<double> &, griddata2<double> &, griddata2<double> &);
-
-//void calc(g4m::dataStruct &, g4m::incrementTab &, g4m::ageStruct &, g4m::ageStruct &, 
-//          dat &, griddataLite<char> &, griddata2<double> &, griddata2<double> &, int, int, int);
-//void calc(g4m::dataStruct &, g4m::incrementTab &, g4m::ageStruct &, g4m::ageStruct &,
-//          dat &, griddataLite<char> &, griddata2<double> &, griddata2<double> &,
-//          griddata2<double> &, griddataLite<char> &, griddata2<double> &, 
-//          griddata2<double> &, int , int , int );  
-void calc(g4m::dataStruct &, g4m::incrementTab &, g4m::ageStruct &, g4m::ageStruct &,
-          dat &, griddataLite<char> &, griddata2<double> &, griddata2<double> &,
-          griddata2<double> &, griddataLite<char> &, griddata2<double> &, 
-          griddata2<double> &, int , double , int , griddata2<double> &);           
+void calc(g4m::dataStruct &it, g4m::incrementTab &fi, g4m::ageStruct &cohort, g4m::ageStruct &newCohort,
+		  dat &singleCell, griddataLite<char> &managedForest, griddata2<double> &maiForest, griddata2<double> &rotationForest,
+		  griddata2<double> &rotationForestNew, griddata2<double> &thinningForest, griddata2<double> &thinningForestNew, 
+		  griddata2<double> &harvestGrid, int year, double priceC, int asID, griddata2<double> &OforestShGrid);
           
-//void initCohorts(dataDetStruct &, g4m::incrementTab &, ageStructVector &, 
-//                 griddata2<double> &,griddata2<double> &, griddata2<double> &);           
-//void initCohorts(dataDetStruct &, g4m::incrementTab &, ageStructVector &, ageStructVector &,
-//                 griddata2<double> &,griddata2<double> &, griddata2<double> &);   
-                  
-//void MAI_country(void);
 void MAI_countryregmix(void);
 void woodHarvestStatCountry(void);
 void hurdle_aff_deff(void);
@@ -321,3 +323,8 @@ double npv_calc50(g4m::dataStruct &iter, g4m::ageStruct &cohortTmp, double maiV,
 void forNPV_init(void); // initialisation of arrays for estimation of country average forestry NPV
 
 void carbonPrice(void); // definition of carbon price time functions
+
+void listsToConsider(void);
+void countryCodes();
+
+#endif

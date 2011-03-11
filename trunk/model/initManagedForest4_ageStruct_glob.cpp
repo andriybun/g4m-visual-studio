@@ -1,8 +1,10 @@
+#include "forest.h"
+
 void initManagedForest(dataDetStruct &data_all, g4m::incrementTab &fi, datGlobal &dat_all,
                        ageStructVector &cohort_all, ageStructVector &newCohort_all,
-                       griddata &maiForest, griddata &thinningForest,
-                       griddata2<char> &rotationType, griddata2<char> &managedForest,
-                       griddata &rotationForest, griddata &harvestGrid, griddata &OforestShGrid) 
+                       griddata2<double> &maiForest, griddata2<double> &thinningForest,
+                       griddataLite<char> &rotationType, griddataLite<char> &managedForest,
+                       griddata2<double> &rotationForest, griddata2<double> &harvestGrid, griddata2<double> &OforestShGrid) 
 
  {
   double woodHarvest[NumberOfCountryregmix];
@@ -1167,12 +1169,12 @@ iter++;
 ///////////////////////////////////////////////////////////////////////////////
  
 void initLoop(int i, dataDetStruct &data_all, g4m::incrementTab &fi, ageStructVector &cohort_all, 
-              ageStructVector &newCohort_all, datGlobal &dat_all, griddata &maiForest, 
-              griddata &thinningForest, griddata &rotationForest) 
+              ageStructVector &newCohort_all, datGlobal &dat_all, griddata2<double> &maiForest, 
+              griddata2<double> &thinningForest, griddata2<double> &rotationForest) 
 
 //void initLoop(int i, dataDetStruct &data_all, g4m::incrementTab &fi,  
-//              datGlobal &dat_all, griddata &maiForest, 
-//              griddata &thinningForest, griddata &rotationForest) 
+//              datGlobal &dat_all, griddata2<double> &maiForest, 
+//              griddata2<double> &thinningForest, griddata2<double> &rotationForest) 
 
 
 
@@ -1535,7 +1537,8 @@ void initLoop(int i, dataDetStruct &data_all, g4m::incrementTab &fi, ageStructVe
 //************************************
 //**** Element for preparing output for GUI 
 //************************************
-        singleCell.simUnit = sMap.getSIMU(X,Y);        
+		singleCell.x = X;
+		singleCell.y = Y;
 //cout<<"X=\t"<<X<<"\t Y=\t"<<Y<<"\t simUnit=\t"<<sMap.getSIMU(X,Y)<<endl;
 //        singleCell.Rotation = Rotation;
         singleCell.Rotation = rotationForest.get(xi,yi);

@@ -1,15 +1,18 @@
 #include "increment.h"
 
-
-namespace g4m {
-  double interpol(double x0, double x1, double y0, double y1, double y) {
-    double dx = x1 - x0;
-    double dy = y1 - y0;
-    double d = 0.;
-    if(dy > 0. || dy < 0.) {
-      d = dx * (y-y0) / dy;}
-    return(x0 + d);
-  }
+namespace g4m
+{
+	double interpol(double x0, double x1, double y0, double y1, double y)
+	{
+		double dx = x1 - x0;
+		double dy = y1 - y0;
+		double d = 0.;
+		if(dy > 0. || dy < 0.)
+		{
+			d = dx * (y-y0) / dy;
+		}
+		return(x0 + d);
+	}
 
   incrementCurves::incrementCurves
   (double a0, double a1, double a2, double a3, double a4,

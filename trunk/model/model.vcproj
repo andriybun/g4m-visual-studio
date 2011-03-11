@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="model"
 	ProjectGUID="{34679105-80C1-47A8-BFDA-CE3552CE584F}"
 	RootNamespace="model"
@@ -181,7 +181,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\calc_glob_2001.cpp"
+				RelativePath=".\calc.cpp"
 				>
 			</File>
 			<File
@@ -190,6 +190,10 @@
 			</File>
 			<File
 				RelativePath=".\countryCodes_new.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cPrices_NatDefra.cpp"
 				>
 			</File>
 			<File
@@ -202,6 +206,10 @@
 			</File>
 			<File
 				RelativePath=".\forNPV.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\hurdle_and_deforaffor_glob_CI.cpp"
 				>
 			</File>
 			<File
@@ -247,15 +255,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\cPrices_NatDefra.h"
-				>
-			</File>
-			<File
 				RelativePath=".\dat.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dataStruct_MG.h"
+				RelativePath=".\dataStruct.h"
 				>
 			</File>
 			<File
@@ -264,14 +268,6 @@
 			</File>
 			<File
 				RelativePath=".\forest.h"
-				>
-			</File>
-			<File
-				RelativePath=".\griddata3_MG.h"
-				>
-			</File>
-			<File
-				RelativePath=".\hurdle_and_deforaffor_glob_CI.h"
 				>
 			</File>
 			<File

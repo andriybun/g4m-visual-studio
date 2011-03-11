@@ -30,8 +30,8 @@ public:
 	griddata2 & operator = (const griddata2& g);
 	~griddata2();
 	void ShowArray();                       // prints array
-	void PrintToFile(string fileName, string rastrType);      // print array to file
-	void PrintToFilePrev(string fileName, string rastrType);  // print previous year array to file
+	void PrintToFile(string fileName, string rastrType = "ESRI");      // print array to file
+	void PrintToFilePrev(string fileName, string rastrType = "ESRI");  // print previous year array to file
 	void ShowArrayPrev();                   // prints array for the previous year
 	void update();                          // updates values for previous year to current values
 	void set(int x, int y, TP val);     // assigns value val to cell [x][y]

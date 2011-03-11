@@ -1,8 +1,7 @@
 #ifndef READINPUT_CPP
 #define READINPUT_CPP
-#include <algorithm>
-#include <map>
-#include "ipol.h"
+
+#include "forest.h"
 
 using namespace std;
 
@@ -479,7 +478,7 @@ pair<double, string> getNumber(string str)
   for(unsigned int i=0; i < str.size(); ++i) {
     if((str[i] >= '0' && str[i] <= '9') || str[i] == '.')
        number += str[i];
-    else if((str[i] != '[') and (str[i] != ']'))
+    else if((str[i] != '[') && (str[i] != ']'))
       text += str[i];
   }
   double x = 0;

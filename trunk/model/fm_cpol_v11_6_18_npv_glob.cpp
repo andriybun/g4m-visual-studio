@@ -1,13 +1,12 @@
-#ifndef fm_cpol_cpp
-#define fm_cpol_cpp
+#include "forest.h"
 
  void fm_cpol(dataDetStruct &data_all, g4m::incrementTab &fi, ageStructVector &cohort_all, 
-              ageStructVector &newCohort_all, datGlobal &dat_all, griddata &maiForest, 
-              griddata &thinningForest, griddata &rotationForest, griddata2<char> &managedForest,
-              griddata &rotationForestNew, griddata &thinningForestNew, griddata2<char> &manageChForest,
-              griddata2<char> &rotationType, griddata &harvestGrid, int year, griddata2<char> &unmanaged, 
+              ageStructVector &newCohort_all, datGlobal &dat_all, griddata2<double> &maiForest, 
+              griddata2<double> &thinningForest, griddata2<double> &rotationForest, griddataLite<char> &managedForest,
+              griddata2<double> &rotationForestNew, griddata2<double> &thinningForestNew, griddataLite<char> &manageChForest,
+              griddataLite<char> &rotationType, griddata2<double> &harvestGrid, int year, griddataLite<char> &unmanaged, 
               double fm_hurdle, double &maxDiff, double priceC,
-              set<int> &useChange, griddata &thinningForestO,griddata2<int> &rotationForestO,griddata2<int> &rotationForestNewO) 
+              set<int> &useChange, griddata2<double> &thinningForestO,griddataLite<int> &rotationForestO,griddataLite<int> &rotationForestNewO) 
  
  
  {
@@ -2434,5 +2433,3 @@ cout<<"ii=\t"<<ii<<"\t woodHarvest["<<ii<<"]="<<"\t"<<woodHarvest[ii]<<endl;
           
       
 }
-
-#endif
