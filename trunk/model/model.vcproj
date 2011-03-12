@@ -191,10 +191,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\countryCodes_new.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\cPrices_NatDefra.cpp"
 				>
 			</File>
