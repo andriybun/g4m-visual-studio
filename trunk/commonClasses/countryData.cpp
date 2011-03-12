@@ -81,11 +81,8 @@ countryData countryData::getSmoothAvg(int timePeriodWidth, int timeStep)
 
 			for (int yearIdx = 0; yearIdx < numYears; yearIdx += timeStep)
 			{
-				if (countByYears[yearIdx] > 0)
-				{
-					result.set(countryIdx, firstYear + yearIdx, 
-						computeAvg(valuesByYears, countByYears, yearIdx, timePeriodWidth, numYears));
-				}
+				result.set(countryIdx, firstYear + yearIdx, 
+					computeAvg(valuesByYears, countByYears, yearIdx, timePeriodWidth, numYears));
 			}
 
 			delete [] valuesByYears;
@@ -103,7 +100,7 @@ double countryData::computeAvg(double *values, int *count, int yearIdx, int time
 	for(int idx = xmax(0, yearIdx - timeHalfPeriodWidth); idx <= xmin(numYears-1, yearIdx+timeHalfPeriodWidth); idx++)
 	{
 		num += count[idx];
-		sum += values[idx];
+		sum += (count[idx] == 0 ? 0 : values[idx]);
 	}
 	return sum / num;
 }
