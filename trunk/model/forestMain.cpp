@@ -267,7 +267,9 @@ int main(int argc, char * argv[])
   string suffix="glob_base_GUI";  
   string scenario[4]={"bau","ref","etgca","dgca"};
 //PriceCiS[23] = {0,5,10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,1000};
-carbonPrice(); // initialisation of the C price function
+	
+	//TODO: uncomment and/or fix
+	//carbonPrice(); // initialisation of the C price function
 
 int PriceC = 0; //*12/44;  // Set carbon price scenario
 double priceC = 0.;

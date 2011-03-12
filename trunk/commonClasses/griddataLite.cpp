@@ -150,6 +150,7 @@ griddataLite<TP>::~griddataLite()
 	delete []grid;
 }
 
+template class griddataLite<char>;
 template class griddataLite<int>;
 template class griddataLite<float>;
 template class griddataLite<double>;
