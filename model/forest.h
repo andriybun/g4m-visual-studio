@@ -91,7 +91,7 @@ void MAI_countryregmix(void);
 void woodHarvestStatCountry(void);
 void hurdle_aff_deff(void);
 void cPrices(void);
-void int2str(int i, char tmp[]);   // defined in misc.h
+//void int2str(int i, char tmp[]);   // defined in misc.h
 
 void woodProductionIndexes(void); // country code and year for wood production file
 

@@ -223,9 +223,7 @@ int readInputDet(dataDetStruct &data_all)
       ss >> regID;
       int ElemNum = 0;
       string colname;
-      char regstr[2]; 
-      int2str(lineNum+1,regstr);
-      colname = "re" + string(regstr) + "price0";
+      colname = "re" + IntToStr(lineNum+1) + "price0";
       while (ss >> val) {
         lprice[colname].insert(2000+(ElemNum)*10,val);
         ElemNum++;
@@ -262,9 +260,7 @@ int readInputDet(dataDetStruct &data_all)
       ss >> regID;
       int ElemNum = 0;
       string colname;
-      char regstr[2]; 
-      int2str(LineNum+1,regstr);
-      colname = "re" + string(regstr) + "price0";
+      colname = "re" + IntToStr(LineNum+1) + "price0";
       while (ss >> val) {
         wprice[colname].insert(2000+(ElemNum)*10,val);
         ElemNum++;
@@ -316,18 +312,13 @@ int readInputDet(dataDetStruct &data_all)
       ss >> regID;
       int ElemNum = 0;
       string colname;
-      char regstr[2]; 
-//      int2str(countryNwp[LineNum],regstr);
-      int2str(LineNum+1,regstr);
-//cout << "regstr"<<"\t"<<regstr<<endl; 
-      colname = "re" + string(regstr) + "price0";
-//cout<<"colname"<<"\t"<<colname<<endl;
-      while (ss >> val) {
-        wprod[colname].insert(yearNwp[ElemNum],val);
-//cout<< wprod[colname].v(yearNwp[ElemNum])<<endl;         
-        ElemNum++;
-      }
-      LineNum++;
+      colname = "re" + IntToStr(LineNum+1) + "price0";
+		while (ss >> val)
+		{
+			wprod[colname].insert(yearNwp[ElemNum],val);
+			ElemNum++;
+		}
+		LineNum++;
     }
   }
 cout<<"wprod[re1price0].v(2010)= "<<wprod["re1price0"].v(2020)<<endl;  

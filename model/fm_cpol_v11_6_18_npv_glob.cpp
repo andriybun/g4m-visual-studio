@@ -115,10 +115,8 @@ if ((fm_hurdle == 1)&&(toAdjust.size()>1)){
       if (iter->PROTECT[2000] == 0)
       {
         int asID = iter->asID;
-        char regionch[2];
-        int2str(region,regionch);
-        string regprice = "re"+string(regionch)+"price0";
-        string regprice0 = "re"+string(regionch)+"price0";
+        string regprice = "re"+IntToStr(region)+"price0";
+        string regprice0 = "re"+IntToStr(region)+"price0";
         int xi = (iter->x);
         int yi = (iter->y);                    
 
@@ -346,13 +344,9 @@ if ((year > 2000) && ((year) % 10 == 0) && (fm_hurdle == 1))
      if (iter->PROTECT[2000] == 0)
 	{
     int asID = iter->asID;
-    char regionch[2];
-    int2str(region,regionch);
-    string regprice = "re"+string(regionch)+"price0";
-    string regprice0 = "re"+string(regionch)+"price0";
-    char countrych[3];
-    int2str(country,countrych);
-    string countryprice = "re"+string(countrych)+"price0";
+    string regprice = "re"+IntToStr(region)+"price0";
+    string regprice0 = "re"+IntToStr(region)+"price0";
+    string countryprice = "re"+IntToStr(country)+"price0";
     country = iter->COUNTRY[2000]; 
     int xi = (iter->x);
     int yi = (iter->y);
@@ -757,13 +751,9 @@ while (iter != data_all.end()) {
     if (toAdjust.find(country) != toAdjust.end()) {  
      int asID = iter->asID;
      if ((iter->PROTECT[2000]==0)&&((iter->POTVEG[2000]<10 && iter->FOREST[2000]>0 && iter->MAIE[2000]>0)||(iter->POTVEG[2000]<10 && (iter->NPP[2000]>0)||iter->MAIN[2000]>0))){
-    char regionch[2];
-    int2str(region,regionch);
-    string regprice = "re"+string(regionch)+"price0";
-    string regprice0 = "re"+string(regionch)+"price0";
-    char countrych[3];
-    int2str(country,countrych);
-    string countryprice = "re"+string(countrych)+"price0";
+    string regprice = "re"+IntToStr(region)+"price0";
+    string regprice0 = "re"+IntToStr(region)+"price0";
+    string countryprice = "re"+IntToStr(country)+"price0";
     country = iter->COUNTRY[2000];     
     int xi = (iter->x);
     int yi = (iter->y);
@@ -997,13 +987,9 @@ while (iter != data_all.end()) {
      if (toAdjust.find(country) != toAdjust.end()) {  
        if ((iter->PROTECT[2000]==0)&&((iter->POTVEG[2000]<10 && iter->FOREST[2000]>0 && iter->MAIE[2000]>0)||(iter->POTVEG[2000]<10 && (iter->NPP[2000]>0)||iter->MAIN[2000]>0))){
         int asID = iter->asID;
-        char regionch[2];
-    int2str(region,regionch);
-    string regprice = "re"+string(regionch)+"price0";
-    string regprice0 = "re"+string(regionch)+"price0";
-    char countrych[3];
-    int2str(country,countrych);
-    string countryprice = "re"+string(countrych)+"price0";
+    string regprice = "re"+IntToStr(region)+"price0";
+    string regprice0 = "re"+IntToStr(region)+"price0";
+    string countryprice = "re"+IntToStr(country)+"price0";
     country = iter->COUNTRY[2000];     
     int xi = (iter->x);
     int yi = (iter->y);
@@ -1254,13 +1240,9 @@ while (iter != data_all.end()) {
    if (maiForest.get(xi,yi)>0)
    { 
     int asID = iter->asID;
-    char regionch[2];
-    int2str(region,regionch);
-    string regprice = "re"+string(regionch)+"price0";
-    string regprice0 = "re"+string(regionch)+"price0";
-    char countrych[3];
-    int2str(country,countrych);
-    string countryprice = "re"+string(countrych)+"price0";
+    string regprice = "re"+IntToStr(region)+"price0";
+    string regprice0 = "re"+IntToStr(region)+"price0";
+    string countryprice = "re"+IntToStr(country)+"price0";
     country = iter->COUNTRY[2000];     
 //  if (floor(woodHarvest[country]) < 0.95 * wprod[countryprice].v(year))
 //  if (floor(woodHarvest[country]) < 0.94 * wprod[countryprice].v(year))  
@@ -1668,13 +1650,9 @@ iter = data_all.begin();
 	if (iter->PROTECT[2000] == 0)
 	{
     int asID = iter->asID;
-    char regionch[2];
-    int2str(region,regionch);
-    string regprice = "re"+string(regionch)+"price0";
-    string regprice0 = "re"+string(regionch)+"price0";
-    char countrych[3];
-    int2str(country,countrych);
-    string countryprice = "re"+string(countrych)+"price0";
+    string regprice = "re"+IntToStr(region)+"price0";
+    string regprice0 = "re"+IntToStr(region)+"price0";
+    string countryprice = "re"+IntToStr(country)+"price0";
     country = iter->COUNTRY[2000];     
     int xi = (iter->x);
     int yi = (iter->y);
@@ -1936,13 +1914,9 @@ while (iter != data_all.end()) {
   if (toAdjust.find(country) != toAdjust.end()) {  
    if ((iter->PROTECT[2000]==0)&&((iter->POTVEG[2000]<10 && iter->FOREST[2000]>0 && iter->MAIE[2000]>0)||(iter->POTVEG[2000]<10 && (iter->NPP[2000]>0)||iter->MAIN[2000]>0))){
     int asID = iter->asID;
-    char regionch[2];
-    int2str(region,regionch);
-    string regprice = "re"+string(regionch)+"price0";
-    string regprice0 = "re"+string(regionch)+"price0";
-    char countrych[3];
-    int2str(country,countrych);
-    string countryprice = "re"+string(countrych)+"price0";
+    string regprice = "re"+IntToStr(region)+"price0";
+    string regprice0 = "re"+IntToStr(region)+"price0";
+    string countryprice = "re"+IntToStr(country)+"price0";
     country = iter->COUNTRY[2000];     
     int xi = (iter->x);
     int yi = (iter->y);
@@ -2176,13 +2150,9 @@ while (iter != data_all.end()) {
   if (toAdjust.find(country) != toAdjust.end()) {  
    if ((iter->PROTECT[2000]==0)&&((iter->POTVEG[2000]<10 && iter->FOREST[2000]>0 && iter->MAIE[2000]>0)||(iter->POTVEG[2000]<10 && (iter->NPP[2000]>0)||iter->MAIN[2000]>0))){
     int asID = iter->asID;
-    char regionch[2];
-    int2str(region,regionch);
-    string regprice = "re"+string(regionch)+"price0";
-    string regprice0 = "re"+string(regionch)+"price0";
-    char countrych[3];
-    int2str(country,countrych);
-    string countryprice = "re"+string(countrych)+"price0";
+    string regprice = "re"+IntToStr(region)+"price0";
+    string regprice0 = "re"+IntToStr(region)+"price0";
+    string countryprice = "re"+IntToStr(country)+"price0";
     country = iter->COUNTRY[2000]; 
     
     int xi = (iter->x);
@@ -2414,10 +2384,7 @@ while (iter != data_all.end()) {
 
     if (toAdjust.size()>1){
       for (int i=1; i<=209; i++){
-        char countrych[3];
-        int ii = i;
-        int2str(ii,countrych);
-        string countryprice = "re"+string(countrych)+"price0";
+        string countryprice = "re"+IntToStr(i)+"price0";
         if (wprod[countryprice].v(year) > 0){
         
              if ((regions.find(coutryRegion[i]) != regions.end()) 
@@ -2443,9 +2410,7 @@ cout<<"harvDiff["<<i<<"]="<<"\t"<<harvDiff[i]<<"\t woodHarvest["<<i<<"]="<<"\t"<
           set<int>::iterator itt = toAdjust.begin();
           int ii = *itt;
 cout<<"ii=\t"<<ii<<"\t woodHarvest["<<ii<<"]="<<"\t"<<woodHarvest[ii]<<endl;          
-          char countrych[3];
-          int2str(ii,countrych);
-          string countryprice = "re"+string(countrych)+"price0";          
+          string countryprice = "re"+IntToStr(ii)+"price0";          
           harvDiff[ii] = abs(woodHarvest[ii] - wprod[countryprice].v(year))/wprod[countryprice].v(year); 
           maxDiff = harvDiff[ii];
           }

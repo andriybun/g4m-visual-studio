@@ -599,4 +599,8 @@ namespace g4m
 	template class ipol<double, int>;
 	template class ipol<int, int>;
 	template class ipol<int, double>;
+
+	template class fipol<float>;
+	template class fipol<double>;
+	template class fipol<int>;
 }
