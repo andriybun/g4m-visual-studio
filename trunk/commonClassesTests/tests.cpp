@@ -47,39 +47,33 @@ void testCountryData()
 {
 	countryData obj = countryData();
 
-	obj.set(1, 2008, 6);
-	obj.set(1, 2009, 5);
-	obj.inc(1, 2009, 4);
-	obj.set(1, 2010, 30);
-	obj.set(1, 2011, 23);
-	obj.set(1, 2012, 15);
-	obj.set(1, 2013, 11);
+	obj.set(1, 2000, 125.334);
+	obj.set(1, 2001, 24498.2);
+	obj.set(1, 2002, 24855.8);
+	obj.set(1, 2003, 25259.2);
+	obj.set(1, 2004, 25668.2);
+	obj.set(1, 2005, 26065.4);
+	obj.set(1, 2006, 26443.7);
+	obj.set(1, 2017, 26800.5);
+	obj.set(1, 2008, 27135.4);
+	obj.set(1, 2009, 27449.2);
+	obj.set(1, 2010, 27743);
 
-	obj.set(2, 2008, 1);
-	obj.set(2, 2009, 2);
-	obj.inc(3, 2009, 3);
-	cout << obj.getRegionSum(10, 2009) << endl;
-	cout << obj.getRegionSum(20, 2010) << endl;
-	cout << obj.getRegionSum(17, 2008) << endl;
-	cout << obj.getRegionSum(17, 2009) << endl;
-	cout << "********************" << endl;
-	cout << obj.getAvg(1, 2008) << endl;
-	cout << obj.getAvg(1, 2009) << endl;
-	cout << obj.getAvg(2, 2008) << endl;
-	cout << obj.getAvg(3, 2009) << endl;
-	cout << "********************" << endl;
+	//cout << obj.getRegionSum(10, 2009) << endl;
+	//cout << obj.getAvg(1, 2008) << endl;
+
 	{
-		countryData avgRes = obj.getSmoothAvg(3);
-		avgRes.printToFile("data/test.txt", 2008, 2013, 1);
+		countryData avgRes = obj.getSmoothAvg(5);
+		avgRes.printToFile("data/test.txt", 2000, 2010, 1);
 	}
-	{
-		countryData avgRes = obj.getTimeAvg(3);
-		avgRes.printToFile("data/test_t_1.txt", 2008, 2013, 1);
-	}
-	{
-		countryData avgRes = obj.getTimeAvg(3);
-		avgRes.printToFile("data/test_t_3.txt", 2008, 2013, 3);
-	}
+	//{
+	//	countryData avgRes = obj.getTimeAvg(3);
+	//	avgRes.printToFile("data/test_t_1.txt", 2008, 2013, 1);
+	//}
+	//{
+	//	countryData avgRes = obj.getTimeAvg(3);
+	//	avgRes.printToFile("data/test_t_3.txt", 2008, 2013, 3);
+	//}
 
 	//obj.getTimeAvg(1, 5);
 	//  obj.insertCountryToPrint(1);
