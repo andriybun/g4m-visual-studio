@@ -14,6 +14,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <cstdlib>
 #include <string>
 #include <vector>
@@ -56,6 +57,7 @@ public:
 	set_t getListOfCountries();
 	void setListOfCountries(set_t S);
 	void printToFile(string fileName, int firstYear, int lastYear, int step, string statType = "VAL");  // print array to file
+	int readFromFile(string fileName);
 };
 
 #endif

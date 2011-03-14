@@ -1,9 +1,7 @@
 #ifndef TESTS_H_
 #define TESTS_H_
 
-#include "griddata2.h"
-#include "countryData.h"
-#include "vector2d.h"
+#include "commonClasses.h"
 
 void testGriddata2();
 void testCountryData();

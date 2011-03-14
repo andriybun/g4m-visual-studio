@@ -45,19 +45,32 @@ void testGriddata2()
 
 void testCountryData()
 {
-	countryData obj = countryData();
+	countryData obj;
+	obj.readFromFile("data/country_data.txt");
 
-	obj.set(1, 2000, 125.334);
-	obj.set(1, 2001, 24498.2);
-	obj.set(1, 2002, 24855.8);
-	obj.set(1, 2003, 25259.2);
-	obj.set(1, 2004, 25668.2);
-	//obj.set(1, 2005, 26065.4);
-	obj.set(1, 2006, 26443.7);
-	obj.set(1, 2007, 26800.5);
-	obj.set(1, 2008, 27135.4);
-	obj.set(1, 2009, 27449.2);
-	obj.set(1, 2010, 27743);
+	//obj.set(3, 2000, 125.334);
+	//obj.set(3, 2001, 24498.2);
+	//obj.set(3, 2002, 24855.8);
+	//obj.set(3, 2003, 25259.2);
+	//obj.set(3, 2004, 25668.2);
+	//obj.set(3, 2005, 26065.4);
+	//obj.set(3, 2006, 26443.7);
+	//obj.set(3, 2007, 26800.5);
+	//obj.set(3, 2008, 27135.4);
+	//obj.set(3, 2009, 27449.2);
+	//obj.set(3, 2010, 27743);
+
+	//obj.set(17, 2000, 5996.98);
+	//obj.set(17, 2001, 5997.82);
+	//obj.set(17, 2002, 5992.3);
+	//obj.set(17, 2003, 5993.03);
+	//obj.set(17, 2004, 5993.71);
+	//obj.set(17, 2005, 5994.34);
+	//obj.set(17, 2006, 5994.93);
+	//obj.set(17, 2007, 5787.18);
+	//obj.set(17, 2008, 5622.92);
+	//obj.set(17, 2009, 5306.21);
+	//obj.set(17, 2010, 5305.54);
 
 	//cout << obj.getRegionSum(10, 2009) << endl;
 	//cout << obj.getAvg(1, 2008) << endl;
@@ -66,6 +79,7 @@ void testCountryData()
 		countryData avgRes = obj.getSmoothAvg(5);
 		avgRes.printToFile("data/test.txt", 2000, 2010, 1);
 	}
+
 	//{
 	//	countryData avgRes = obj.getTimeAvg(3);
 	//	avgRes.printToFile("data/test_t_1.txt", 2008, 2013, 1);
@@ -76,10 +90,10 @@ void testCountryData()
 	//}
 
 	//obj.getTimeAvg(1, 5);
-	//  obj.insertCountryToPrint(1);
-	//  obj.insertCountryToPrint(2);
-	//  obj.insertCountryToPrint(3);
-	//  obj.PrintToFile("--del.txt",2008,2009,1, "AVG");
+	//obj.insertCountryToPrint(1);
+	//obj.insertCountryToPrint(2);
+	//obj.insertCountryToPrint(3);
+	//obj.PrintToFile("--del.txt",2008,2009,1, "AVG");
 }
 
 

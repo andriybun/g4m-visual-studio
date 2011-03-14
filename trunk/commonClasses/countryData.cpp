@@ -44,6 +44,7 @@ countryData countryData::getTimeAvg(int timePeriodWidth)
 countryData countryData::getSmoothAvg(int timePeriodWidth, int timeStep)
 {
 	countryData result;
+	result.setListOfCountries(countriesToPrint);
 
 	if (timePeriodWidth % 2 != 1) 
 	{
@@ -173,6 +174,52 @@ void countryData::printToFile(string fileName, int firstYear, int lastYear, int 
 	{
 		cout << "Unable to save to file!" << endl;
 	}
+}
+
+int countryData::readFromFile(string fileName)
+{
+	ifstream f;
+
+	f.open(fileName.c_str(),ios::in);
+	if (f.is_open())
+	{
+		string line, lineElem;
+		getline(f, line);
+		stringstream ss(line);
+		ss >> lineElem;
+
+		// Parse header
+		int year;
+		vector<int> yearVector;
+		while(ss >> year)
+		{
+			yearVector.push_back(year);
+		}
+
+		// Parse data
+		while(!f.eof())
+		{
+			getline(f, line);
+			stringstream ss(line);
+			int countryIdx;
+			int yearIdx = 0;
+			ss >> countryIdx;
+			insertCountryToPrint(countryIdx);
+			double val;
+			while(ss >> val)
+			{
+				set(countryIdx, yearVector[yearIdx], val);
+				yearIdx++;
+			}
+		}
+	}
+	else
+	{
+		cout << "Unable to read from file!" << endl;
+		return 1;
+	}
+
+	return 0;
 }
 
 // default constructor
