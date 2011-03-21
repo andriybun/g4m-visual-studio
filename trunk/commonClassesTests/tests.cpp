@@ -78,6 +78,19 @@ void testCountryData()
 	{
 		countryData avgRes = obj.getSmoothAvg(5);
 		avgRes.printToFile("data/test.txt", 2000, 2010, 1);
+
+		int countryIdx = 18;
+		cout << avgRes.get(countryIdx, 2000) << endl;
+		cout << avgRes.get(countryIdx, 2001) << endl;
+		cout << avgRes.get(countryIdx, 2002) << endl;
+		cout << avgRes.get(countryIdx, 2003) << endl;
+		cout << avgRes.get(countryIdx, 2004) << endl;
+		cout << avgRes.get(countryIdx, 2005) << endl;
+		cout << avgRes.get(countryIdx, 2006) << endl;
+		cout << avgRes.get(countryIdx, 2007) << endl;
+		cout << avgRes.get(countryIdx, 2008) << endl;
+		cout << avgRes.get(countryIdx, 2009) << endl;
+		cout << avgRes.get(countryIdx, 2010) << endl;
 	}
 
 	//{

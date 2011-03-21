@@ -5,8 +5,7 @@ extern settingsT settings;
 void readSettings()
 {
 	ifstream f;
-	//  string FileName = "C:/Gusti/CurrentWork/GFM/georgPrgs/dima/DeforAforCCurves_growth/ManagementPlus/GUI/g4m_parallel + GUI1/settings.ini";
-	string FileName = "settings_glob.ini";
+	string FileName = "data/settings_glob.ini";
 	f.open(FileName.c_str(), ios::in);
 	if (!f.is_open())
 	{

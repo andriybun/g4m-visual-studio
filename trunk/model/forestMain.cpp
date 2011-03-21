@@ -23,7 +23,7 @@ map<string, g4m::ipol<double,double> > cprice; // datamap for carbon price
 // containers of data
 //******************************************************************************
 bool GUIcontainers = true;
-simUnitsMap sMap = simUnitsMap("simu.bin");
+simUnitsMap sMap = simUnitsMap("data/simu.bin");
 simUnitsData ASU;
 set<int> regions;
 set<int> years;             // select years for results output
