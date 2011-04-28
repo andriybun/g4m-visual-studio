@@ -204,7 +204,7 @@ int readInputDet(dataDetStruct &data_all)
 //  FileName = dataInputDir2+"landPrice_base_201210.txt";  
 //  FileName = dataInputDir2+"landPrice_ref_201210.txt";  
 ///    FileName = dataInputDir2+"landRent_bas_ydfr_y05.txt"; 
-  FileName = dataInputDir2+"landPrice_weo_base_280211.txt"; 
+  FileName = dataInputDir2+"landPrice_weo_bas_280211.txt"; 
     
   fplp.open(FileName.c_str(), ios::in);
   if (!fplp.is_open()) {
