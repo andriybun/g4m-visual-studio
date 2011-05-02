@@ -5,45 +5,48 @@
 #include <vector>
 #include <cmath>
 
+template <class realT>
 class countryData;
+
+//template class countryData<float>;
+//template class countryData<double>;
 
 namespace g4m
 {
-
 	//////////////////////////////////////////////////////////
 	// Interpolation
 	//////////////////////////////////////////////////////////
-	template <class IDX, class VAL>
-	class ipol		//Interpolate: IDX .. Index, VAL .. Value
+	template <class idxT, class realT>
+	class ipol		//Interpolate: idxT .. Index, realT .. Value
 	{
 	public:
-		friend class ::countryData;
-		void insert(IDX, VAL);
-		void inc(IDX, VAL);
-		VAL v(const IDX i = 0);   //returns the value
-		ipol(const ipol<IDX, VAL> & g);
+		template <class realT> friend class ::countryData;
+		void insert(idxT, realT);
+		void inc(idxT, realT);
+		realT v(const idxT i = 0);   //returns the value
+		ipol(const ipol<idxT, realT> & g);
 		ipol();
 		void clear();
-		VAL operator[](const IDX);
-		void operator*=(const double x);
+		realT operator[](const idxT);
+		void operator*=(const realT x);
 	private:
-		std::map<IDX, VAL> aMap;
-		VAL ip(const IDX i, const IDX i0, const IDX i1, const VAL v0, const VAL v1);
+		std::map<idxT, realT> aMap;
+		realT ip(const idxT i, const idxT i0, const idxT i1, const realT v0, const realT v1);
 	};
 
 	//////////////////////////////////////////////////////////
 	// Multidimensional interpolation
 	//////////////////////////////////////////////////////////
-	template <class IDX, class VAL>
-    class ipol<std::vector<IDX>, VAL>
+	template <class idxT, class realT>
+    class ipol<std::vector<idxT>, realT>
 	{
 	public:
-		void insert(std::vector<IDX>, VAL);
-		VAL v(const std::vector<IDX>);   //returns the value
+		void insert(std::vector<idxT>, realT);
+		realT v(const std::vector<idxT>);   //returns the value
 		void clear();
-		VAL operator[](const std::vector<IDX> i);
+		realT operator[](const std::vector<idxT> i);
 	private:
-		std::map<std::vector<IDX>, VAL> aMap; //Data Map
+		std::map<std::vector<idxT>, realT> aMap; //Data Map
 	};
 
 
@@ -51,21 +54,21 @@ namespace g4m
 	// Fast Interploation where the steps of the index are 1 and starting at 0
 	// and the size of the data array is known in advance
 	// and complete filled with values
-	// Interpolate: IDX .. Index, VAL .. Value
+	// Interpolate: idxT .. Index, realT .. Value
 	//////////////////////////////////////////////////////////
-	template <class VAL>
+	template <class realT>
     class fipol
 	{
 	public:
-		bool insert(unsigned int, VAL);
-		bool insert(unsigned int*, VAL);
-		bool insert(std::vector<unsigned int>, VAL);
-		VAL g(const double);   //returns the value
-		VAL g(double*);
-		VAL g(std::vector<double>);
-		void fill(VAL);
-		VAL operator[](const double);
-		void operator*=(const double x);
+		bool insert(unsigned int, realT);
+		bool insert(unsigned int*, realT);
+		bool insert(std::vector<unsigned int>, realT);
+		realT g(const realT);   //returns the value
+		realT g(realT*);
+		realT g(std::vector<realT>);
+		void fill(realT);
+		//realT operator[](const realT);
+		//void operator*=(const realT x);
 		fipol();
 		fipol(unsigned int);
 		fipol(std::vector<unsigned int>);
@@ -76,10 +79,10 @@ namespace g4m
 		void clear(std::vector<unsigned int>);
 		unsigned int gs();
 	private:
-		VAL* aMap;
+		realT* aMap;
 		unsigned int* n;
 		unsigned int dim;
-		VAL ip(const double i, const double i0, const double i1, const double v0, const double v1);
+		realT ip(const realT i, const realT i0, const realT i1, const realT v0, const realT v1);
 	};
 }
 

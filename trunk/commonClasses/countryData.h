@@ -29,30 +29,31 @@ const int countriesNum = 245;
 
 using namespace std;
 
+template <class realT>
 class countryData
 {
 private:
 	typedef set<int> set_t;
-	vector< g4m::ipol<int, double> > values;
+	vector< g4m::ipol<int, realT> > values;
 	vector< g4m::ipol<int, int> > count;
 	vector< unsigned char > regions;
 	set_t countriesToPrint;
 	bool printAllCountries;
 	void setRegions();
-	double computeAvg(double *values, int *count, int timeIdx, int timePeriodWidth, int numYears);
+	realT computeAvg(realT *values, int *count, int timeIdx, int timePeriodWidth, int numYears);
 public:
 	countryData();
 	countryData(const countryData & g);
 	countryData & operator = (const countryData & g);
 	~countryData();
 	void reset(void);
-	void set(int, int, double);
-	void inc(int, int, double);
-	double get(int countryIdx, int year);
-	double getAvg(int countryIdx, int year);
+	void set(int, int, realT);
+	void inc(int, int, realT);
+	realT get(int countryIdx, int year);
+	realT getAvg(int countryIdx, int year);
 	countryData getTimeAvg(int timePeriodWidth);
 	countryData getSmoothAvg(int timePeriodWidth, int timeStep = 1);
-	double getRegionSum(unsigned char regIdx, int year);
+	realT getRegionSum(unsigned char regIdx, int year);
 	void insertCountryToPrint(int countryIdx);
 	set_t getListOfCountries();
 	void setListOfCountries(set_t S);

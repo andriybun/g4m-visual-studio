@@ -13,7 +13,7 @@
 
 using namespace std;
 
-template <class TP>
+template <class T>
 class griddata2
 {
 private:
@@ -21,10 +21,10 @@ private:
 	int VerResolution;
 	int HorNeigh;
 	int VerNeigh;
-	TP *GridRows;
-	TP *grid, *gridPrev;  
+	T *GridRows;
+	T *grid, *gridPrev;  
 public:
-	griddata2(int HR, int VR, TP val);
+	griddata2(int HR, int VR, T val);
 	griddata2();
 	griddata2(const griddata2& g);
 	griddata2 & operator = (const griddata2& g);
@@ -34,15 +34,15 @@ public:
 	void PrintToFilePrev(string fileName, string rastrType = "ESRI");  // print previous year array to file
 	void ShowArrayPrev();                   // prints array for the previous year
 	void update();                          // updates values for previous year to current values
-	void set(int x, int y, TP val);     // assigns value val to cell [x][y]
-	void setPrev(int x, int y, TP val); // assigns previous year value val to cell [x][y]
-	void inc(int x, int y, TP val);     // adds value val to the existing value in cell [x][y]
-	TP get(int x, int y);               // returns value stored in cell [x][y]
-	TP getPrev(int x, int y);           // returns value for the previous year stored in cell [x][y]
+	void set(int x, int y, T val);     // assigns value val to cell [x][y]
+	void setPrev(int x, int y, T val); // assigns previous year value val to cell [x][y]
+	void inc(int x, int y, T val);     // adds value val to the existing value in cell [x][y]
+	T get(int x, int y);               // returns value stored in cell [x][y]
+	T getPrev(int x, int y);           // returns value for the previous year stored in cell [x][y]
 	void SetNeighNum(int n, int m);     // sets number of neighbour cells to be considered
-	TP GetMax(int x, int y);            // returns maximum value of all neighbours for the previous year
-	TP GetMin(int x, int y);            // returns minimum value of all neighbours for the previous year
-	TP GetAvg(int x, int y);            // returns average value for the previous year
+	T GetMax(int x, int y);            // returns maximum value of all neighbours for the previous year
+	T GetMin(int x, int y);            // returns minimum value of all neighbours for the previous year
+	T GetAvg(int x, int y);            // returns average value for the previous year
 };
 
 // using class constructor:

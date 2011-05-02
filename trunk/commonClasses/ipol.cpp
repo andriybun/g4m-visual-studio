@@ -7,58 +7,58 @@ namespace g4m
 	//////////////////////////////////////////////////////////
 
 	// Class default constructor
-	template <class IDX, class VAL>
-	ipol<IDX, VAL>::ipol() { }
+	template <class idxT, class realT>
+	ipol<idxT, realT>::ipol() { }
 
 	// Class copy constructor
-	template <class IDX, class VAL>
-	ipol<IDX, VAL>::ipol(const ipol<IDX, VAL> & g)
+	template <class idxT, class realT>
+	ipol<idxT, realT>::ipol(const ipol<idxT, realT> & g)
 	{
 		aMap = g.aMap;
 	}
 
-	template <class IDX, class VAL>
-	void ipol<IDX, VAL>::clear()
+	template <class idxT, class realT>
+	void ipol<idxT, realT>::clear()
 	{
 		aMap.clear();
 	}
 
-	template <class IDX, class VAL>
-	void ipol<IDX, VAL>::insert(IDX i, VAL v)
+	template <class idxT, class realT>
+	void ipol<idxT, realT>::insert(idxT i, realT v)
 	{
 		aMap.erase(i);
 		aMap.insert(std::make_pair(i, v));
 	}
 	  
-	template <class IDX, class VAL>
-	void ipol<IDX, VAL>::inc(IDX i, VAL v)
+	template <class idxT, class realT>
+	void ipol<idxT, realT>::inc(idxT i, realT v)
 	{
 		v += aMap[i];
 		aMap.erase(i);
 		aMap.insert(std::make_pair(i, v));
 	}
 
-	template <class IDX, class VAL>
-	VAL ipol<IDX, VAL>::ip(const IDX i, const IDX i0, const IDX i1, const VAL v0, const VAL v1)
+	template <class idxT, class realT>
+	realT ipol<idxT, realT>::ip(const idxT i, const idxT i0, const idxT i1, const realT v0, const realT v1)
 	{
 		//interpolate/extrapolate the value for index i
-		VAL y;
+		realT y;
 		if(i0 == i1)
 		{
-			y = (v0 + v1)/2.;
+			y = (v0 + v1) / 2.;
 		}
 		else
 		{
-			y = v0 + (i-i0)/(i1-i0) * (v1-v0);
+			y = v0 + (i-i0) / (i1-i0) * (v1-v0);
 		}
 		return(y);
 	}
 
-	template <class IDX, class VAL>
-	VAL ipol<IDX, VAL>::v(const IDX i)
+	template <class idxT, class realT>
+	realT ipol<idxT, realT>::v(const idxT i)
 	{
-		typename std::map<IDX,VAL>::iterator lo, up;
-		VAL y = 0;
+		typename std::map<idxT,realT>::iterator lo, up;
+		realT y = 0;
 		if (aMap.size() > 0)
 		{
 			up = aMap.lower_bound(i);
@@ -81,10 +81,10 @@ namespace g4m
 		return(y);
 	}
 
-	template <class IDX, class VAL>
-	void ipol<IDX, VAL>::operator*=(const double x)
+	template <class idxT, class realT>
+	void ipol<idxT, realT>::operator*=(const realT x)
 	{
-		typename std::map<IDX,VAL>::iterator iter;
+		typename std::map<idxT,realT>::iterator iter;
 		iter = aMap.begin();
 		while(iter != aMap.end())
 		{
@@ -93,8 +93,8 @@ namespace g4m
 		}
 	}
 
-	template <class IDX, class VAL>
-	VAL ipol<IDX, VAL>::operator[](const IDX i)
+	template <class idxT, class realT>
+	realT ipol<idxT, realT>::operator[](const idxT i)
 	{
 		return(v(i));
 	}
@@ -103,41 +103,41 @@ namespace g4m
 	// Multidimensional interpolation
 	//////////////////////////////////////////////////////////
 
-	template <class IDX, class VAL>
-	void ipol<std::vector<IDX>, VAL>::clear()
+	template <class idxT, class realT>
+	void ipol<std::vector<idxT>, realT>::clear()
 	{
 		aMap.clear();
 	}
 
-	template <class IDX, class VAL>
-	void ipol<std::vector<IDX>, VAL>::insert(std::vector<IDX> i, VAL v)
+	template <class idxT, class realT>
+	void ipol<std::vector<idxT>, realT>::insert(std::vector<idxT> i, realT v)
 	{
 		aMap.insert(make_pair(i, v));
 	}
 
-	template <class IDX, class VAL>
-    VAL ipol<std::vector<IDX>, VAL>::v(const std::vector<IDX> i)
+	template <class idxT, class realT>
+    realT ipol<std::vector<idxT>, realT>::v(const std::vector<idxT> i)
 	{
-		typename std::map<std::vector<IDX>, VAL>::iterator iter;
+		typename std::map<std::vector<idxT>, realT>::iterator iter;
 		unsigned int regions = 1;
 		for(unsigned int j=0; j<i.size(); ++j)
 		{
 			regions *= 2;
 		}
-		std::vector<VAL>* y = new std::vector<VAL>[regions];
-		double* dist = new double[regions]; //shortest distance in region
+		std::vector<realT>* y = new std::vector<realT>[regions];
+		realT* dist = new realT[regions]; //shortest distance in region
 		for(unsigned int j=0; j < regions; ++j)
 		{
 			dist[j] = -1.;
 		}
 		for(iter = aMap.begin(); iter != aMap.end(); ++iter)
 		{
-			double d=0.;
+			realT d=0.;
 			int pos=0;
 			int mul=1;
 			for(unsigned int j=0; j < iter->first.size() && j < i.size(); ++j) 
 			{
-				double tmp = iter->first[j] - i[j];
+				realT tmp = iter->first[j] - i[j];
 				if(tmp > 0.) {pos += mul;}
 				//d += tmp * tmp; //Geometric interpolation
 				d += std::fabs(tmp);  //Manhaten distance
@@ -160,8 +160,8 @@ namespace g4m
 				dist[j] = dist[j]; //Manhaten distance
 			}
 		}
-		double ip = 0.;
-		double distsum = 0.;
+		realT ip = 0.;
+		realT distsum = 0.;
 		int n = 0;
 		for(unsigned int j=0; j < regions; ++j)
 		{
@@ -195,14 +195,14 @@ namespace g4m
 		{
 			ip = 0.;
 		}
-		VAL ret = ip;
+		realT ret = ip;
 		delete[] y;
 		delete[] dist;
 		return(ret);
 	}
 
-	template <class IDX, class VAL>
-    VAL ipol<std::vector<IDX>, VAL>::operator[](const std::vector<IDX> i)
+	template <class idxT, class realT>
+    realT ipol<std::vector<idxT>, realT>::operator[](const std::vector<idxT> i)
 	{
 		return(v(i));
 	}
@@ -212,30 +212,30 @@ namespace g4m
 	// Fast interpolation
 	//////////////////////////////////////////////////////////
 
-	template <class VAL>
-    unsigned int fipol<VAL>::gs()
+	template <class realT>
+    unsigned int fipol<realT>::gs()
 	{
 		return(n[0]);
 	}
 
-	template <class VAL>
-    fipol<VAL>::fipol() : dim(1)
+	template <class realT>
+    fipol<realT>::fipol() : dim(1)
 	{
 		n = new unsigned int[1];
 		n[0] = 1;
-		aMap = new VAL[n[0]];
+		aMap = new realT[n[0]];
 	}
 
-	template <class VAL>
-    fipol<VAL>::fipol(unsigned int an) : dim(1)
+	template <class realT>
+    fipol<realT>::fipol(unsigned int an) : dim(1)
 	{
 		n = new unsigned int[dim];
 		n[0] = an;
-		aMap = new VAL[n[0]];
+		aMap = new realT[n[0]];
 	}
 
-	template <class VAL>
-    fipol<VAL>::fipol(const unsigned int* an, const unsigned int adim)
+	template <class realT>
+    fipol<realT>::fipol(const unsigned int* an, const unsigned int adim)
 	{
 		dim = adim;
 		n = new unsigned int[dim];
@@ -245,11 +245,11 @@ namespace g4m
 			n[i] = an[i];
 			slots *= n[i];
 		}
-		aMap = new VAL[slots];
+		aMap = new realT[slots];
 	}
 
-	template <class VAL>
-    fipol<VAL>::fipol(std::vector<unsigned int> an) : dim(an.size())
+	template <class realT>
+    fipol<realT>::fipol(std::vector<unsigned int> an) : dim(an.size())
 	{
 		n = new unsigned int[dim];
 		unsigned int slots = n[0] = an[0];
@@ -258,29 +258,29 @@ namespace g4m
 			n[i] = an[i];
 			slots *= n[i];
 		}
-		aMap = new VAL[slots];
+		aMap = new realT[slots];
 	}
 
-	template <class VAL>
-    fipol<VAL>::~fipol()
+	template <class realT>
+    fipol<realT>::~fipol()
 	{
 		delete[] n;
 		delete[] aMap;
 	}
 
-	template <class VAL>
-    void fipol<VAL>::clear(unsigned int an)
+	template <class realT>
+    void fipol<realT>::clear(unsigned int an)
 	{
 		dim = 1;
 		delete[] n;
 		delete[] aMap;
 		n = new unsigned int[dim];
 		n[0] = an;
-		aMap = new VAL[n[0]];
+		aMap = new realT[n[0]];
 	}
 
-	template <class VAL>
-    void fipol<VAL>::clear(unsigned int* an, unsigned int adim)
+	template <class realT>
+    void fipol<realT>::clear(unsigned int* an, unsigned int adim)
 	{
 		dim = adim;
 		delete[] n;
@@ -292,11 +292,11 @@ namespace g4m
 			n[i] = an[i];
 			slots *= n[i];
 		}
-		aMap = new VAL[slots];
+		aMap = new realT[slots];
 	}
 
-	template <class VAL>
-	void fipol<VAL>::clear(std::vector<unsigned int> an)
+	template <class realT>
+	void fipol<realT>::clear(std::vector<unsigned int> an)
 	{
 		dim = an.size();
 		delete[] n;
@@ -308,11 +308,11 @@ namespace g4m
 			n[i] = an[i];
 			slots *= n[i];
 		}
-		aMap = new VAL[slots];
+		aMap = new realT[slots];
 	}
 
-	template <class VAL>
-	void fipol<VAL>::fill(VAL x)
+	template <class realT>
+	void fipol<realT>::fill(realT x)
 	{
 		unsigned int slots = n[0];
 		for(unsigned int i=1; i<dim; ++i)
@@ -325,8 +325,8 @@ namespace g4m
 		}
 	}
 
-	template <class VAL>
-	bool fipol<VAL>::insert(unsigned int i, VAL v)
+	template <class realT>
+	bool fipol<realT>::insert(unsigned int i, realT v)
 	{
 		bool ret = false;
 		if(i < n[0])
@@ -337,8 +337,8 @@ namespace g4m
 		return(ret);
 	}
 
-	template <class VAL>
-	bool fipol<VAL>::insert(unsigned int* i, VAL v)
+	template <class realT>
+	bool fipol<realT>::insert(unsigned int* i, realT v)
 	{
 		bool ret = true;
 		unsigned int idx = i[0];
@@ -359,8 +359,8 @@ namespace g4m
 		return(ret);
 	}
 
-	template <class VAL>
-    bool fipol<VAL>::insert(std::vector<unsigned int> i, VAL v)
+	template <class realT>
+    bool fipol<realT>::insert(std::vector<unsigned int> i, realT v)
 	{
 		bool ret = true;
 		unsigned int idx = i[0];
@@ -381,26 +381,26 @@ namespace g4m
 		return(ret);
 	}
   
-	template <class VAL>
-	VAL fipol<VAL>::ip(const double i, const double i0, const double i1, const double v0, const double v1)
+	template <class realT>
+	realT fipol<realT>::ip(const realT i, const realT i0, const realT i1, const realT v0, const realT v1)
 	{
 		//interpolate/extrapolate the value for index i
-		VAL y;
+		realT y;
 		if(i0 == i1)
 		{
-			y = (v0 + v1)/2.;
+			y = (v0 + v1) / 2.;
 		}
 		else
 		{
-		  y = v0 + (i-i0)/(i1-i0) * (v1-v0);
+		  y = v0 + (i-i0) / (i1-i0) * (v1-v0);
 		}
 		return(y);
 	}
 
-	template <class VAL>
-    VAL fipol<VAL>::g(const double i)
+	template <class realT>
+    realT fipol<realT>::g(const realT i)
 	{
-		VAL y;
+		realT y;
 		if(i >= n[0])
 		{
 			y = aMap[n[0]-1];
@@ -411,15 +411,15 @@ namespace g4m
 		}
 		else
 		{
-			unsigned int i0 = std::floor(i);
-			unsigned int i1 = std::ceil(i);
+			unsigned int i0 = (unsigned int)std::floor(i);
+			unsigned int i1 = (unsigned int)std::ceil(i);
 			y = ip(i, i0, i1, aMap[i0], aMap[i1]);
 		}
 		return(y);
 	}
 
-	template <class VAL>
-    VAL fipol<VAL>::g(double* i)
+	template <class realT>
+    realT fipol<realT>::g(realT* i)
 	{
 		//Test if index is in the possible range
 		for(unsigned j = 1; j < dim; ++j)
@@ -433,15 +433,15 @@ namespace g4m
 				i[j] = 0;
 			}
 		}
-		unsigned int sur = std::ceil(std::pow((double) 2,(double)dim));
+		unsigned int sur = (unsigned int)2 << (dim - 1);
 		unsigned int* idx = new unsigned int[sur];
-		double* dist = new double[sur];
+		realT* dist = new realT[sur];
 		for(unsigned j = 0; j < sur; ++j)
 		{
 			idx[j] = -1; dist[j] = -1;
 		}
-		idx[0] = std::floor(i[0]);
-		idx[1] = std::ceil(i[0]);
+		idx[0] = (unsigned int)std::floor(i[0]);
+		idx[1] = (unsigned int)std::ceil(i[0]);
 		//dist[0] = std::pow(i[0] - std::floor(i[0]), 2); //Geometric
 		//dist[1] = std::pow(i[0] - std::ceil(i[0]), 2);  //Geometric
 		dist[0] = std::fabs(i[0] - std::floor(i[0])); //Manhaten distance
@@ -449,13 +449,13 @@ namespace g4m
 		unsigned int mul = n[0];
 		for(unsigned j = 1; j < dim; ++j)
 		{
-			unsigned int t = std::ceil(std::pow((double)2,(double)j));
-			unsigned int uc = std::ceil(i[j]) * mul;
-			unsigned int uf = std::floor(i[j]) * mul;
-			//double dc = std::pow(i[j] - std::ceil(i[j]), 2);  //Geometric
-			//double df = std::pow(i[j] - std::floor(i[j]), 2); //Geometric
-			double dc = std::fabs(i[j] - std::ceil(i[j]));  //Manhaten distance
-			double df = 1. - dc;                            //Manhaten distance
+			unsigned int t = (unsigned int)2 << (j - 1);
+			unsigned int uc = (unsigned int)std::ceil(i[j]) * mul;
+			unsigned int uf = (unsigned int)std::floor(i[j]) * mul;
+			//realT dc = std::pow(i[j] - std::ceil(i[j]), 2);  //Geometric
+			//realT df = std::pow(i[j] - std::floor(i[j]), 2); //Geometric
+			realT dc = std::fabs(i[j] - std::ceil(i[j]));  //Manhaten distance
+			realT df = 1. - dc;                            //Manhaten distance
 			for(unsigned int k=0; k<t; ++k)
 			{
 				idx[k+t] = idx[k] + uc;
@@ -468,8 +468,8 @@ namespace g4m
 		//for(unsigned j = 0; j < sur; ++j) { //Geometric
 		//  if(dist[j] > 0.) {dist[j] = std::sqrt(dist[j]);}
 		//}
-		double sdist = 0.;
-		double sval = 0.;
+		realT sdist = 0.;
+		realT sval = 0.;
 		for(unsigned j=0; j<sur; ++j)
 		{
 			if(idx[j] >= 0)
@@ -487,7 +487,7 @@ namespace g4m
 				}
 			}
 		}
-		VAL ret = 0.;
+		realT ret = 0.;
 		if(sdist > 0.)
 		{
 			ret = sval / sdist;
@@ -497,8 +497,8 @@ namespace g4m
 		return(ret);
 	}
 
-	template <class VAL>
-    VAL fipol<VAL>::g(std::vector<double> i)
+	template <class realT>
+    realT fipol<realT>::g(std::vector<realT> i)
 	{
 		//Test if index is in the possible range
 		for(unsigned j = 1; j < dim && j < i.size(); ++j)
@@ -512,15 +512,15 @@ namespace g4m
 				i[j] = 0;
 			}
 		}
-		unsigned int sur = std::ceil(std::pow((double)2,(double)dim));
+		unsigned int sur = (unsigned int)2 << (dim - 1);
 		unsigned int* idx = new unsigned int[sur];
-		double* dist = new double[sur];
+		realT* dist = new realT[sur];
 		for(unsigned j = 0; j < sur; ++j)
 		{
 			idx[j] = -1; dist[j] = -1;
 		}
-		idx[0] = std::floor(i[0]);
-		idx[1] = std::ceil(i[0]);
+		idx[0] = (unsigned int)std::floor(i[0]);
+		idx[1] = (unsigned int)std::ceil(i[0]);
 		//dist[0] = std::pow(i[0] - std::floor(i[0]), 2); //Geometric
 		//dist[1] = std::pow(i[0] - std::ceil(i[0]), 2);  //Geometric
 		dist[0] = std::fabs(i[0] - std::floor(i[0])); //Manhaten distance
@@ -528,13 +528,13 @@ namespace g4m
 		unsigned int mul = n[0];
 		for(unsigned j = 1; j < dim && j < i.size(); ++j)
 		{
-			unsigned int t = std::ceil(std::pow((double) 2,(double)j));
-			unsigned int uc = std::ceil(i[j]) * mul;
-			unsigned int uf = std::floor(i[j]) * mul;
-			//double dc = std::pow(i[j] - std::ceil(i[j]), 2);  //Geometric
-			//double df = std::pow(i[j] - std::floor(i[j]), 2); //Geometric
-			double dc = std::fabs(i[j] - std::ceil(i[j]));  //Manhaten distance
-			double df = 1. - dc;                            //Manhaten distance
+			unsigned int t = (unsigned int)2 << (j - 1);
+			unsigned int uc = (unsigned int)std::ceil(i[j]) * mul;
+			unsigned int uf = (unsigned int)std::floor(i[j]) * mul;
+			//realT dc = std::pow(i[j] - std::ceil(i[j]), 2);  //Geometric
+			//realT df = std::pow(i[j] - std::floor(i[j]), 2); //Geometric
+			realT dc = std::fabs(i[j] - std::ceil(i[j]));  //Manhaten distance
+			realT df = (realT)1 - dc;                            //Manhaten distance
 			for(unsigned int k=0; k<t; ++k)
 			{
 				idx[k+t] = idx[k] + uc;
@@ -547,8 +547,8 @@ namespace g4m
 		//for(unsigned j = 0; j < sur; ++j) { //Geometric
 		//  if(dist[j] > 0.) {dist[j] = std::sqrt(dist[j]);}
 		//}
-		double sdist = 0.;
-		double sval = 0.;
+		realT sdist = 0.;
+		realT sval = 0.;
 		for(unsigned j=0; j<sur; ++j)
 		{
 			if(idx[j] >= 0)
@@ -556,7 +556,7 @@ namespace g4m
 				if(dist[j] > 0.)
 				{
 					sval += aMap[idx[j]] / dist[j];
-					sdist += 1./dist[j];
+					sdist += 1. / dist[j];
 				}
 				else
 				{
@@ -566,7 +566,7 @@ namespace g4m
 				}
 			}
 		}
-		VAL ret = 0.;
+		realT ret = 0.;
 		if(sdist > 0.)
 		{
 			ret = sval / sdist;
@@ -576,10 +576,10 @@ namespace g4m
 		return(ret);
   }
 
-	//template <class IDX, class VAL>
-	//void ipol<IDX, VAL>::operator*=(const double x)
+	//template <class idxT, class realT>
+	//void ipol<idxT, realT>::operator*=(const realT x)
 	//{
-	//	typename std::map<IDX,VAL>::iterator iter;
+	//	typename std::map<idxT,realT>::iterator iter;
 	//	iter = aMap.begin();
 	//	while(iter != aMap.end() )
 	//	{
@@ -588,8 +588,8 @@ namespace g4m
 	//	}
 	//}
 
-	//template <class IDX, class VAL>
-	//VAL ipol<IDX, VAL>::operator[](const IDX i)
+	//template <class idxT, class realT>
+	//realT ipol<idxT, realT>::operator[](const idxT i)
 	//{
 	//	return(g(i));
 	//}
@@ -597,10 +597,13 @@ namespace g4m
 	// Important: add explicit declarations here for the types needed
 	template class ipol<double, double>;
 	template class ipol<double, int>;
-	template class ipol<int, int>;
 	template class ipol<int, double>;
+	template class ipol<float, float>;
+	template class ipol<float, int>;
+	template class ipol<int, float>;
+	template class ipol<int, int>;
 
 	template class fipol<float>;
 	template class fipol<double>;
-	template class fipol<int>;
+	//template class fipol<int>;
 }
