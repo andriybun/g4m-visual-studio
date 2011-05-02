@@ -1,9 +1,9 @@
 #include "griddata2.h"
 
-template <class TP>
-void griddata2<TP>::ShowArray()
+template <class T>
+void griddata2<T>::ShowArray()
 {
-	TP val;
+	T val;
 	int isChar = 0;
 	char t1;
 	unsigned char t2;
@@ -23,10 +23,10 @@ void griddata2<TP>::ShowArray()
 	}   
 }
 
-template <class TP>
-void griddata2<TP>::ShowArrayPrev()
+template <class T>
+void griddata2<T>::ShowArrayPrev()
 {
-	TP val;
+	T val;
 	int isChar = 0;
 	char t1;
 	unsigned char t2;
@@ -46,10 +46,10 @@ void griddata2<TP>::ShowArrayPrev()
 	}   
 }
 
-template <class TP>
-void griddata2<TP>::PrintToFile(string fileName, string rastrType)
+template <class T>
+void griddata2<T>::PrintToFile(string fileName, string rastrType)
 {
-	TP val;
+	T val;
 	int isChar = 0;
 	char t1;
 	unsigned char t2;
@@ -104,10 +104,10 @@ void griddata2<TP>::PrintToFile(string fileName, string rastrType)
 	}
 }
 
-template <class TP>
-void griddata2<TP>::PrintToFilePrev(string fileName, string rastrType)
+template <class T>
+void griddata2<T>::PrintToFilePrev(string fileName, string rastrType)
 {
-	TP val;
+	T val;
 	int isChar = 0;
 	char t1;
 	unsigned char t2;
@@ -164,57 +164,57 @@ void griddata2<TP>::PrintToFilePrev(string fileName, string rastrType)
 	}
 } 
 
-template <class TP>
-void griddata2<TP>::set(int x, int y, TP val)
+template <class T>
+void griddata2<T>::set(int x, int y, T val)
 {
 	grid[y*HorResolution+x] = val;
 }
 
-template <class TP>
-void griddata2<TP>::setPrev(int x, int y, TP val)
+template <class T>
+void griddata2<T>::setPrev(int x, int y, T val)
 {
 	gridPrev[y*HorResolution+x] = val;
 }
 
-template <class TP>
-void griddata2<TP>::inc(int x, int y, TP val)
+template <class T>
+void griddata2<T>::inc(int x, int y, T val)
 {
 	grid[y*HorResolution+x] += val;
 }
 
-template <class TP>
-TP griddata2<TP>::get(int x, int y)
+template <class T>
+T griddata2<T>::get(int x, int y)
 {
 	return (grid[y*HorResolution+x]);
 }
 
-template <class TP>
-TP griddata2<TP>::getPrev(int x, int y)
+template <class T>
+T griddata2<T>::getPrev(int x, int y)
 {
 	return (gridPrev[y*HorResolution+x]);
 }
 
-template <class TP>
-void griddata2<TP>::update()
+template <class T>
+void griddata2<T>::update()
 {
-	memcpy(gridPrev,grid,VerResolution*HorResolution*sizeof(TP));
+	memcpy(gridPrev,grid,VerResolution*HorResolution*sizeof(T));
 }
 
-template <class TP>
-void griddata2<TP>::SetNeighNum(int n, int m)
+template <class T>
+void griddata2<T>::SetNeighNum(int n, int m)
 {
 	HorNeigh = n;
 	VerNeigh = m;
 }
 
-template <class TP>
-TP griddata2<TP>::GetMax(int x, int y)
+template <class T>
+T griddata2<T>::GetMax(int x, int y)
 {
 	int tmpx = x - HorNeigh;
 	if (tmpx < 0) tmpx = HorResolution + tmpx;
 	int tmpy = y - VerNeigh;
 	if (tmpy < 0) tmpy = 0;
-	TP maxv = gridPrev[tmpy*HorResolution+tmpx];
+	T maxv = gridPrev[tmpy*HorResolution+tmpx];
 	for (int j = tmpy; j <= y + VerNeigh; j++)
 	{
 		if (j >= VerResolution) break;
@@ -230,14 +230,14 @@ TP griddata2<TP>::GetMax(int x, int y)
 	return(maxv);
 }
 
-template <class TP>
-TP griddata2<TP>::GetMin(int x, int y)
+template <class T>
+T griddata2<T>::GetMin(int x, int y)
 {
 	int tmpx = x - HorNeigh;
 	if (tmpx < 0) tmpx = HorResolution + tmpx;
 	int tmpy = y - VerNeigh;
 	if (tmpy < 0) tmpy = 0;
-	TP minv = gridPrev[tmpy*HorResolution+tmpx];
+	T minv = gridPrev[tmpy*HorResolution+tmpx];
 	for (int j = tmpy; j <= y + VerNeigh; j++)
 	{
 		if (j >= VerResolution) break;
@@ -253,15 +253,15 @@ TP griddata2<TP>::GetMin(int x, int y)
 	return(minv);
 }
 
-template <class TP>
-TP griddata2<TP>::GetAvg(int x, int y)
+template <class T>
+T griddata2<T>::GetAvg(int x, int y)
 {
 	int count = 0;
 	int tmpx = x - HorNeigh;
 	if (tmpx < 0) tmpx = HorResolution + tmpx;
 	int tmpy = y - VerNeigh;
 	if (tmpy < 0) tmpy = 0;
-	TP sumv = 0;
+	T sumv = 0;
 	for (int j = tmpy; j <= y + VerNeigh; j++)
 	{
 		if (j >= VerResolution) break;
@@ -278,15 +278,15 @@ TP griddata2<TP>::GetAvg(int x, int y)
 }
 
 // Class constructor
-template <class TP>
-griddata2<TP>::griddata2(int HR, int VR, TP val)
+template <class T>
+griddata2<T>::griddata2(int HR, int VR, T val)
 {
 	HorResolution = HR;
 	VerResolution = VR;
 	HorNeigh = 1;
 	VerNeigh = 1;
-	grid = new TP[HorResolution*VerResolution];
-	gridPrev = new TP[HorResolution*VerResolution];
+	grid = new T[HorResolution*VerResolution];
+	gridPrev = new T[HorResolution*VerResolution];
 	for (int j = 0; j < VerResolution; j++)
 	{
 		for (int i = 0; i < HorResolution; i++)
@@ -298,16 +298,16 @@ griddata2<TP>::griddata2(int HR, int VR, TP val)
 }
 
 // Default constructor
-template <class TP>
-griddata2<TP>::griddata2()
+template <class T>
+griddata2<T>::griddata2()
 {
 	HorResolution = 720;
 	VerResolution = 360;
 	HorNeigh = 1;
 	VerNeigh = 1;
-	TP val = 0;
-	grid = new TP[HorResolution*VerResolution];
-	gridPrev = new TP[HorResolution*VerResolution];
+	T val = 0;
+	grid = new T[HorResolution*VerResolution];
+	gridPrev = new T[HorResolution*VerResolution];
 	for (int j = 0; j < VerResolution; j++)
 	{
 
@@ -320,23 +320,23 @@ griddata2<TP>::griddata2()
 }
 
 // Copy constructor
-template <class TP>
-griddata2<TP>::griddata2(const griddata2 & g)
+template <class T>
+griddata2<T>::griddata2(const griddata2 & g)
 {
 	cout << "COPY ::>\n";
 	HorResolution = g.HorResolution;
 	VerResolution = g.VerResolution;
 	HorNeigh = g.HorNeigh;
 	VerNeigh = g.VerNeigh;
-	grid = new TP[HorResolution*VerResolution];
-	gridPrev = new TP[HorResolution*VerResolution];
-	memcpy(grid,g.grid,HorResolution*VerResolution*sizeof(TP));
-	memcpy(gridPrev,g.gridPrev,HorResolution*VerResolution*sizeof(TP));
+	grid = new T[HorResolution*VerResolution];
+	gridPrev = new T[HorResolution*VerResolution];
+	memcpy(grid,g.grid,HorResolution*VerResolution*sizeof(T));
+	memcpy(gridPrev,g.gridPrev,HorResolution*VerResolution*sizeof(T));
 }
 
 // Assignment operator overloading
-template <class TP>
-griddata2<TP> & griddata2<TP>::operator = (const griddata2 & g)
+template <class T>
+griddata2<T> & griddata2<T>::operator = (const griddata2 & g)
 {
 	if (this != &g)
 	{
@@ -344,17 +344,17 @@ griddata2<TP> & griddata2<TP>::operator = (const griddata2 & g)
 		VerResolution = g.VerResolution;
 		HorNeigh = g.HorNeigh;
 		VerNeigh = g.VerNeigh;
-		grid = new TP[HorResolution*VerResolution];
-		gridPrev = new TP[HorResolution*VerResolution];
-		memcpy(grid,g.grid,HorResolution*VerResolution*sizeof(TP));
-		memcpy(gridPrev,g.gridPrev,HorResolution*VerResolution*sizeof(TP));
+		grid = new T[HorResolution*VerResolution];
+		gridPrev = new T[HorResolution*VerResolution];
+		memcpy(grid,g.grid,HorResolution*VerResolution*sizeof(T));
+		memcpy(gridPrev,g.gridPrev,HorResolution*VerResolution*sizeof(T));
 	}
 	return *this;
 }
 
 // Destructor
-template <class TP>
-griddata2<TP>::~griddata2()
+template <class T>
+griddata2<T>::~griddata2()
 {
 	delete []grid;
 	delete []gridPrev;

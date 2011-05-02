@@ -183,6 +183,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\dynamicArrays.h"
+				>
+			</File>
+			<File
 				RelativePath=".\griddata2.h"
 				>
 			</File>
@@ -192,6 +196,10 @@
 			</File>
 			<File
 				RelativePath=".\ipol.h"
+				>
+			</File>
+			<File
+				RelativePath=".\staticArrays.h"
 				>
 			</File>
 			<File

@@ -13,21 +13,22 @@
 
 using namespace std;
 
+template <class T>
 class vector2d
 {
 private:
-	int dimensionsNum;
-	vector<double *> dat_all;
-	double *tmpVector;
+	int dimSize;
+	vector<T *> allData;
+	T *tmpVector;
 public:
 	vector2d();
 	vector2d(int dims);
 	~vector2d();
-	void push(vector<double> input);
-	vector<double> pop();
+	void push(vector<T> input);
+	vector<T> pop();
 	bool saveToFile(string fileName);
 	bool readFromFile(string fileName);
-	vector<double> operator [](int index);
+	vector<T> operator [](int index);
 	int size();
 };
 

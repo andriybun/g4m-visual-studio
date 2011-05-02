@@ -1,6 +1,7 @@
 #include "countryData.h"
 
-void countryData::reset(void)
+template <class realT>
+void countryData<realT>::reset(void)
 {
 	int ind = 0;
 	do
@@ -12,36 +13,41 @@ void countryData::reset(void)
 	while (ind <countriesNum);
 }
 
-
-void countryData::set(int ind, int year, double val)
+template <class realT>
+void countryData<realT>::set(int ind, int year, realT val)
 {
 	values[ind].insert(year,val);
 	count[ind].insert(year,1);
 }
 
-void countryData::inc(int ind, int year, double val)
+template <class realT>
+void countryData<realT>::inc(int ind, int year, realT val)
 {
 	values[ind].inc(year,val);
 	count[ind].inc(year,1);
 }
 
-double countryData::get(int countryIdx, int year)
+template <class realT>
+realT countryData<realT>::get(int countryIdx, int year)
 {
 	return(values[countryIdx][year]);
 }
 
-double countryData::getAvg(int countryIdx, int year)
+template <class realT>
+realT countryData<realT>::getAvg(int countryIdx, int year)
 {
 	return(values[countryIdx][year]/count[countryIdx][year]);
 }
 
-countryData countryData::getTimeAvg(int timePeriodWidth)
+template <class realT>
+countryData<realT> countryData<realT>::getTimeAvg(int timePeriodWidth)
 {
 	countryData result = getSmoothAvg(timePeriodWidth, timePeriodWidth);
 	return result;
 }
 
-countryData countryData::getSmoothAvg(int timePeriodWidth, int timeStep)
+template <class realT>
+countryData<realT> countryData<realT>::getSmoothAvg(int timePeriodWidth, int timeStep)
 {
 	countryData result;
 	result.setListOfCountries(countriesToPrint);
@@ -52,7 +58,7 @@ countryData countryData::getSmoothAvg(int timePeriodWidth, int timeStep)
 		return result;
 	}
 
-	map<int, double>::iterator valuesIter, valuesIterLastEl;
+	map<int, realT>::iterator valuesIter, valuesIterLastEl;
 	map<int, int>::iterator countIter, countIterLastEl;
 
 	int sumValues = 0;
@@ -69,7 +75,7 @@ countryData countryData::getSmoothAvg(int timePeriodWidth, int timeStep)
 			int firstYear = valuesIter->first;
 			int lastYear = valuesIterLastEl->first;
 			int numYears = lastYear - firstYear + 1;
-			double *valuesByYears = new double[numYears];
+			realT *valuesByYears = new realT[numYears];
 			int *countByYears = new int[numYears];
 			memset(countByYears, 0, numYears * sizeof(int));
 
@@ -93,9 +99,10 @@ countryData countryData::getSmoothAvg(int timePeriodWidth, int timeStep)
 	return result;
 }
 
-double countryData::computeAvg(double *values, int *count, int yearIdx, int timePeriodWidth, int numYears)
+template <class realT>
+realT countryData<realT>::computeAvg(realT *values, int *count, int yearIdx, int timePeriodWidth, int numYears)
 {
-	double sum = (double)0;
+	realT sum = (realT)0;
 	int num = 0;
 	int timeHalfPeriodWidth = (timePeriodWidth - 1) / 2;
 	for(int idx = xmax(0, yearIdx - timeHalfPeriodWidth); idx <= xmin(numYears-1, yearIdx+timeHalfPeriodWidth); idx++)
@@ -106,9 +113,10 @@ double countryData::computeAvg(double *values, int *count, int yearIdx, int time
 	return sum / num;
 }
 
-double countryData::getRegionSum(unsigned char regIdx, int year)
+template <class realT>
+realT countryData<realT>::getRegionSum(unsigned char regIdx, int year)
 {
-	double sum = 0;
+	realT sum = 0;
 	int ind = 0;
 	do
 	{
@@ -122,24 +130,28 @@ double countryData::getRegionSum(unsigned char regIdx, int year)
 	return sum;
 }
 
-void countryData::insertCountryToPrint(int countryIdx)
+template <class realT>
+void countryData<realT>::insertCountryToPrint(int countryIdx)
 {
 	countriesToPrint.insert(countryIdx);
 	printAllCountries = false;
 }
 
-set<int> countryData::getListOfCountries()
+template <class realT>
+set<int> countryData<realT>::getListOfCountries()
 {
 	return countriesToPrint;
 }
 
-void countryData::setListOfCountries(set_t S)
+template <class realT>
+void countryData<realT>::setListOfCountries(set_t S)
 {
 	countriesToPrint = S;
 	if (countriesToPrint.size() > 0) printAllCountries = false;
 }
 
-void countryData::printToFile(string fileName, int firstYear, int lastYear, int step, string statType)
+template <class realT>
+void countryData<realT>::printToFile(string fileName, int firstYear, int lastYear, int step, string statType)
 {
 	ofstream f;
 	f.open(fileName.c_str(),ios::out);
@@ -176,7 +188,8 @@ void countryData::printToFile(string fileName, int firstYear, int lastYear, int 
 	}
 }
 
-int countryData::readFromFile(string fileName)
+template <class realT>
+int countryData<realT>::readFromFile(string fileName)
 {
 	ifstream f;
 
@@ -205,7 +218,7 @@ int countryData::readFromFile(string fileName)
 			int yearIdx = 0;
 			ss >> countryIdx;
 			insertCountryToPrint(countryIdx);
-			double val;
+			realT val;
 			while(ss >> val)
 			{
 				set(countryIdx, yearVector[yearIdx], val);
@@ -223,7 +236,8 @@ int countryData::readFromFile(string fileName)
 }
 
 // default constructor
-countryData::countryData()
+template <class realT>
+countryData<realT>::countryData()
 {
 	printAllCountries = true;
 	values.resize(countriesNum);
@@ -233,7 +247,8 @@ countryData::countryData()
 }
 
 // copy constructor
-countryData::countryData(const countryData & g)
+template <class realT>
+countryData<realT>::countryData(const countryData & g)
 {
 	values = g.values;
 	count = g.count;
@@ -243,7 +258,8 @@ countryData::countryData(const countryData & g)
 }
 
 // assignment operator
-countryData & countryData::operator = (const countryData & g)
+template <class realT>
+countryData<realT> & countryData<realT>::operator = (const countryData & g)
 {
 	if (this != &g)
 	{
@@ -257,12 +273,14 @@ countryData & countryData::operator = (const countryData & g)
 }
 
 // destructor
-countryData::~countryData()
+template <class realT>
+countryData<realT>::~countryData()
 {
 
 }
 
-void countryData::setRegions()
+template <class realT>
+void countryData<realT>::setRegions()
 {
 	regions.assign(countriesNum, 0);
 	regions[	1	]=	0	;
@@ -511,3 +529,6 @@ void countryData::setRegions()
 	regions[	244	]=	0	;
 
 }
+
+template class countryData<float>;
+template class countryData<double>;

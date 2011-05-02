@@ -1,9 +1,9 @@
 #include "griddataLite.h"
 
-template <class TP>
-void griddataLite<TP>::ShowArray()
+template <class T>
+void griddataLite<T>::ShowArray()
 {
-	TP val;
+	T val;
 	int isChar = 0;
 	char t1;
 	unsigned char t2;
@@ -23,10 +23,10 @@ void griddataLite<TP>::ShowArray()
 	}   
 }
 
-template <class TP>
-void griddataLite<TP>::PrintToFile(string fileName, string rastrType = "ESRI")
+template <class T>
+void griddataLite<T>::PrintToFile(string fileName, string rastrType = "ESRI")
 {
-	TP val;
+	T val;
 	int isChar = 0;
 	char t1;
 	unsigned char t2;
@@ -82,31 +82,31 @@ void griddataLite<TP>::PrintToFile(string fileName, string rastrType = "ESRI")
 	}
 }
 
-template <class TP>
-void griddataLite<TP>::set(int x, int y, TP val)
+template <class T>
+void griddataLite<T>::set(int x, int y, T val)
 {
 	grid[y*HorResolution+x] = val;
 }
 
-template <class TP>
-void griddataLite<TP>::inc(int x, int y, TP val)
+template <class T>
+void griddataLite<T>::inc(int x, int y, T val)
 {
 	grid[y*HorResolution+x] += val;
 }
 
-template <class TP>
-TP griddataLite<TP>::get(int x, int y)
+template <class T>
+T griddataLite<T>::get(int x, int y)
 {
 	return (grid[y*HorResolution+x]);
 }
 
 // Class constructor
-template <class TP>
-griddataLite<TP>::griddataLite(int HR, int VR, TP val)
+template <class T>
+griddataLite<T>::griddataLite(int HR, int VR, T val)
 {
 	HorResolution = HR;
 	VerResolution = VR;
-	grid = new TP[HorResolution*VerResolution];
+	grid = new T[HorResolution*VerResolution];
 	for (int j = 0; j < VerResolution; j++)
 	{
 		for (int i = 0; i < HorResolution; i++)
@@ -117,13 +117,13 @@ griddataLite<TP>::griddataLite(int HR, int VR, TP val)
 }
 
 // Default constructor
-template <class TP>
-griddataLite<TP>::griddataLite()
+template <class T>
+griddataLite<T>::griddataLite()
 {
 	HorResolution = 720;
 	VerResolution = 360;
-	TP val = 0;
-	grid = new TP[HorResolution*VerResolution];
+	T val = 0;
+	grid = new T[HorResolution*VerResolution];
 	for (int j = 0; j < VerResolution; j++)
 	{
 		for (int i = 0; i < HorResolution; i++)
@@ -134,18 +134,18 @@ griddataLite<TP>::griddataLite()
 }
 
 // Copy constructor
-template <class TP>
-griddataLite<TP>::griddataLite(const griddataLite& g)
+template <class T>
+griddataLite<T>::griddataLite(const griddataLite& g)
 {
 	HorResolution = g.HorResolution;
 	VerResolution = g.VerResolution;
-	grid = new TP[HorResolution*VerResolution];
-	memcpy(grid,g.grid,HorResolution*VerResolution*sizeof(TP));
+	grid = new T[HorResolution*VerResolution];
+	memcpy(grid,g.grid,HorResolution*VerResolution*sizeof(T));
 }
 
 // Destructor
-template <class TP>
-griddataLite<TP>::~griddataLite()
+template <class T>
+griddataLite<T>::~griddataLite()
 {
 	delete []grid;
 }

@@ -45,7 +45,7 @@ void testGriddata2()
 
 void testCountryData()
 {
-	countryData obj;
+	countryData<double> obj;
 	obj.readFromFile("data/country_data.txt");
 
 	//obj.set(3, 2000, 125.334);
@@ -76,7 +76,7 @@ void testCountryData()
 	//cout << obj.getAvg(1, 2008) << endl;
 
 	{
-		countryData avgRes = obj.getSmoothAvg(5);
+		countryData<double> avgRes = obj.getSmoothAvg(5);
 		avgRes.printToFile("data/test.txt", 2000, 2010, 1);
 
 		int countryIdx = 18;
@@ -115,7 +115,7 @@ void testVector2d()
 {
 	int dimN = 10;
 
-	vector2d obj = vector2d(dimN);
+	vector2d<double> obj = vector2d<double>(dimN);
 	for (int i = 0; i < 4; i++)
 	{
 		vector<double> tmp;

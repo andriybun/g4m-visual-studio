@@ -13,25 +13,25 @@
 
 using namespace std;
 
-template <class TP>
+template <class T>
 class griddataLite
 {
- private:
+private:
 	int HorResolution;
 	int VerResolution;
-	TP *GridRows;
-	TP *grid;
+	T *GridRows;
+	T *grid;
 public:
-	griddataLite(int HR, int VR, TP val);
+	griddataLite(int HR, int VR, T val);
 	griddataLite();
 	griddataLite(const griddataLite& g);
 	~griddataLite();
 	void ShowArray();                       // prints array
 	void PrintToFile(string fileName, string rastrType);      // print array to file
-	void set(int x, int y, TP val);     // assigns value val to cell [x][y]
-	void inc(int x, int y, TP val);     // adds value val to the existing value in cell [x][y]
-	TP get(int x, int y);               // returns value stored in cell [x][y]
- };
+	void set(int x, int y, T val);     // assigns value val to cell [x][y]
+	void inc(int x, int y, T val);     // adds value val to the existing value in cell [x][y]
+	T get(int x, int y);               // returns value stored in cell [x][y]
+};
 
   // using class constructor:
   // griddataLite<DATA_TYPE> OBJECT_NAME = griddataLite<DATA_TYPE>(LONGITUDE_RES,LATTITUDE_RES,DEFAULT_VALUE);
