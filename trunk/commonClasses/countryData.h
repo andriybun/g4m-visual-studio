@@ -47,7 +47,7 @@ public:
 	countryData & operator = (const countryData & g);
 	~countryData();
 	void reset(void);
-	void set(int, int, realT);
+	void setVal(int, int, realT);
 	void inc(int, int, realT);
 	realT get(int countryIdx, int year);
 	realT getAvg(int countryIdx, int year);

@@ -12,107 +12,113 @@
 #include "increment.h"
 #include "ipol.h"
 
-namespace g4m {
+namespace g4m
+{
   
-  class ageStruct {
-    friend class ageLUT;
-  public:
-    //stockingDegree Ertragstafel if < 0 .. no thinning -> max Stocking degree
-    //sws ... sawnwood share (depending on d) bezogen auf Vorratsfestmeter
-    //hlv ... 1 - harvesting losses Vornutzung (depending on d) von Vorratsfestmetern
-    //hle ... 1 - harvesting losses Endnutzung (depending on d) von Vorratsfestmetern
-    //dbv .. Deckungsbeitrag (depending on d) Vornutzung (auf VFM bezogen)
-    //dbe .. Deckungsbeitrag (depending on d) Endnutzung (auf VFM bezogen)
- //minDbv .. Minimaler Deckungsbeitrag/Jahr/Ha damit Durchforstung gemacht wird
- //minDbe .. Minimaler Deckungsbeitrag/Jahr/Ha damit Endnutzung gemacht wird
-    //Minimal rotation time share of the target rotation time
-    ageStruct(incrementTab *it
-	      , ipol<double,double> &sws
-	      , ipol<double,double> &hlv, ipol<double,double> &hle
-	      , ipol<double,double> &dbv, ipol<double,double> &dbe
-	      , double minDbVn
-	      , double minDbEn, double mai, int rotationPeriod
-	      , double stockingDegree=1., double area=1., double minRot=0.75
-	      , bool ageClassesFlag = true // MG: if True create real normal forest; if False create with number of ageclasses equal aageclasses
-	      , int aageclasses = 1
+class ageStruct
+{
+	friend class ageLUT;
+public:
+	//stockingDegree Ertragstafel if < 0 .. no thinning -> max Stocking degree
+	//sws ... sawnwood share (depending on d) bezogen auf Vorratsfestmeter
+	//hlv ... 1 - harvesting losses Vornutzung (depending on d) von Vorratsfestmetern
+	//hle ... 1 - harvesting losses Endnutzung (depending on d) von Vorratsfestmetern
+	//dbv .. Deckungsbeitrag (depending on d) Vornutzung (auf VFM bezogen)
+	//dbe .. Deckungsbeitrag (depending on d) Endnutzung (auf VFM bezogen)
+	//minDbv .. Minimaler Deckungsbeitrag/Jahr/Ha damit Durchforstung gemacht wird
+	//minDbe .. Minimaler Deckungsbeitrag/Jahr/Ha damit Endnutzung gemacht wird
+	//Minimal rotation time share of the target rotation time
+	ageStruct(incrementTab *it
+		, ipol<double, double> &sws
+		, ipol<double, double> &hlv, ipol<double, double> &hle
+		, ipol<double, double> &dbv, ipol<double, double> &dbe
+		, double minDbVn
+		, double minDbEn, double mai, int rotationPeriod
+		, double stockingDegree=1., double area=1., double minRot=0.75
+		, bool ageClassesFlag = true // MG: if True create real normal forest; if False create with number of ageclasses equal aageclasses
+		, int aageclasses = 1
     );
     ageStruct(const ageStruct & g);
     ageStruct & operator = (const ageStruct& g); // A.Bun: added 16.08.2010 to allow copying objects
-    class v {
-    public:
-      double area;
-      double enSw; // sawnwood from final cut tC/ha
-      double enRw; // restwood from final cut tC/ha
-      double vnSw; // sawnwood from thinning tC/ha
-      double vnRw; // restwood from thinning tC/ha
-      double dbEn; // 
-      double dbVn; // 
-      double hv; //Harvesting losses      
-      double enSwT; //MG: total sawn wood, tC, from final cut
-      double enRwT; //MG: total rest wood, tC, from final cut
-      double vnSwT; //MG: total sawn wood, tC, from thinning
-      double vnRwT; //MG: total rest wood, tC, from thinning
-      double hvT; // //MG: sum of total harvest losses at final cut and thinning
-      
-      v();
-      ~v();
-    };
-    ~ageStruct();
-    double setArea(int age, double area);
-    double setBm(int age, double area);  //Biomass
-    double getArea(int age);  //Area
-    double getArea();
-    double getBm(int age);    //Biomass
-    double getBm();
-    double getD(int age);     //Diameter
-    double createNormalForest(int rotationPeriod, double area, double sd=1.);
-    v aging();
-    double setMai(double mai);
-    double setRotPeriod(int rotPeriod);
-    double setStockingdegree(double sd);
 
-//MG    
-    double getRotPeriod();
-    double getStockingdegree();
-//-----------------------------
-    
-    double afforest(double area);
-    //type: 0..Take from all age classes, 1..Take from the eldest age classes
-    //area is positive number, return the deforested biomass
-    v deforest(double area, int type=0);
-    int getAgeClasses();
-    int getActiveAge();
-  private:
-    int setAgeClasses(int ageClasses);
-    incrementTab *it;
-    struct cohort {
-      double area;
-      double bm;  //Biomass
-      double d;
-      double h;
-    };
-    cohort *dat;
-    int ageClasses;  //Rotation time Unmanaged forests (depend on NPP)
-    int targetRotationPeriod;
-    double tragetHarvestArea;
-    double targetSd;  //if targetSd < 0. ... no thinning
-    double mai;
-    double updateHarvestArea();
-    v finalCut(double area, bool eco=true);
-    ipol<double,double> sws;
-    ipol<double,double> hlv;
-    ipol<double,double> hle;
-    ipol<double,double> dbv;
-    ipol<double,double> dbe;
-    double winVn;
-    double winEn;
-    v divArea(v& x, double area);
-    double minDbVn;
-    double minDbEn;
-    double minRot;
-    int activeAge; //Currently used AgeClsses
-    int fitActiveAge(int type=0); //0..look around, 1..Full check
-  };
+	class v {
+	public:
+		double area;
+		double enSw; // sawnwood from final cut tC/ha
+		double enRw; // restwood from final cut tC/ha
+		double vnSw; // sawnwood from thinning tC/ha
+		double vnRw; // restwood from thinning tC/ha
+		double dbEn; // 
+		double dbVn; // 
+		double hv; //Harvesting losses      
+		double enSwT; //MG: total sawn wood, tC, from final cut
+		double enRwT; //MG: total rest wood, tC, from final cut
+		double vnSwT; //MG: total sawn wood, tC, from thinning
+		double vnRwT; //MG: total rest wood, tC, from thinning
+		double hvT; // //MG: sum of total harvest losses at final cut and thinning
+
+		v();
+		~v();
+	};
+
+	~ageStruct();
+	double setArea(int age, double area);
+	double setBm(int age, double area);  //Biomass
+	double getArea(int age);  //Area
+	double getArea();
+	double getBm(int age);    //Biomass
+	double getBm();
+	double getD(int age);     //Diameter
+	double createNormalForest(int rotationPeriod, double area, double sd=1.);
+	v aging();
+	double setMai(double mai);
+	double setRotPeriod(int rotPeriod);
+	double setStockingdegree(double sd);
+
+	//MG    
+	double getRotPeriod();
+	double getStockingdegree();
+	//-----------------------------
+
+	double afforest(double area);
+	//type: 0..Take from all age classes, 1..Take from the eldest age classes
+	//area is positive number, return the deforested biomass
+	v deforest(double area, int type=0);
+	int getAgeClasses();
+	int getActiveAge();
+private:
+	int setAgeClasses(int ageClasses);
+	incrementTab *it;
+
+	struct cohort {
+		double area;
+		double bm;  //Biomass
+		double d;
+		double h;
+	};
+
+	cohort *dat;
+	int ageClasses;  //Rotation time Unmanaged forests (depend on NPP)
+	int targetRotationPeriod;
+	double tragetHarvestArea;
+	double targetSd;  //if targetSd < 0. ... no thinning
+	double mai;
+	double updateHarvestArea();
+	v finalCut(double area, bool eco=true);
+	ipol<double,double> sws;
+	ipol<double,double> hlv;
+	ipol<double,double> hle;
+	ipol<double,double> dbv;
+	ipol<double,double> dbe;
+	double winVn;
+	double winEn;
+	v divArea(v& x, double area);
+	double minDbVn;
+	double minDbEn;
+	double minRot;
+	int activeAge; //Currently used AgeClsses
+	int fitActiveAge(int type=0); //0..look around, 1..Full check
+};
   
   class ageLUT { //Lookup table for the age struct if we have 1 ha normal forest
   public:

@@ -8,7 +8,7 @@ extern g4m::coeffStruct coeff;
 
 extern map<string, g4m::ipol<double,double> > wprice;
 
-extern vector2d biomass_bau;
+extern vector2d<double> biomass_bau;
 
 extern float minRotNPV[NumberOfCountries];
 extern float minMedNPV[NumberOfCountries];

@@ -359,7 +359,7 @@ cout << "end of first pass" << endl;
 			    harvestGrid.set(xi,yi,harvWood * forestArea0);
                 woodHarvest[Country0-1] += harvWood * forestArea0;
               }            
-            } else if (woodHarvest[Country0-1] > 1.05 * wprod[countryregprice].v(year)) {
+            } else if (woodHarvest[countryreg] > 1.05 * wprod[countryregprice].v(year)) {
 //if (Country0 == 61){cout<<"woodHarvest= "<<woodHarvest[countryreg]<<"\t 1.1 * woodHarvestStat= "<<1.1 * woodHarvestStat[Country0-1] <<endl;}                   
 
                 if (rotationForest.get(xi,yi) < rotMaxBmTh) {
