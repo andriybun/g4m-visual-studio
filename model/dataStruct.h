@@ -68,19 +68,19 @@ struct dataStruct
 struct coeffStruct
 {
 	// Starting Year of simmulation
-	int bYear;
+	short int bYear;
 	// Ending Year of simmulation
-	int eYear;
+	short int eYear;
 	// Interaction between cells
-	int cellsInteract;
+	short int cellsInteract;
 	// Consider afforestation
-	int inclAffor;
+	short int inclAffor;
 	// No pay
-	int noPay;
+	short int noPay;
 	// Belowground biomass
-	int uBiomass;
+	short int uBiomass;
 	// Litter
-	int litter;
+	short int litter;
 	// Soil organic carbon
 	int SOC;
 	//******************************************************************************

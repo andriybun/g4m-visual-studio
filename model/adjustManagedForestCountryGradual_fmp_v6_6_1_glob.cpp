@@ -10,7 +10,7 @@ extern set<int> countryregList;
 
 extern map<string, g4m::ipol<double,double> > wprod;
 
-extern vector2d NPVbau;
+extern vector2d<double> NPVbau;
 
 extern double FMs[NumberOfCountries];
 extern double FM_sink_stat[NumberOfCountries];

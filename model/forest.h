@@ -34,7 +34,7 @@ using namespace std;
 
 #define GridStepLat		(double)0.5		// step by latitude
 #define GridStepLon		(double)0.5		// step by longitude
-#define nYears			50
+#define nYears			61
 #define NumberOfCountryregmix 50		// number of POLES regions mixed with EU27 countries
 #define NumberOfCountries 244			// new country codes
 #define unitConv		(double)1e-6	// unit conversion: 1e-6 - Mt

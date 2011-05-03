@@ -38,20 +38,20 @@ set<int> countryregList;      // country and region mixture to be considered
 int ResLatitude, ResLongitude;    // resolutions of model
 int eyear, byear;
 
-double MAI_CountryUprotect[NumberOfCountries];
-double MAI_CountryAll[NumberOfCountries];
-double MAI_countryregmix_up_avg[NumberOfCountryregmix];
-//double woodHarvestStat[NumberOfCountries];
-double Hurdle_opt[NumberOfCountries];
-double afforRate_opt[NumberOfCountries];
-double deforRate_opt[NumberOfCountries];
+double MAI_CountryUprotect[NumberOfCountries+1];
+double MAI_CountryAll[NumberOfCountries+1];
+double MAI_countryregmix_up_avg[NumberOfCountryregmix+1];
+//double woodHarvestStat[NumberOfCountries+1];
+double Hurdle_opt[NumberOfCountries+1];
+double afforRate_opt[NumberOfCountries+1];
+double deforRate_opt[NumberOfCountries+1];
 double EmissionsCurCountry[NumberOfCountries+1];
 double EmissionsCurAfforCountry[NumberOfCountries+1];
-//short int countryNwp[NumberOfCountries];
+//short int countryNwp[NumberOfCountries+1];
 short int yearNwp[11];
-double countryLosses[NumberOfCountries];
-double FM_sink_stat[NumberOfCountries];
-double FMs[NumberOfCountries];
+double countryLosses[NumberOfCountries+1];
+double FM_sink_stat[NumberOfCountries+1];
+double FMs[NumberOfCountries+1];
 short int coutryRegion[NumberOfCountries+1];
 int numRecords = 0; // number of records in the input data file
 //int country_asId[210][2]; //country - asId start and end  
@@ -59,10 +59,10 @@ int numRecords = 0; // number of records in the input data file
 int numAgeStruct = 0;
 //int usedNumAgeStruct = 0;
 
-short int countryCodeOrder[NumberOfCountries];
+short int countryCodeOrder[NumberOfCountries+1];
 char counrtyOrderISO[NumberOfCountries+1][4]; 
 string countryOrderName[NumberOfCountries+1];
-string countryRegName[NumberOfCountryregmix];
+string countryRegName[NumberOfCountryregmix+1];
 
 g4m::ipol<double,double> sws;  //Schnittholzanteil an Vfm // share of harvestable sawnwood per m3 (diameter, share)
 g4m::ipol<double,double> hlv;   //1-Ernteverluste Vornutzung // loosses after first prefinal cut (diameter, share of harvesting loses) ?
@@ -89,22 +89,22 @@ float MixPrice2010[51];
 // NPV curves
 double profit = 0.;
 
-float minRotNPV[NumberOfCountries];   // country average NPV if max MAI rotation is applied to all forests
-float minMedNPV[NumberOfCountries];   // NPV at rotation between min and medium rotation
-float medRotNPV[NumberOfCountries];   // NPV at rotation between min and medium rotation
-float medMaxNPV[NumberOfCountries];     // NPV at rotation between medium and max biomass rotation
-float maxRotNPV[NumberOfCountries];  // country average NPV if max biomass rotation is applied to all forests
-float minRot[NumberOfCountries];    // country average min rotation (max harvest)
-float maxRot[NumberOfCountries];    // country average max biomass rotation
+float minRotNPV[NumberOfCountries+1];   // country average NPV if max MAI rotation is applied to all forests
+float minMedNPV[NumberOfCountries+1];   // NPV at rotation between min and medium rotation
+float medRotNPV[NumberOfCountries+1];   // NPV at rotation between min and medium rotation
+float medMaxNPV[NumberOfCountries+1];     // NPV at rotation between medium and max biomass rotation
+float maxRotNPV[NumberOfCountries+1];  // country average NPV if max biomass rotation is applied to all forests
+float minRot[NumberOfCountries+1];    // country average min rotation (max harvest)
+float maxRot[NumberOfCountries+1];    // country average max biomass rotation
 bool forNPVcurves = false;
 bool forNPVcuvvesDyn = false;
-bool fmpol = true; // For testing FM response to C price incentive; requires bin files with BAU biomass and NPV
+bool fmpol = false; // For testing FM response to C price incentive; requires bin files with BAU biomass and NPV
 bool bau = false; // Write bin files with BAU biomass and NPV
 
 //if (fmpol){
-vector2d NPVbau = vector2d(46000);
-vector2d biomass_bau = vector2d(46000);
-vector2d Profit_bau = vector2d(46000);
+vector2d<double> NPVbau = vector2d<double>(46000);
+vector2d<double> biomass_bau = vector2d<double>(46000);
+vector2d<double> Profit_bau = vector2d<double>(46000);
 //} 
 int maxDiffCountry = 0;
 double harvDiff[NumberOfCountries];
@@ -130,57 +130,57 @@ bool cellInteract = true;
 //*****************************************************************************
 bool countryOutput = true;                                                                               
 
-countryData CountriesNforCover = countryData();
-countryData CountriesNforTotC = countryData();
-countryData CountriesAfforHaYear = countryData();  
+countryData<double> CountriesNforCover = countryData<double>();
+countryData<double> CountriesNforTotC = countryData<double>();
+countryData<double> CountriesAfforHaYear = countryData<double>();  
 
-countryData CountriesAfforCYear = countryData();  
-countryData CountriesAfforCYear_ab = countryData();  
-countryData CountriesAfforCYear_bl = countryData();  
-countryData CountriesAfforCYear_biom = countryData();  
-countryData CountriesAfforCYear_dom = countryData();    
-countryData CountriesAfforCYear_soil = countryData();    
+countryData<double> CountriesAfforCYear = countryData<double>();  
+countryData<double> CountriesAfforCYear_ab = countryData<double>();  
+countryData<double> CountriesAfforCYear_bl = countryData<double>();  
+countryData<double> CountriesAfforCYear_biom = countryData<double>();  
+countryData<double> CountriesAfforCYear_dom = countryData<double>();    
+countryData<double> CountriesAfforCYear_soil = countryData<double>();    
 //---------  
-countryData CountriesOforCover = countryData();
-countryData CountriesDeforHaYear = countryData();  
+countryData<double> CountriesOforCover = countryData<double>();
+countryData<double> CountriesDeforHaYear = countryData<double>();  
 
-countryData CountriesOfor_abC = countryData();
-countryData CountriesOforC_biom = countryData(); 
-countryData CountriesDeforCYear = countryData();  
-countryData CountriesDeforCYear_bl = countryData();   
-countryData CountriesDeforCYear_ab = countryData(); 
-countryData CountriesDeforCYear_biom = countryData();
-countryData CountriesDeforCYear_dom = countryData();   
-countryData CountriesDeforCYear_soil = countryData();     
+countryData<double> CountriesOfor_abC = countryData<double>();
+countryData<double> CountriesOforC_biom = countryData<double>(); 
+countryData<double> CountriesDeforCYear = countryData<double>();  
+countryData<double> CountriesDeforCYear_bl = countryData<double>();   
+countryData<double> CountriesDeforCYear_ab = countryData<double>(); 
+countryData<double> CountriesDeforCYear_biom = countryData<double>();
+countryData<double> CountriesDeforCYear_dom = countryData<double>();   
+countryData<double> CountriesDeforCYear_soil = countryData<double>();     
 //---------  
-countryData CountriesWoodHarvestM3Year = countryData();    
-countryData CountriesWoodHarvestPlusM3Year = countryData(); 
-countryData CountriesWoodHarvestFmM3Year = countryData();
-countryData CountriesWoodHarvestDfM3Year = countryData();
-countryData CountriesWoodLoosCYear = countryData();   
-countryData CountriesHarvLossesYear = countryData();
+countryData<double> CountriesWoodHarvestM3Year = countryData<double>();    
+countryData<double> CountriesWoodHarvestPlusM3Year = countryData<double>(); 
+countryData<double> CountriesWoodHarvestFmM3Year = countryData<double>();
+countryData<double> CountriesWoodHarvestDfM3Year = countryData<double>();
+countryData<double> CountriesWoodLoosCYear = countryData<double>();   
+countryData<double> CountriesHarvLossesYear = countryData<double>();
 //---------
-countryData CountriesManagedForHa = countryData();     
-countryData CountriesManagedCount = countryData();  
+countryData<double> CountriesManagedForHa = countryData<double>();     
+countryData<double> CountriesManagedCount = countryData<double>();  
 
-countryData CountriesMAI = countryData();    
-countryData CountriesCAI = countryData();    
-countryData CountriesCAI_new = countryData();      
-countryData CountriesFM = countryData();   
-countryData CountriesFMbm = countryData();     
+countryData<double> CountriesMAI = countryData<double>();    
+countryData<double> CountriesCAI = countryData<double>();    
+countryData<double> CountriesCAI_new = countryData<double>();      
+countryData<double> CountriesFM = countryData<double>();   
+countryData<double> CountriesFMbm = countryData<double>();     
 //---------------------------------------------------------------------------  
-countryData CountryRotation =  countryData(); 
+countryData<double> CountryRotation =  countryData<double>(); 
 //----------
-countryData CountriesWprod =  countryData();  // test wood production input data
+countryData<double> CountriesWprod =  countryData<double>();  // test wood production input data
 //-----------
-countryData CountriesProfit =  countryData();  // profit due to selling  harvested wood
+countryData<double> CountriesProfit =  countryData<double>();  // profit due to selling  harvested wood
 //---------------------------------------------------------------------------  
-countryData CountryregWoodHarvestM3Year =  countryData(); 
-countryData CountryregWoodHarvestFmM3Year = countryData();
-countryData CountryregWoodHarvestDfM3Year = countryData();  
-countryData CountryregWprod =  countryData();
+countryData<double> CountryregWoodHarvestM3Year =  countryData<double>(); 
+countryData<double> CountryregWoodHarvestFmM3Year = countryData<double>();
+countryData<double> CountryregWoodHarvestDfM3Year = countryData<double>();  
+countryData<double> CountryregWprod =  countryData<double>();
 //---------------------------------------------------------------------------  
-countryData CountryregRotation =  countryData(); 
+countryData<double> CountryregRotation =  countryData<double>(); 
 
 //**************************
 //Output file  
@@ -575,57 +575,57 @@ cout<<"start writing to GUI table"<<endl;
 //*************************************
 //** table data
 //*************************************
-  countryData CountriesNforCover_tw = CountriesNforCover.getSmoothAvg(5);
-  countryData CountriesNforTotC_tw = CountriesNforTotC.getSmoothAvg(5);
-  countryData CountriesAfforHaYear_tw = CountriesAfforHaYear.getSmoothAvg(5);  
+  countryData<double> CountriesNforCover_tw = CountriesNforCover.getSmoothAvg(5);
+  countryData<double> CountriesNforTotC_tw = CountriesNforTotC.getSmoothAvg(5);
+  countryData<double> CountriesAfforHaYear_tw = CountriesAfforHaYear.getSmoothAvg(5);  
 
-  countryData CountriesAfforCYear_tw = CountriesAfforCYear.getSmoothAvg(5);  
-  countryData CountriesAfforCYear_ab_tw = CountriesAfforCYear_ab.getSmoothAvg(5);  
-  countryData CountriesAfforCYear_bl_tw = CountriesAfforCYear_bl.getSmoothAvg(5);  
-  countryData CountriesAfforCYear_biom_tw = CountriesAfforCYear_biom.getSmoothAvg(5);  
-  countryData CountriesAfforCYear_dom_tw = CountriesAfforCYear_dom.getSmoothAvg(5);    
-  countryData CountriesAfforCYear_soil_tw = CountriesAfforCYear_soil.getSmoothAvg(5);    
+  countryData<double> CountriesAfforCYear_tw = CountriesAfforCYear.getSmoothAvg(5);  
+  countryData<double> CountriesAfforCYear_ab_tw = CountriesAfforCYear_ab.getSmoothAvg(5);  
+  countryData<double> CountriesAfforCYear_bl_tw = CountriesAfforCYear_bl.getSmoothAvg(5);  
+  countryData<double> CountriesAfforCYear_biom_tw = CountriesAfforCYear_biom.getSmoothAvg(5);  
+  countryData<double> CountriesAfforCYear_dom_tw = CountriesAfforCYear_dom.getSmoothAvg(5);    
+  countryData<double> CountriesAfforCYear_soil_tw = CountriesAfforCYear_soil.getSmoothAvg(5);    
 //---------  
-  countryData CountriesOforCover_tw = CountriesOforCover.getSmoothAvg(5);
-  countryData CountriesDeforHaYear_tw = CountriesDeforHaYear.getSmoothAvg(5);  
+  countryData<double> CountriesOforCover_tw = CountriesOforCover.getSmoothAvg(5);
+  countryData<double> CountriesDeforHaYear_tw = CountriesDeforHaYear.getSmoothAvg(5);  
     
-  countryData CountriesOfor_abC_tw = CountriesOfor_abC.getSmoothAvg(5);
-  countryData CountriesOforC_biom_tw = CountriesOforC_biom.getSmoothAvg(5); 
-  countryData CountriesDeforCYear_tw = CountriesDeforCYear.getSmoothAvg(5);  
-  countryData CountriesDeforCYear_bl_tw = CountriesDeforCYear_bl.getSmoothAvg(5);   
-  countryData CountriesDeforCYear_ab_tw = CountriesDeforCYear_ab.getSmoothAvg(5); 
-  countryData CountriesDeforCYear_biom_tw = CountriesDeforCYear_biom.getSmoothAvg(5);
-  countryData CountriesDeforCYear_dom_tw = CountriesDeforCYear_dom.getSmoothAvg(5);   
-  countryData CountriesDeforCYear_soil_tw = CountriesDeforCYear_soil.getSmoothAvg(5);     
+  countryData<double> CountriesOfor_abC_tw = CountriesOfor_abC.getSmoothAvg(5);
+  countryData<double> CountriesOforC_biom_tw = CountriesOforC_biom.getSmoothAvg(5); 
+  countryData<double> CountriesDeforCYear_tw = CountriesDeforCYear.getSmoothAvg(5);  
+  countryData<double> CountriesDeforCYear_bl_tw = CountriesDeforCYear_bl.getSmoothAvg(5);   
+  countryData<double> CountriesDeforCYear_ab_tw = CountriesDeforCYear_ab.getSmoothAvg(5); 
+  countryData<double> CountriesDeforCYear_biom_tw = CountriesDeforCYear_biom.getSmoothAvg(5);
+  countryData<double> CountriesDeforCYear_dom_tw = CountriesDeforCYear_dom.getSmoothAvg(5);   
+  countryData<double> CountriesDeforCYear_soil_tw = CountriesDeforCYear_soil.getSmoothAvg(5);     
 //---------  
-  countryData CountriesWoodHarvestM3Year_tw = CountriesWoodHarvestM3Year.getSmoothAvg(5);
-  countryData CountriesWoodHarvestPlusM3Year_tw = CountriesWoodHarvestPlusM3Year.getSmoothAvg(5); 
-  countryData CountriesWoodHarvestFmM3Year_tw = CountriesWoodHarvestFmM3Year.getSmoothAvg(5);
-  countryData CountriesWoodHarvestDfM3Year_tw = CountriesWoodHarvestDfM3Year.getSmoothAvg(5);
-  countryData CountriesWoodLoosCYear_tw = CountriesWoodLoosCYear.getSmoothAvg(5);   
-  countryData CountriesHarvLossesYear_tw = CountriesHarvLossesYear.getSmoothAvg(5);
+  countryData<double> CountriesWoodHarvestM3Year_tw = CountriesWoodHarvestM3Year.getSmoothAvg(5);
+  countryData<double> CountriesWoodHarvestPlusM3Year_tw = CountriesWoodHarvestPlusM3Year.getSmoothAvg(5); 
+  countryData<double> CountriesWoodHarvestFmM3Year_tw = CountriesWoodHarvestFmM3Year.getSmoothAvg(5);
+  countryData<double> CountriesWoodHarvestDfM3Year_tw = CountriesWoodHarvestDfM3Year.getSmoothAvg(5);
+  countryData<double> CountriesWoodLoosCYear_tw = CountriesWoodLoosCYear.getSmoothAvg(5);   
+  countryData<double> CountriesHarvLossesYear_tw = CountriesHarvLossesYear.getSmoothAvg(5);
 //---------
-  countryData CountriesManagedForHa_tw = CountriesManagedForHa.getSmoothAvg(5);     
-  countryData CountriesManagedCount_tw = CountriesManagedCount.getSmoothAvg(5);  
+  countryData<double> CountriesManagedForHa_tw = CountriesManagedForHa.getSmoothAvg(5);     
+  countryData<double> CountriesManagedCount_tw = CountriesManagedCount.getSmoothAvg(5);  
   
-  countryData CountriesMAI_tw = CountriesMAI.getSmoothAvg(5);    
-  countryData CountriesCAI_tw = CountriesCAI.getSmoothAvg(5);    
-  countryData CountriesCAI_new_tw = CountriesCAI_new.getSmoothAvg(5);      
-  countryData CountriesFM_tw = CountriesFM.getSmoothAvg(5);   
-  countryData CountriesFMbm_tw = CountriesFMbm.getSmoothAvg(5);     
+  countryData<double> CountriesMAI_tw = CountriesMAI.getSmoothAvg(5);    
+  countryData<double> CountriesCAI_tw = CountriesCAI.getSmoothAvg(5);    
+  countryData<double> CountriesCAI_new_tw = CountriesCAI_new.getSmoothAvg(5);      
+  countryData<double> CountriesFM_tw = CountriesFM.getSmoothAvg(5);   
+  countryData<double> CountriesFMbm_tw = CountriesFMbm.getSmoothAvg(5);     
 //---------------------------------------------------------------------------  
-  countryData CountryRotation_tw =  CountryRotation.getSmoothAvg(5); 
+  countryData<double> CountryRotation_tw =  CountryRotation.getSmoothAvg(5); 
 //----------
-  countryData CountriesWprod_tw =  CountriesWprod.getSmoothAvg(5);  // test wood production input data
+  countryData<double> CountriesWprod_tw =  CountriesWprod.getSmoothAvg(5);  // test wood production input data
 //-----------
-//  countryData CountriesProfit =  CountriesProfit.getSmoothAvg(5);  // profit due to selling  harvested wood
+//  countryData<double> CountriesProfit =  CountriesProfit.getSmoothAvg(5);  // profit due to selling  harvested wood
 //---------------------------------------------------------------------------  
-  countryData CountryregWoodHarvestM3Year_tw =  CountryregWoodHarvestM3Year.getSmoothAvg(5); 
-  countryData CountryregWoodHarvestFmM3Year_tw = CountryregWoodHarvestFmM3Year.getSmoothAvg(5);
-  countryData CountryregWoodHarvestDfM3Year_tw = CountryregWoodHarvestDfM3Year.getSmoothAvg(5);  
-  countryData CountryregWprod_tw =  CountryregWprod.getSmoothAvg(5);
+  countryData<double> CountryregWoodHarvestM3Year_tw =  CountryregWoodHarvestM3Year.getSmoothAvg(5); 
+  countryData<double> CountryregWoodHarvestFmM3Year_tw = CountryregWoodHarvestFmM3Year.getSmoothAvg(5);
+  countryData<double> CountryregWoodHarvestDfM3Year_tw = CountryregWoodHarvestDfM3Year.getSmoothAvg(5);  
+  countryData<double> CountryregWprod_tw =  CountryregWprod.getSmoothAvg(5);
   //---------------------------------------------------------------------------  
-  countryData CountryregRotation_tw =  CountryregRotation.getSmoothAvg(5); 
+  countryData<double> CountryregRotation_tw =  CountryregRotation.getSmoothAvg(5); 
   //---------------------------------------------------------------------------  
   tableData obj;
   vector<string> point;

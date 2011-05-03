@@ -14,7 +14,7 @@ void countryData<realT>::reset(void)
 }
 
 template <class realT>
-void countryData<realT>::set(int ind, int year, realT val)
+void countryData<realT>::setVal(int ind, int year, realT val)
 {
 	values[ind].insert(year,val);
 	count[ind].insert(year,1);
@@ -88,7 +88,7 @@ countryData<realT> countryData<realT>::getSmoothAvg(int timePeriodWidth, int tim
 
 			for (int yearIdx = 0; yearIdx < numYears; yearIdx += timeStep)
 			{
-				result.set(countryIdx, firstYear + yearIdx, 
+				result.setVal(countryIdx, firstYear + yearIdx, 
 					computeAvg(valuesByYears, countByYears, yearIdx, timePeriodWidth, numYears));
 			}
 
@@ -221,7 +221,7 @@ int countryData<realT>::readFromFile(string fileName)
 			realT val;
 			while(ss >> val)
 			{
-				set(countryIdx, yearVector[yearIdx], val);
+				setVal(countryIdx, yearVector[yearIdx], val);
 				yearIdx++;
 			}
 		}
