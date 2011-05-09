@@ -117,7 +117,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="$(SolutionDir)\jDataViewClasses\Source Files; $(SolutionDir)\commonClasses"
+				AdditionalIncludeDirectories="$(SolutionDir)\jDataViewClasses; $(SolutionDir)\commonClasses"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
