@@ -7,9 +7,10 @@ using namespace std;
 
 void testGriddata2()
 {
+	griddata2<int> OBJ = griddata2<int>(36,18,99);
 	// using class constructor:
 	// griddata2<DATA_TYPE> OBJECT_NAME = griddata2<DATA_TYPE>(LONGITUDE_RES,LATTITUDE_RES,DEFAULT_VALUE);
-	griddata2<unsigned char> OBJ = griddata2<unsigned char>(36,18,99);
+	//griddata2<unsigned char> OBJ = griddata2<unsigned char>(36,18,99);
 	// OBJ.ShowArray();
 	// using default class constructor:
 	// griddata2<DATA_TYPE> OBJECT_NAME;
@@ -113,10 +114,9 @@ void testCountryData()
 
 void testVector2d()
 {
-	int dimN = 10;
-
+	int dimN = 1000;
 	vector2d<double> obj = vector2d<double>(dimN);
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 1000; i++)
 	{
 		vector<double> tmp;
 		for (int j = 0; j < dimN; j++)
@@ -127,18 +127,24 @@ void testVector2d()
 	}
 	obj.saveToFile("-del");
 
-	cout << "TEST: " << endl;
-	//vector2d obj = vector2d();
-	obj.readFromFile("-del.bin");
-	cout << "size of the object: " << obj.size() << endl;
-	cout << "size of the 2nd element: " << obj[2].size() << endl;
-	cout << "last vector's elements: " << endl;
-	vector<double> t = obj.pop();
-	vector<double> t1 = obj[1];
-	for (int j = 0; j < t1.size(); j++)
+	for (int k = 0; k < 500; k++)
 	{
-		cout << t1[j] << "\t";
+		obj.readFromFile("-del.bin");
+		obj.saveToFile("-del");
 	}
-	cout << endl;
+
+	//cout << "TEST: " << endl;
+	////vector2d obj = vector2d();
+	//obj.readFromFile("-del.bin");
+	//cout << "size of the object: " << obj.size() << endl;
+	//cout << "size of the 2nd element: " << obj[2].size() << endl;
+	//cout << "last vector's elements: " << endl;
+	//vector<double> t = obj.pop();
+	//vector<double> t1 = obj[1];
+	//for (int j = 0; j < t1.size(); j++)
+	//{
+	//	cout << t1[j] << "\t";
+	//}
+	//cout << endl;
 	system("del -del.bin");
 }

@@ -16,6 +16,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "model", "model\model.vcproj
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "jDataViewClasses", "jDataViewClasses\jDataViewClasses.vcproj", "{B47747D0-7C99-4094-89DB-B64D76A1C405}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "g4m", "g4m\g4m.vcproj", "{8BE9BFBC-B655-4332-86A8-9DE40590A559}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B47747D0-7C99-4094-89DB-B64D76A1C405} = {B47747D0-7C99-4094-89DB-B64D76A1C405}
+		{5026F6F5-ED44-4E1E-9D90-AF57A86E3DC0} = {5026F6F5-ED44-4E1E-9D90-AF57A86E3DC0}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -38,6 +44,10 @@ Global
 		{B47747D0-7C99-4094-89DB-B64D76A1C405}.Debug|Win32.Build.0 = Debug|Win32
 		{B47747D0-7C99-4094-89DB-B64D76A1C405}.Release|Win32.ActiveCfg = Release|Win32
 		{B47747D0-7C99-4094-89DB-B64D76A1C405}.Release|Win32.Build.0 = Release|Win32
+		{8BE9BFBC-B655-4332-86A8-9DE40590A559}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8BE9BFBC-B655-4332-86A8-9DE40590A559}.Debug|Win32.Build.0 = Debug|Win32
+		{8BE9BFBC-B655-4332-86A8-9DE40590A559}.Release|Win32.ActiveCfg = Release|Win32
+		{8BE9BFBC-B655-4332-86A8-9DE40590A559}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
