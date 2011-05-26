@@ -203,6 +203,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\threading.h"
+				>
+			</File>
+			<File
+				RelativePath=".\timer.h"
+				>
+			</File>
+			<File
 				RelativePath=".\vector2d.h"
 				>
 			</File>

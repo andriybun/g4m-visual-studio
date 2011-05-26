@@ -1,7 +1,7 @@
 #ifndef STATIC_ARRAYS_H_
 #define STATIC_ARRAYS_H_
 
-//#define DEBUG_ARRAYS		// uncomment to test exceeding array bounds
+#define DEBUG_ARRAYS		// uncomment to test exceeding array bounds
 
 #if !defined DEBUG_ARRAYS
 
@@ -9,6 +9,7 @@
 	#define array2d(TYPE, NAME, DIM1, DIM2)		TYPE NAME[DIM1][DIM2]
 
 #else
+	#define SERIAL_EXECUTION
 
 	#include <assert.h>
 

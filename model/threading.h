@@ -3,6 +3,8 @@
 
 #include <cmath>
 
+#include "staticArrays.h"
+
 // Uncomment for serial execution of program in one thread
 //#define SERIAL_EXECUTION
 
