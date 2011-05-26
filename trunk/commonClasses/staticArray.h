@@ -1,8 +1,6 @@
 #ifndef STATIC_ARRAYS_H_
 #define STATIC_ARRAYS_H_
 
-#define DEBUG_ARRAYS		// uncomment to test exceeding array bounds
-
 #if !defined DEBUG_ARRAYS
 
 	#define array(TYPE, NAME, DIM1)				TYPE NAME[DIM1]

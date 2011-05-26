@@ -183,7 +183,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\dynamicArrays.h"
+				RelativePath=".\dynamicArray.h"
 				>
 			</File>
 			<File
@@ -199,7 +199,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\staticArrays.h"
+				RelativePath=".\staticArray.h"
 				>
 			</File>
 			<File

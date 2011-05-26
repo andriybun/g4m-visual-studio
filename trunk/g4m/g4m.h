@@ -4,13 +4,18 @@
 #include "jDataViewClasses.h"
 #include "commonClasses.h"
 
-#include "g4mIntf.h"
-#include "computeCell.h"
+//#define DEBUG_ARRAYS
+//#define SERIAL_EXECUTION
 
-#include "staticArrays.h"
+#include "staticArray.h"
+#include "dynamicArray.h"
+
 #include "threading.h"
 #include "timer.h"
 
+// g4m specific
+#include "g4mIntf.h"
+#include "computeCell.h"
 
 
 #endif

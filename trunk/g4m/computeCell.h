@@ -8,10 +8,10 @@
 #define min(x, y) ((x)<(y) ? (x):(y))
 #define max(x, y) ((x)<(y) ? (y):(x))
 
-template <class inCellDataT, class inCommonDataT, class outCellDataT>
-int computeCell(const inCellDataT &inCellData, const inCommonDataT &inCommonData, outCellDataT &outCellData)
+template <class realT>
+int computeCell(const inCellDataT<realT> &inCellData, const inCommonDataT<realT> &inCommonData, outCellDataT<realT> &outCellData)
 {
-	
+	outCellData.STOPGAP = inCellData.STOPGAP * inCommonData.STOPGAP;
 	return 0;
 }
 
