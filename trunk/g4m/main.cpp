@@ -3,11 +3,9 @@
 int main(int argc, char * argv[])
 {
 	
-
-
-	inCellDataT/*<double>*/ inCellData[1];
+	array(inCellDataT/*<double>*/, inCellData, 1);
+	array(outCellDataT/*<double>*/, outCellData, 1);
 	inCommonDataT/*<double>*/ inCommonData;
-	outCellDataT/*<double>*/ outCellData[1];
 
 	int numCells = 1;
 
