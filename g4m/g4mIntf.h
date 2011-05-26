@@ -1,25 +1,22 @@
 #ifndef G4M_INTF_H_
 #define G4M_INTF_H_
 
-//template <class realT>
-typedef struct
+template <class realT>
+struct inCellDataT
 {
+	realT STOPGAP;
+};
 
-} 
-inCellDataT;
-
-//template <class realT>
-typedef struct  
+template <class realT>
+struct inCommonDataT
 {
+	realT STOPGAP;
+};
 
-}
-inCommonDataT;
-
-//template <class realT>
-typedef struct
+template <class realT>
+struct outCellDataT
 {
-
-} 
-outCellDataT;
+	realT STOPGAP;
+};
 
 #endif
