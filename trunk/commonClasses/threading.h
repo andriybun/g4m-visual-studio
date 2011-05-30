@@ -46,7 +46,7 @@ DWORD WINAPI ThreadFun(LPVOID lpParam)
 	return 0;
 }
 
-template <class realT, class inCellDataT, class inCommonDataT, class outCellDataT>
+template <class inCellDataT, class inCommonDataT, class outCellDataT>
 int parallelExecute(int (*execute)(const inCellDataT &, const inCommonDataT &, outCellDataT &), 
 					const inCellDataT * arr, const inCommonDataT & paramsStruct, outCellDataT * outArr, int count)
 {
@@ -111,26 +111,10 @@ int parallelExecute(int (*execute)(const inCellDataT &, const inCommonDataT &, o
 #else
 // Serial execution
 
-#ifndef DEBUG_ARRAYS
-
-template <class realT, class inCellDataT, class inCommonDataT, class outCellDataT>
-int parallelExecute(int (*execute)(const inCellDataT &, const inCommonDataT &, outCellDataT &), 
-					const inCellDataT * arr, const inCommonDataT & paramsStruct, outCellDataT * outArr, int count)
-{
-	for (int i = 0; i < count; i++)	
-	{
-		execute(arr[i], paramsStruct, outArr[i]);
-	}
-
-	return 0;
-}
-
-#else
-
-template <class realT, class inCellDataT, class inCommonDataT, class outCellDataT>
+template <class inCellDataT, class inCommonDataT, class outCellDataT>
 int parallelExecute(int (*execute)(const inCellDataT &, const inCommonDataT &, outCellDataT &),
-					dynamicArrayInternal< inCellDataT > & arr, const inCommonDataT & paramsStruct, 
-					dynamicArrayInternal< outCellDataT> & outArr, int count)
+					dynamicArrayRef(inCellDataT, arr), const inCommonDataT & paramsStruct, 
+					dynamicArrayRef(outCellDataT, outArr), int count)
 {
 	for (int i = 0; i < count; i++)	
 	{
@@ -139,8 +123,6 @@ int parallelExecute(int (*execute)(const inCellDataT &, const inCommonDataT &, o
 
 	return 0;
 }
-
-#endif // if defined DEBUG_ARRAYS
 
 #endif // if defined PARALLEL_ON_WINDOWS
 

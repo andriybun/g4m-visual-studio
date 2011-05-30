@@ -24,6 +24,7 @@
 #ifndef BZ_TIMER_H
 #define BZ_TIMER_H
 
+#include <assert.h>
 #include <time.h>
 
 
@@ -44,13 +45,13 @@ public:
     void stop()
     {
         t2_ = systemTime();
-        //if (state_ != running) error;
+        assert(state_ == running);
         state_ = stopped;
     }
     
     long double elapsedSeconds()
     {
-        //if (state_ != stopped) error;
+        assert(state_ == stopped);
         return t2_ - t1_;
     }
 

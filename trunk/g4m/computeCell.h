@@ -8,9 +8,11 @@
 #define min(x, y) ((x)<(y) ? (x):(y))
 #define max(x, y) ((x)<(y) ? (y):(x))
 
+
 template <class realT>
 int computeCell(const inCellDataT<realT> &inCellData, const inCommonDataT<realT> &inCommonData, outCellDataT<realT> &outCellData)
 {
+	// Stopgap:
 	outCellData.STOPGAP = inCellData.STOPGAP * inCommonData.STOPGAP;
 	return 0;
 }

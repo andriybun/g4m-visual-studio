@@ -4,7 +4,8 @@
 #if !defined DEBUG_ARRAYS
 
 #define dynamicArray(TYPE, NAME)				TYPE * NAME
-#define dynamicAllocate(ARR_NAME, TYPE, SIZE)	ARR_NAME = new TYPE[SIZE]
+#define dynamicArrayRef(TYPE, NAME)				TYPE * & NAME
+#define dynamicAllocate(TYPE, ARR_NAME, SIZE)	ARR_NAME = new TYPE[SIZE]
 #define dynamicFree(ARR_NAME)					delete [] ARR_NAME
 
 #else
@@ -14,7 +15,8 @@
 #include <assert.h>
 
 #define dynamicArray(TYPE, NAME)				dynamicArrayInternal< TYPE > NAME
-#define dynamicAllocate(ARR_NAME, TYPE, SIZE)	ARR_NAME.allocate(SIZE)
+#define dynamicArrayRef(TYPE, NAME)				dynamicArrayInternal< TYPE > & NAME
+#define dynamicAllocate(TYPE, ARR_NAME, SIZE)	ARR_NAME.allocate(SIZE)
 #define dynamicFree(ARR_NAME)					ARR_NAME.setMemoryReleasedFlag()
 
 // Dynamic array 1d
@@ -84,6 +86,7 @@ template <class T>
 T & dynamicArrayInternal<T>::operator [] (int idx)
 {
 	assert(isAllocated);
+	assert(!isMemoryReleased);
 	assert(idx >= 0);
 	assert(idx < dim1size);
 	return data[idx];

@@ -177,6 +177,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\inputFileInfo.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\main.cpp"
 				>
 			</File>
@@ -203,7 +207,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\readInputs.h"
+				RelativePath=".\inputFileInfo.h"
 				>
 			</File>
 		</Filter>
