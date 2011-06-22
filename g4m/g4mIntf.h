@@ -3,17 +3,17 @@
 
 #include "staticArray.h"
 
-
+#define STRUCTDEF(NAME) struct NAME
 
 template <class realT>
-struct inCellDataT
+STRUCTDEF(inCellDataT)
 {
 	// TODO: remove
 	realT STOPGAP;
 };
 
 template <class realT>
-struct inCommonDataT
+STRUCTDEF(inCommonDataT)
 {
 	// Parameters
 	int numCells;
@@ -28,7 +28,7 @@ struct inCommonDataT
 };
 
 template <class realT>
-struct outCellDataT
+STRUCTDEF(outCellDataT)
 {
 	// TODO: remove
 	realT STOPGAP;
