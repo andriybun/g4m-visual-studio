@@ -30,6 +30,8 @@ STRUCTDEF(inCommonDataT)
 template <class realT>
 STRUCTDEF(outCellDataT)
 {
+	realT forestArea;
+	realT forestShare;
 	// TODO: remove
 	realT STOPGAP;
 };

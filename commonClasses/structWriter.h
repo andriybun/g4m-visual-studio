@@ -3,13 +3,16 @@
 
 #include <string>
 #include <deque>
+#include <assert.h>
 
 #include "struct_info.h"
+#include "../jDataViewClasses/jDataViewClasses.h"
 
 struct var_info_lite_t
 {
 	size_t offset;
 	size_t type_id;
+	size_t simuDataPos;
 };
 
 template < typename structT >
@@ -17,8 +20,9 @@ class structWriter
 {
 private:
 	std::deque<var_info_lite_t> varsInfoHolder;
+	simUnitsData & simuData;
 public:
-	structWriter(void) {}
+	structWriter(simUnitsData & simuData): simuData(simuData) {}
 	~structWriter(void) {}
 
 	void addOutputParam(std::string param_name)
@@ -27,11 +31,14 @@ public:
 		struct_info_t< structT > mStructInfo;
 		varInfo.offset = mStructInfo.get_var_offset(param_name);
 		varInfo.type_id = mStructInfo.get_var_type_id(param_name);
+		varInfo.simuDataPos = simuData.descr.getCoordinate(simuData.descr.getNDims()-1, param_name);
+		assert(varInfo.simuDataPos >= 0, "variable not found");
 		varsInfoHolder.push_back(varInfo);
 	}
 
 	void getData(structT &mStruct)
 	{
+		assert(simuDataIsAttached);
 		std::deque<var_info_lite_t>::iterator firstVar = varsInfoHolder.begin();
 		std::deque<var_info_lite_t>::iterator it = firstVar;
 		while (it != varsInfoHolder.end())
