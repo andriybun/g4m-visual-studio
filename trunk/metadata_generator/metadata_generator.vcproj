@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
-	Name="commonClasses"
-	ProjectGUID="{5026F6F5-ED44-4E1E-9D90-AF57A86E3DC0}"
-	RootNamespace="commonClasses"
+	Version="9.00"
+	Name="metadata_generator"
+	ProjectGUID="{66AB8C3F-041A-4FC6-A62A-D0D3692FFB9D}"
+	RootNamespace="metadata_generator"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -20,7 +20,7 @@
 			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="4"
+			ConfigurationType="1"
 			CharacterSet="1"
 			>
 			<Tool
@@ -59,10 +59,17 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
+				Name="VCLinkerTool"
+				LinkIncremental="2"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -74,6 +81,9 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
@@ -81,7 +91,7 @@
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="4"
+			ConfigurationType="1"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -121,10 +131,19 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
+				Name="VCLinkerTool"
+				LinkIncremental="1"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -134,6 +153,9 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -149,23 +171,11 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\countryData.cpp"
+				RelativePath=".\generator_utils.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\griddata2.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\griddataLite.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\ipol.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\vector2d.cpp"
+				RelativePath=".\metadata_generator.cpp"
 				>
 			</File>
 		</Filter>
@@ -175,51 +185,11 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\commonClasses.h"
+				RelativePath=".\generator_utils.h"
 				>
 			</File>
 			<File
-				RelativePath=".\countryData.h"
-				>
-			</File>
-			<File
-				RelativePath=".\dynamicArray.h"
-				>
-			</File>
-			<File
-				RelativePath=".\griddata2.h"
-				>
-			</File>
-			<File
-				RelativePath=".\griddataLite.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ipol.h"
-				>
-			</File>
-			<File
-				RelativePath=".\staticArray.h"
-				>
-			</File>
-			<File
-				RelativePath=".\struct_info.h"
-				>
-			</File>
-			<File
-				RelativePath=".\structWriter.h"
-				>
-			</File>
-			<File
-				RelativePath=".\threading.h"
-				>
-			</File>
-			<File
-				RelativePath=".\timer.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vector2d.h"
+				RelativePath=".\string_utils.h"
 				>
 			</File>
 		</Filter>

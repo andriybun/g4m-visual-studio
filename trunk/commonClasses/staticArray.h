@@ -4,7 +4,9 @@
 #if !defined DEBUG_ARRAYS
 
 	#define array(TYPE, NAME, DIM1)				TYPE NAME[DIM1]
+	#define arrayRef(TYPE, NAME, DIM1)			TYPE (&NAME)[DIM1]
 	#define array2d(TYPE, NAME, DIM1, DIM2)		TYPE NAME[DIM1][DIM2]
+	#define arrayRef2d(TYPE, NAME, DIM1, DIM2)	TYPE (&NAME)[DIM1][DIM2]
 
 #else
 	#define SERIAL_EXECUTION
