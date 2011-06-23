@@ -31,9 +31,12 @@ enum distribute_value_t
 	IS_CONSTANT
 };
 
+template < typename structT > class structWriter;
+
 class simUnitsData
 {
 private:
+	template < typename structT > friend class structWriter;
 	typedef vector<string> str_vector_t;
 	typedef vector<float> float_vector_t;
 	map<int, float_vector_t> data;

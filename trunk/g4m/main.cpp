@@ -33,11 +33,31 @@ int computeModel()
 
 	readInputs<realT>(info, inCellData, inCommonData, outCellData);
 
+	// Initialize outputs
+	simUnitsData simuData("data\\simu.bin");
+	// Helper sets
+	set<int> years;
+	years.insert(2000);
+	years.insert(2005);
+	years.insert(2010);
+	set<string> results;
+	results.insert("forestArea");
+	results.insert("forestShare");
+	// Initialize dimensions of SIMU data class
+	simuData.addDim("year", years);
+	simuData.addDim("value", results);
+	structWriter< outCellDataT<realT> > simuDataWriter(simuData);
+	simuDataWriter.addOutputParam("forestArea");
+	simuDataWriter.addOutputParam("forestShare");
+
 	for (inCommonData.year = inCommonData.beginYear; inCommonData.year <= inCommonData.endYear; inCommonData.year++)
 	{
+		simuData.pointPush(inCommonData.year);
 		parallelExecute< inCellDataT<realT>, inCommonDataT<realT>, outCellDataT<realT> > (
 			&computeCell<realT>, inCellData, inCommonData, outCellData, inCommonData.numCells);
-
+		// IMPLEMENT: writing to simu data
+		// IMPLEMENT: passing address of simUnitsData to parallel execute to write in parallel
+		simuData.pointPop();
 	}
 
 	printf("%f\n", outCellData[0].STOPGAP);

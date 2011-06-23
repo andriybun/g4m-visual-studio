@@ -28,6 +28,8 @@ void struct_info_t< inCommonDataT<double> >::define_metadata()
 template <>
 void struct_info_t< outCellDataT<double> >::define_metadata()
 {
+	add_variable(m_struct.forestArea);		// double
+	add_variable(m_struct.forestShare);		// double
 	add_variable(m_struct.STOPGAP);		// double
 }
 
@@ -50,6 +52,8 @@ void struct_info_t< inCommonDataT<float> >::define_metadata()
 template <>
 void struct_info_t< outCellDataT<float> >::define_metadata()
 {
+	add_variable(m_struct.forestArea);		// float
+	add_variable(m_struct.forestShare);		// float
 	add_variable(m_struct.STOPGAP);		// float
 }
 
