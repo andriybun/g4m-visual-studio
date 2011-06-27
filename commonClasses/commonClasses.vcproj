@@ -207,6 +207,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\structToMapWriter.h"
+				>
+			</File>
+			<File
+				RelativePath=".\structToTableWriter.h"
+				>
+			</File>
+			<File
 				RelativePath=".\structWriter.h"
 				>
 			</File>

@@ -14,7 +14,9 @@
 	#include <assert.h>
 
 	#define array(TYPE, NAME, DIM1)				staticArray<TYPE> NAME(DIM1)
+	#define arrayRef(TYPE, NAME, DIM1)			staticArray<TYPE> & NAME
 	#define array2d(TYPE, NAME, DIM1, DIM2)		staticArray2d<TYPE> NAME(DIM1, DIM2)
+	#define arrayRef2d(TYPE, NAME, DIM1)		staticArray2d<TYPE> & NAME
 
 	// Static array 1d
 	template <class T>

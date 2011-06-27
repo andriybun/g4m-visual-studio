@@ -4,11 +4,10 @@
 tableData::tableData()
 {
 	descr = MDT();
-	N = descr.getN();
 }
 
 // constructor
-tableData::tableData(string fileNameGdc)
+tableData::tableData(std::string fileNameGdc)
 {
 	ifstream f;
 	f.open(fileNameGdc.c_str(), ios::in | ios::binary);
@@ -28,7 +27,7 @@ tableData::tableData(string fileNameGdc)
 			dimCardinals[i] = tmp;
 		}
 		// Reading *.gdt file
-		string fileNameGdt;
+		std::string fileNameGdt;
 		if(fileNameGdc.find_last_of(".") != std::string::npos)
 		{
 			fileNameGdt = fileNameGdc.substr(0, fileNameGdc.find_last_of(".") + 1) + "gdt";
@@ -67,18 +66,13 @@ tableData::tableData(string fileNameGdc)
 // destructor
 tableData::~tableData()
 {
-/*  map<int, float_vector_t>::iterator it = data.begin();
-  while (it != data.end()) {
-    delete it->second;
-    it++;
-  }*/
 }
 
 //================
 // Class methods:
 //================
 
-void tableData::insert(float val, str_vector_t point)
+void tableData::insert(str_vector_t point, float val)
 {
 	if (val != 0)
 	{
@@ -86,23 +80,39 @@ void tableData::insert(float val, str_vector_t point)
 	}
 }
 
-void tableData::insert(float val, int_vector_t point)
+void tableData::insert(int_vector_t point, float val)
 {
 	if (val != 0)
 	{
-		data.insert(make_pair(descr.getHashByCoords(point), val));
+		int card = partialHash.top();
+		data.insert(make_pair(card, val));
 	}
 }
 
-void tableData::insert(float val, string paramName)
+void tableData::insert(std::string paramName, float val)
 {
 	if (point.size() == descr.nDims) point.pop_back();
 	pointPush(paramName);
-	insert(val, point);
+	insert(point, val);
 	pointPop();
 }
 
-void tableData::update(float val, str_vector_t point)
+
+bool tableData::insert(int coord, float val)
+{
+	if (val != 0)
+	{
+		assert((point.size()+1) == descr.getNDims());
+		if (partialHash.top() < 0) return false;
+		long long card = partialHash.top() + partialHashOffset * descr.dimCardinals[point.size()-1] * coord;
+		if (card < 0) return false;
+		data.insert(make_pair(card, val));
+		return true;
+	}
+	return false;
+}
+
+void tableData::update(str_vector_t point, float val)
 {
 	if (val != 0)
 	{
@@ -112,70 +122,9 @@ void tableData::update(float val, str_vector_t point)
 	}
 }
 
-void tableData::rename(string name)
-{
-	descr.paramName = name;
-}
-
-void tableData::renameDims(str_vector_t vec)
-{
-	descr.dimNames = vec;
-}
-
-void tableData::addDim(string dimName, set<string> elements)
-{
-	str_vector_t tmp;
-	set<string>::iterator it = elements.begin();
-	while(it != elements.end())
-	{
-		tmp.push_back(*it);
-		it++;
-	}
-	descr.addDim(dimName,tmp);
-}
-
-void tableData::addDim(string dimName, set<int> elements)
-{
-	str_vector_t tmp;
-	set<int>::iterator it = elements.begin();
-	while(it != elements.end())
-	{
-		tmp.push_back(IntToStr(*it));
-		it++;
-	}
-	descr.addDim(dimName,tmp);
-}
-
-void tableData::addDim(string dimName, string element)
-{
-	str_vector_t tmp;
-	tmp.push_back(element);
-	descr.addDim(dimName,tmp);
-}
-
 void tableData::updateDimEl(string dimName, int posEl, string element)
 {
     descr.updateDimEl(dimName, posEl, element);
-}
-
-void tableData::pointPush(string val)
-{
-	point.push_back(val);
-}
-
-void tableData::pointPush(int val)
-{
-	point.push_back(IntToStr(val));
-}
-
-void tableData::pointPop()
-{
-	point.pop_back();
-}
-
-void tableData::pointClear()
-{
-	point.clear();
 }
 
 void tableData::clear()
@@ -205,7 +154,7 @@ int tableData::append(tableData & another, int dim)
 	// Storing initial size of dimension by which we concatenate tables
 	int thisDimSize = descr.dimCardinals[dim];
 	// Make a copy of own data map
-	map<long long, float> dataCopy = data;
+	std::map<long long, float> dataCopy = data;
 	MDT descrCopy = descr;
 	// Appending data to MDT-description
 	string dimName = descr.dimNames[dim];
@@ -216,23 +165,23 @@ int tableData::append(tableData & another, int dim)
 	// Clear own data
 	data.clear();
 	// Fill new merged data with own data, updating hash table
-	map<long long, float>::iterator it;
+	std::map<long long, float>::iterator it;
 	for (it = dataCopy.begin(); it != dataCopy.end(); it++)
 	{
 		int_vector_t coords = descrCopy.getCoordsByHash(it->first);
-		insert(it->second, coords);
+		insert(coords, it->second);
 	}
 	// Fill new merged data with another's data, updating hash table
 	for (it = another.data.begin(); it != another.data.end(); it++)
 	{
 		int_vector_t coords = another.descr.getCoordsByHash(it->first);
 		coords[dim] += thisDimSize;
-		insert(it->second, coords);
+		insert(coords, it->second);
 	}
 	return 0;
 }
 
-bool tableData::SaveToFile(string outDir, string fileName)
+bool tableData::SaveToFile(std::string outDir, std::string fileName)
 {
 	//****************************
 	//**** Writimg *.GDC file ****
@@ -243,7 +192,7 @@ bool tableData::SaveToFile(string outDir, string fileName)
 		return false;
 	}
 	fileName = outDir + pathSeparator + fileName;
-	string fileNameTmp = fileName + ".gdc";
+	std::string fileNameTmp = fileName + ".gdc";
 	ofstream f;
 	f.open(fileNameTmp.c_str(), ios::out | ios::binary);
 	if (f.is_open())
@@ -266,7 +215,7 @@ bool tableData::SaveToFile(string outDir, string fileName)
 		INV_BYTE_ORDER(tmp_int);
 		f.write(reinterpret_cast<char *>(&tmp_int), sizeof(int));
 		int i = 0;
-		map<long long, float>::iterator it = data.begin();
+		std::map<long long, float>::iterator it = data.begin();
 		while (it != data.end())
 		{
 			long long tmp_long = it->first;
