@@ -30,7 +30,8 @@ struct exchangeT
 	const inCellDataT * inCellData;
 	const inCommonDataT * inCommonData;
 	outCellDataT * outCellData;
-	int (*execute)(const inCellDataT &, const inCommonDataT &, outCellDataT &);
+	int (*execute)(void *, const inCellDataT &, const inCommonDataT &, outCellDataT &);
+	void * params;
 };
 
 template <class inCellDataT, class inCommonDataT, class outCellDataT>
@@ -40,15 +41,20 @@ DWORD WINAPI ThreadFun(LPVOID lpParam)
 
 	for (int i = 0; i < localDataPtr->count; i++)
 	{
-		localDataPtr->execute(localDataPtr->inCellData[i], *localDataPtr->inCommonData, localDataPtr->outCellData[i]);
+		localDataPtr->execute(localDataPtr->params, localDataPtr->inCellData[i], 
+			*localDataPtr->inCommonData, localDataPtr->outCellData[i]);
 	}
 
 	return 0;
 }
 
 template <class inCellDataT, class inCommonDataT, class outCellDataT>
-int parallelExecute(int (*execute)(const inCellDataT &, const inCommonDataT &, outCellDataT &), 
-					const inCellDataT * arr, const inCommonDataT & paramsStruct, outCellDataT * outArr, int count)
+int parallelExecute(int (*execute)(void * params, const inCellDataT &, const inCommonDataT &, outCellDataT &),
+					const inCellDataT * arr,
+					const inCommonDataT & paramsStruct,
+					outCellDataT * outArr,
+					int count,
+					void * params = NULL)
 {
 	SYSTEM_INFO sysinfo;
 	GetSystemInfo( &sysinfo );
@@ -69,6 +75,7 @@ int parallelExecute(int (*execute)(const inCellDataT &, const inCommonDataT &, o
 		msgArray[i].inCommonData = &paramsStruct;
 		msgArray[i].outCellData = &outArr[i * itemsPerThread];
 		msgArray[i].execute = execute;
+		msgArray[i].params = params;
 	}
 
 	DWORD threadsCreated = 0;
@@ -112,13 +119,16 @@ int parallelExecute(int (*execute)(const inCellDataT &, const inCommonDataT &, o
 // Serial execution
 
 template <class inCellDataT, class inCommonDataT, class outCellDataT>
-int parallelExecute(int (*execute)(const inCellDataT &, const inCommonDataT &, outCellDataT &),
-					dynamicArrayRef(inCellDataT, arr), const inCommonDataT & paramsStruct, 
-					dynamicArrayRef(outCellDataT, outArr), int count)
+int parallelExecute(int (*execute)(void * params, const inCellDataT &, const inCommonDataT &, outCellDataT &),
+					dynamicArrayRef(inCellDataT, arr),
+					const inCommonDataT & paramsStruct,
+					dynamicArrayRef(outCellDataT, outArr),
+					int count,
+					void * params = NULL)
 {
 	for (int i = 0; i < count; i++)	
 	{
-		execute(arr[i], paramsStruct, outArr[i]);
+		execute(params, arr[i], paramsStruct, outArr[i]);
 	}
 
 	return 0;

@@ -1,23 +1,61 @@
+#include <cmath>
+
 #include "g4m.h"
 
 template <class realT>
-int readInputs(inputFileInfoT info, dynamicArrayRef(inCellDataT<realT>, inCellData), 
-			   inCommonDataT<realT> &inCommonData, dynamicArrayRef(outCellDataT<realT>, outCellData))
+int readInputs(inputFileInfoT info,
+			   simUnitsData simuData,
+			   dynamicArrayRef(inCellDataT<realT>, inCellData), 
+			   inCommonDataT<realT> &inCommonData,
+			   dynamicArrayRef(outCellDataT<realT>, outCellData),
+			   dynamicArrayRef(outCellDataT<realT>, outCountrySummaryData))
 {
-	int numCells = 1;
+	// stopgap
+	int xMin = - 180;
+	int xMax = 180;
+	int yMin = -69;
+	int yMax = 83;
+	int numCells = (xMax - xMin + 2) * (yMax - yMin + 2) * 4;
+	int numCountries = 10;
+
+	inCommonData.beginYear = 2000;
+	inCommonData.endYear = 2010;
 
 	dynamicAllocate(inCellDataT<realT>, inCellData, numCells);
 	dynamicAllocate(outCellDataT<realT>, outCellData, numCells);
+	dynamicAllocateZeros(outCellDataT<realT>, outCountrySummaryData, numCountries);
 
-	inCellData[0].STOPGAP = 8;
-	inCommonData.STOPGAP = 9;
+	int cellIdx = 0;
+
+	for (int x = xMin * (realT)2; x <= xMax * (realT)2; x++)
+	{
+		for (int y = yMin * (realT)2; y <= yMax * (realT)2; y++)
+		{
+			double xx = x / (realT)2;
+			double yy = y / (realT)2;
+			inCellData[cellIdx].x = xx;
+			inCellData[cellIdx].y = yy;
+			inCellData[cellIdx].countryIdx = fabs((realT)(((x + y) / 10) % 10));
+			cellIdx++;
+		}
+	}
+
 	inCommonData.numCells = numCells;
+	inCommonData.numCountries = numCountries;
+	// end stopgap
 
 	return 0;
 }
 
-template int readInputs<float>(inputFileInfoT info, dynamicArrayRef(inCellDataT<float>, inCellData), 
-							   inCommonDataT<float> &inCommonData, dynamicArrayRef(outCellDataT<float>, outCellData));
-template int readInputs<double>(inputFileInfoT info, dynamicArrayRef(inCellDataT<double>, inCellData),
-								inCommonDataT<double> &inCommonData, dynamicArrayRef(outCellDataT<double>, outCellData));
-
+template int readInputs<float>(inputFileInfoT info,
+							   simUnitsData simuData,
+							   dynamicArrayRef(inCellDataT<float>, inCellData), 
+							   inCommonDataT<float> &inCommonData,
+							   dynamicArrayRef(outCellDataT<float>, outCellData),
+							   dynamicArrayRef(outCellDataT<float>, outCountrySummaryData));
+template int readInputs<double>(inputFileInfoT info,
+								simUnitsData simuData,
+								dynamicArrayRef(inCellDataT<double>, inCellData),
+								inCommonDataT<double> &inCommonData, 
+								dynamicArrayRef(outCellDataT<double>, outCellData),
+								dynamicArrayRef(outCellDataT<double>, outCountrySummaryData));

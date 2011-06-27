@@ -3,10 +3,11 @@
 
 #if !defined DEBUG_ARRAYS
 
-#define dynamicArray(TYPE, NAME)				TYPE * NAME
-#define dynamicArrayRef(TYPE, NAME)				TYPE * & NAME
-#define dynamicAllocate(TYPE, ARR_NAME, SIZE)	ARR_NAME = new TYPE[SIZE]
-#define dynamicFree(ARR_NAME)					delete [] ARR_NAME
+#define dynamicArray(TYPE, NAME)					TYPE * NAME
+#define dynamicArrayRef(TYPE, NAME)					TYPE * & NAME
+#define dynamicAllocate(TYPE, ARR_NAME, SIZE)		ARR_NAME = new TYPE[SIZE]
+#define dynamicAllocateZeros(TYPE, ARR_NAME, SIZE)	ARR_NAME = new TYPE[SIZE]; memset(ARR_NAME, 0, SIZE * sizeof(TYPE))
+#define dynamicFree(ARR_NAME)						delete [] ARR_NAME
 
 #else
 
@@ -14,10 +15,11 @@
 
 #include <assert.h>
 
-#define dynamicArray(TYPE, NAME)				dynamicArrayInternal< TYPE > NAME
-#define dynamicArrayRef(TYPE, NAME)				dynamicArrayInternal< TYPE > & NAME
-#define dynamicAllocate(TYPE, ARR_NAME, SIZE)	ARR_NAME.allocate(SIZE)
-#define dynamicFree(ARR_NAME)					ARR_NAME.setMemoryReleasedFlag()
+#define dynamicArray(TYPE, NAME)					dynamicArrayInternal< TYPE > NAME
+#define dynamicArrayRef(TYPE, NAME)					dynamicArrayInternal< TYPE > & NAME
+#define dynamicAllocate(TYPE, ARR_NAME, SIZE)		ARR_NAME.allocate(SIZE)
+#define dynamicAllocateZeros(TYPE, ARR_NAME, SIZE)	ARR_NAME.allocateZeros(SIZE)
+#define dynamicFree(ARR_NAME)						ARR_NAME.setMemoryReleasedFlag()
 
 // Dynamic array 1d
 template <class T>
@@ -34,6 +36,7 @@ public:
 	dynamicArrayInternal(const dynamicArrayInternal & orig);
 	dynamicArrayInternal & operator = (const dynamicArrayInternal & orig);
 	void allocate(const int size);
+	void allocateZeros(const int size);
 	void setMemoryReleasedFlag();
 	T & operator [] (int idx);
 };
@@ -100,6 +103,20 @@ void dynamicArrayInternal<T>::allocate(const int size)
 	data = new T[size];
 	isAllocated = true;
 	isMemoryReleased = false;
+}
+
+template <class T>
+void dynamicArrayInternal<T>::allocateZeros(const int size)
+{
+	assert(!isAllocated);
+	dim1size = size;
+	data = new T[size];
+	isAllocated = true;
+	isMemoryReleased = false;
+	for (int i = 0; i < size; i++)
+	{
+		memset((void *)(& data[i]), 0, sizeof(T));
+	}
 }
 
 template <class T>

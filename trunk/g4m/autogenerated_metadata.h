@@ -12,17 +12,19 @@
 template <>
 void struct_info_t< inCellDataT<double> >::define_metadata()
 {
-	add_variable(m_struct.STOPGAP);		// double
+	add_variable(m_struct.x);		// double
+	add_variable(m_struct.y);		// double
+	add_variable(m_struct.countryIdx);		// int
 }
 
 template <>
 void struct_info_t< inCommonDataT<double> >::define_metadata()
 {
 	add_variable(m_struct.numCells);		// int
+	add_variable(m_struct.numCountries);		// int
 	add_variable(m_struct.beginYear);		// int
 	add_variable(m_struct.endYear);		// int
 	add_variable(m_struct.year);		// int
-	add_variable(m_struct.STOPGAP);		// double
 }
 
 template <>
@@ -30,23 +32,24 @@ void struct_info_t< outCellDataT<double> >::define_metadata()
 {
 	add_variable(m_struct.forestArea);		// double
 	add_variable(m_struct.forestShare);		// double
-	add_variable(m_struct.STOPGAP);		// double
 }
 
 template <>
 void struct_info_t< inCellDataT<float> >::define_metadata()
 {
-	add_variable(m_struct.STOPGAP);		// float
+	add_variable(m_struct.x);		// float
+	add_variable(m_struct.y);		// float
+	add_variable(m_struct.countryIdx);		// int
 }
 
 template <>
 void struct_info_t< inCommonDataT<float> >::define_metadata()
 {
 	add_variable(m_struct.numCells);		// int
+	add_variable(m_struct.numCountries);		// int
 	add_variable(m_struct.beginYear);		// int
 	add_variable(m_struct.endYear);		// int
 	add_variable(m_struct.year);		// int
-	add_variable(m_struct.STOPGAP);		// float
 }
 
 template <>
@@ -54,7 +57,6 @@ void struct_info_t< outCellDataT<float> >::define_metadata()
 {
 	add_variable(m_struct.forestArea);		// float
 	add_variable(m_struct.forestShare);		// float
-	add_variable(m_struct.STOPGAP);		// float
 }
 
 #endif
