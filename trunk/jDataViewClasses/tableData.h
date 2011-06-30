@@ -25,6 +25,7 @@
 class tableData : public baseData
 {
 private:
+	template < typename structT > friend class structToTableWriterT;
 	std::map<long long, float> data;
 public:
 	tableData();

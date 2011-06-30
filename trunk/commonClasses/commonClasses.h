@@ -1,4 +1,5 @@
 #include "countryData.h"
+#include "countrySummaryBase.h"
 #include "griddata2.h"
 #include "griddataLite.h"
 #include "ipol.h"

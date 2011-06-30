@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="metadata_generator"
 	ProjectGUID="{66AB8C3F-041A-4FC6-A62A-D0D3692FFB9D}"
 	RootNamespace="metadata_generator"
@@ -184,6 +184,10 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\generate_operators.h"
+				>
+			</File>
 			<File
 				RelativePath=".\generator_utils.h"
 				>

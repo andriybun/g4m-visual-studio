@@ -10,14 +10,14 @@
 template <class realT>
 int computeCell(void * params, const inCellDataT<realT> &inCellData, const inCommonDataT<realT> &inCommonData, outCellDataT<realT> &outCellData)
 {
-	structToMapWriter< outCellDataT<realT> > & simuDataWriter = (*((dataContainersHolder<realT> *)params)).simuWriter;
-	dynamicArrayRef(outCellDataT<realT>, outCountrySummaryData) = (*((dataContainersHolder<realT> *)params)).outCountrySummaryData;
+	structToMapWriterT< outCellDataT<realT> > & simuDataWriter = (*((dataContainersHolder<realT> *)params)).simuWriter;
+	countrySummaryBaseT< outCellDataT<realT> > & outCountrySummaryData = (*((dataContainersHolder<realT> *)params)).outCountrySummaryData;
 
 	// Stopgap:
 	outCellData.forestArea = 20;
 	outCellData.forestShare = 40;
-	outCountrySummaryData[inCellData.countryIdx].forestArea += outCellData.forestArea;
-	outCountrySummaryData[inCellData.countryIdx].forestShare += outCellData.forestShare;
+	outCountrySummaryData.inc(inCellData.countryIdx, inCommonData.year, outCellData);
+	outCellDataT<realT> tst = outCountrySummaryData.get(inCellData.countryIdx, inCommonData.year);
 	// end stopgap
 
 	simuDataWriter.writeData(inCellData.x, inCellData.y, outCellData);

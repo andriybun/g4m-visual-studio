@@ -37,7 +37,7 @@ int computeModel()
 	simuData.addDim("year", years);
 	simuData.addDim("value", results);
 	// SIMU data writer
-	structToMapWriter< outCellDataT<realT> > simuDataWriter(simuData);
+	structToMapWriterT< outCellDataT<realT> > simuDataWriter(simuData);
 	simuDataWriter.addOutputParam("forestArea", DISTRIBUTE_PROPORTIONALLY);
 	simuDataWriter.addOutputParam("forestShare", IS_CONSTANT);
 	// Summary by countries
@@ -48,12 +48,14 @@ int computeModel()
 	countrySummaryTable.addDim("year", years);
 	countrySummaryTable.addDim("country", countries);
 	countrySummaryTable.addDim("value", results);
-	structToTableWriter< outCellDataT<realT> > countrySummaryWriter(countrySummaryTable);
+	structToTableWriterT< outCellDataT<realT> > countrySummaryWriter(countrySummaryTable);
+	countrySummaryWriter.addOutputParam("forestArea");
+	countrySummaryWriter.addOutputParam("forestShare");
+	countrySummaryBaseT< outCellDataT<realT> > outCountrySummaryData;
 
 	// Initialize data
 	dynamicArray(inCellDataT<realT>, inCellData);
 	dynamicArray(outCellDataT<realT>, outCellData);
-	dynamicArray(outCellDataT<realT>, outCountrySummaryData);
 	inCommonDataT<realT> inCommonData;
 
 	// Holder of data classes and structs
@@ -64,6 +66,8 @@ int computeModel()
 	inputFileInfoT info(guiFile);
 
 	readInputs<realT>(info, simuData, inCellData, inCommonData, outCellData, outCountrySummaryData);
+	// TODO: move to readInputs
+	outCountrySummaryData.allocate(countries, inCommonData.beginYear, inCommonData.endYear);
 
 	for (inCommonData.year = inCommonData.beginYear; inCommonData.year <= inCommonData.endYear; inCommonData.year++)
 	{
@@ -71,15 +75,22 @@ int computeModel()
 		countrySummaryTable.pointPush(inCommonData.year);
 		parallelExecute< inCellDataT<realT>, inCommonDataT<realT>, outCellDataT<realT> > (
 			&computeCell<realT>, inCellData, inCommonData, outCellData, inCommonData.numCells, (void *)(& pHolder));
+		for (int countryIdx = 0; countryIdx < inCommonData.numCountries; countryIdx++)
+		{
+			countrySummaryTable.pointPush(countryIdx);
+			//countrySummaryWriter.writeData(outCountrySummaryData[countryIdx]);
+			countrySummaryTable.pointPop();
+		}
+
 		simuData.pointPop();
 		countrySummaryTable.pointPop();
 	}
 
 	dynamicFree(inCellData);
 	dynamicFree(outCellData);
-	dynamicFree(outCountrySummaryData);
 
 	simuData.SaveToFile("..\\GLOBIOM GUI\\data\\maps", "my_test_map");
+	countrySummaryTable.SaveToFile("..\\GLOBIOM GUI\\data\\tables", "my_test_table");
 
 	return 0;
 };

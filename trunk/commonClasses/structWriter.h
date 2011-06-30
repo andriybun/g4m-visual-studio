@@ -16,13 +16,13 @@ struct var_info_lite_t
 };
 
 template < typename structT >
-class structWriter
+class structWriterT
 {
 protected:
 	std::deque<var_info_lite_t> varsInfoHolder;
 public:
-	structWriter() {}
-	~structWriter(void) {}
+	structWriterT() {}
+	~structWriterT(void) {}
 
 	float getValue(structT & mStruct, std::deque<var_info_lite_t>::iterator & it)
 	{
