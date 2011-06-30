@@ -7,6 +7,7 @@
 
 #include "intf.h"
 
+//const int MAX_NUM_COUNTRIES = 300;
 
 
 template <>

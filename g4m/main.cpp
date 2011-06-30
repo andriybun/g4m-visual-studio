@@ -51,7 +51,8 @@ int computeModel()
 	structToTableWriterT< outCellDataT<realT> > countrySummaryWriter(countrySummaryTable);
 	countrySummaryWriter.addOutputParam("forestArea");
 	countrySummaryWriter.addOutputParam("forestShare");
-	countrySummaryBaseT< outCellDataT<realT> > outCountrySummaryData;
+	//countrySummaryBaseT< outCellDataT<realT> > outCountrySummaryData;
+	countrySummaryT< outCellDataT<realT> > outCountrySummaryData;
 
 	// Initialize data
 	dynamicArray(inCellDataT<realT>, inCellData);
