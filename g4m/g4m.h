@@ -22,12 +22,11 @@
 template <class realT>
 struct dataContainersHolder
 {
-	structToMapWriter< outCellDataT<realT> > & simuWriter;
-	dynamicArrayRef(outCellDataT<realT>, outCountrySummaryData);
+	structToMapWriterT< outCellDataT<realT> > & simuWriter;
+	countrySummaryBaseT< outCellDataT<realT> > &outCountrySummaryData;
 
-	dataContainersHolder(structToMapWriter< outCellDataT<realT> > & simuWriter/* = NULL*/
-		, dynamicArrayRef(outCellDataT<realT>, outCountrySummaryData)/* = NULL*/
-		//, dynamicArrayRef(outCellDataT<realT>, outCountrySummaryData) = NULL
+	dataContainersHolder(structToMapWriterT< outCellDataT<realT> > & simuWriter /*= NULL*/
+		, countrySummaryBaseT< outCellDataT<realT> > &outCountrySummaryData /*= NULL*/
 		)
 		: simuWriter(simuWriter)
 		, outCountrySummaryData(outCountrySummaryData)
@@ -44,7 +43,7 @@ int readInputs(inputFileInfoT info,
 			   dynamicArrayRef(inCellDataT<realT>, inCellData), 
 			   inCommonDataT<realT> &inCommonData,
 			   dynamicArrayRef(outCellDataT<realT>, outCellData),
-			   dynamicArrayRef(outCellDataT<realT>, outCountrySummaryData));
+			   countrySummaryBaseT< outCellDataT<realT> > & outCountrySummaryData);
 
 template <class realT>
 int computeCell(void * params,

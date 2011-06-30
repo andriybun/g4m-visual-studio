@@ -147,6 +147,7 @@ public:
 		{
 			return 5;
 		}
+		return -1;
 	}
 
 	size_t get_var_offset(std::string var_name, size_t idx = 0)

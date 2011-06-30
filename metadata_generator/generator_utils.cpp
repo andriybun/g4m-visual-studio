@@ -23,7 +23,7 @@ bool ParseVar(const vector<string> &words, int &currPos, vector<varInfoT> &varDa
 	return true;
 }
 
-bool ParseArray(const vector<string> &words, int &currPos, vector<arrayInfoT> &arrayData)
+bool ParseArray(const vector<string> &words, int &currPos, vector<varInfoT> &arrayData)
 {
 	if (words[++currPos] != "(") return false; // invalid syntax
 	string typeName = words[++currPos];
@@ -33,7 +33,7 @@ bool ParseArray(const vector<string> &words, int &currPos, vector<arrayInfoT> &a
 	string arraySize = words[++currPos];
 	if (words[++currPos] != ")") return false; // invalid syntax
 	if (words[++currPos] != ";") return false; // invalid syntax
-	arrayData.push_back(arrayInfoT(arrayName, typeName, arraySize));
+	arrayData.push_back(varInfoT(arrayName, typeName, true, arraySize));
 	return true;
 }
 
@@ -49,9 +49,7 @@ bool ParseStruct(const vector<string> &words, int &currPos, vector<structInfoT> 
 	{
 		if (words[currPos] == "array")
 		{
-			vector<arrayInfoT> dummy;
-			if (!ParseArray(words, currPos, dummy)) return false; // invalid syntax
-			varData.push_back(varInfoT(dummy[0].name, dummy[0].type + "[" + dummy[0].size + "]"));
+			if (!ParseArray(words, currPos, varData)) return false; // invalid syntax
 		}
 		else
 		{
@@ -79,9 +77,7 @@ bool ParseStructTemplate(const vector<string> &words, int &currPos, vector<struc
 	{
 		if (words[currPos] == "array")
 		{
-			vector<arrayInfoT> dummy;
-			if (!ParseArray(words, currPos, dummy)) return false; // invalid syntax
-			varData.push_back(varInfoT(dummy[0].name, dummy[0].type + "[" + dummy[0].size + "]"));
+			if (!ParseArray(words, currPos, varData)) return false; // invalid syntax
 		}
 		else
 		{

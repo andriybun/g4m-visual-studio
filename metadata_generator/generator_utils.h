@@ -18,18 +18,25 @@ struct varInfoT
 {
 	string name;
 	string type;
-
-	varInfoT(string name, string type): name(name), type(type) {}
-};
-
-struct arrayInfoT
-{
-	string name;
-	string type;
+	bool isArray;
 	string size;
 
-	arrayInfoT(string name, string type, string size): name(name), type(type), size(size) {}
+	varInfoT(string name, string type, bool isArray = false, string size = "")
+		: name(name)
+		, type(type)
+		, isArray(isArray)
+		, size(size)
+	{}
 };
+
+//struct arrayInfoT
+//{
+//	string name;
+//	string type;
+//	string size;
+//
+//	arrayInfoT(string name, string type, string size): name(name), type(type), size(size) {}
+//};
 
 struct structInfoT
 {
@@ -48,7 +55,7 @@ struct structInfoT
 
 bool ParseConst(const vector<string> &words, int &currPos, vector<constInfoT> &constData);
 bool ParseVar(const vector<string> &words, int &currPos, vector<varInfoT> &varData);
-bool ParseArray(const vector<string> &words, int &currPos, vector<arrayInfoT> &arrayData);
+bool ParseArray(const vector<string> &words, int &currPos, vector<varInfoT> &arrayData);
 bool ParseStruct(const vector<string> &words, int &currPos, vector<structInfoT> &structData);
 bool ParseStructTemplate(const vector<string> &words, int &currPos, vector<structInfoT> &structData);
 

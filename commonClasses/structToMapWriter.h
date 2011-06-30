@@ -9,13 +9,13 @@
 #include "../jDataViewClasses/jDataViewClasses.h"
 
 template < typename structT >
-class structToMapWriter : public structWriter<structT>
+class structToMapWriterT : public structWriterT<structT>
 {
 private:
 	simUnitsData & simuData;
 public:
-	structToMapWriter(simUnitsData & simuData): simuData(simuData) {}
-	~structToMapWriter(void) {}
+	structToMapWriterT(simUnitsData & simuData): simuData(simuData) {}
+	~structToMapWriterT(void) {}
 
 	void addOutputParam(std::string param_name, distribute_value_t distribute_value = DISTRIBUTE_PROPORTIONALLY)
 	{
@@ -24,7 +24,7 @@ public:
 		varInfo.offset = mStructInfo.get_var_offset(param_name);
 		varInfo.type_id = mStructInfo.get_var_type_id(param_name);
 		varInfo.simuDataPos = simuData.descr.getCoordinate(simuData.descr.getNDims()-1, param_name);
-		assert(varInfo.simuDataPos >= 0, "variable not found");
+		assert(varInfo.simuDataPos >= 0);
 		varInfo.distribute_value = distribute_value;
 		varsInfoHolder.push_back(varInfo);
 	}

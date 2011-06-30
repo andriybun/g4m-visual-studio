@@ -8,7 +8,7 @@ int readInputs(inputFileInfoT info,
 			   dynamicArrayRef(inCellDataT<realT>, inCellData), 
 			   inCommonDataT<realT> &inCommonData,
 			   dynamicArrayRef(outCellDataT<realT>, outCellData),
-			   dynamicArrayRef(outCellDataT<realT>, outCountrySummaryData))
+			   countrySummaryBaseT< outCellDataT<realT> > & outCountrySummaryData)
 {
 	// stopgap
 	int xMin = - 180;
@@ -23,7 +23,6 @@ int readInputs(inputFileInfoT info,
 
 	dynamicAllocate(inCellDataT<realT>, inCellData, numCells);
 	dynamicAllocate(outCellDataT<realT>, outCellData, numCells);
-	dynamicAllocateZeros(outCellDataT<realT>, outCountrySummaryData, numCountries);
 
 	int cellIdx = 0;
 
@@ -52,10 +51,10 @@ template int readInputs<float>(inputFileInfoT info,
 							   dynamicArrayRef(inCellDataT<float>, inCellData), 
 							   inCommonDataT<float> &inCommonData,
 							   dynamicArrayRef(outCellDataT<float>, outCellData),
-							   dynamicArrayRef(outCellDataT<float>, outCountrySummaryData));
+							   countrySummaryBaseT< outCellDataT<float> > & outCountrySummaryData);
 template int readInputs<double>(inputFileInfoT info,
 								simUnitsData simuData,
 								dynamicArrayRef(inCellDataT<double>, inCellData),
 								inCommonDataT<double> &inCommonData, 
 								dynamicArrayRef(outCellDataT<double>, outCellData),
-								dynamicArrayRef(outCellDataT<double>, outCountrySummaryData));
+								countrySummaryBaseT< outCellDataT<double> > & outCountrySummaryData);

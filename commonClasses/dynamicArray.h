@@ -6,7 +6,8 @@
 #define dynamicArray(TYPE, NAME)					TYPE * NAME
 #define dynamicArrayRef(TYPE, NAME)					TYPE * & NAME
 #define dynamicAllocate(TYPE, ARR_NAME, SIZE)		ARR_NAME = new TYPE[SIZE]
-#define dynamicAllocateZeros(TYPE, ARR_NAME, SIZE)	ARR_NAME = new TYPE[SIZE]; memset(ARR_NAME, 0, SIZE * sizeof(TYPE))
+#define dynamicSetZeros(TYPE, ARR_NAME, SIZE)		memset(ARR_NAME, 0, SIZE * sizeof(TYPE))
+#define dynamicAllocateZeros(TYPE, ARR_NAME, SIZE)	ARR_NAME = new TYPE[SIZE]; dynamicSetZeros(TYPE, ARR_NAME, SIZE)
 #define dynamicFree(ARR_NAME)						delete [] ARR_NAME
 
 #else
@@ -18,6 +19,7 @@
 #define dynamicArray(TYPE, NAME)					dynamicArrayInternal< TYPE > NAME
 #define dynamicArrayRef(TYPE, NAME)					dynamicArrayInternal< TYPE > & NAME
 #define dynamicAllocate(TYPE, ARR_NAME, SIZE)		ARR_NAME.allocate(SIZE)
+#define dynamicSetZeros(TYPE, ARR_NAME, SIZE)		ARR_NAME.setZeros(SIZE)
 #define dynamicAllocateZeros(TYPE, ARR_NAME, SIZE)	ARR_NAME.allocateZeros(SIZE)
 #define dynamicFree(ARR_NAME)						ARR_NAME.setMemoryReleasedFlag()
 
@@ -106,6 +108,17 @@ void dynamicArrayInternal<T>::allocate(const int size)
 }
 
 template <class T>
+void dynamicArrayInternal<T>::setZeros(const int size)
+{
+	assert(isAllocated);
+	assert(size == dim1size);
+	for (int i = 0; i < size; i++)
+	{
+		memset((void *)(& data[i]), 0, sizeof(T));
+	}
+}
+
+template <class T>
 void dynamicArrayInternal<T>::allocateZeros(const int size)
 {
 	assert(!isAllocated);
@@ -113,10 +126,7 @@ void dynamicArrayInternal<T>::allocateZeros(const int size)
 	data = new T[size];
 	isAllocated = true;
 	isMemoryReleased = false;
-	for (int i = 0; i < size; i++)
-	{
-		memset((void *)(& data[i]), 0, sizeof(T));
-	}
+	setZeros(size);
 }
 
 template <class T>

@@ -32,12 +32,12 @@ enum distribute_value_t
 	IS_CONSTANT
 };
 
-template < typename structT > class structToMapWriter;
+template < typename structT > class structToMapWriterT;
 
 class simUnitsData : public baseData
 {
 private:
-	template < typename structT > friend class structToMapWriter;
+	template < typename structT > friend class structToMapWriterT;
 	std::map<int, float_vector_t> data;
 	simUnitsMap sMap;
 public:
