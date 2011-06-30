@@ -1,7 +1,7 @@
 #ifndef G4M_H_
 #define G4M_H_
 
-#define DEBUG_ARRAYS
+//#define DEBUG_ARRAYS
 //#define SERIAL_EXECUTION
 
 #include "jDataViewClasses.h"
@@ -16,9 +16,11 @@
 // g4m specific
 #include "g4mIntf.h"
 #include "inputFileInfo.h"
+
+// data containers and writers
+#include "countrySummary.h"
 #include "structToMapWriter.h"
 #include "structToTableWriter.h"
-#include "countrySummary.h"
 
 template <class realT>
 struct dataContainersHolder

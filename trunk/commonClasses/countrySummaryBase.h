@@ -23,7 +23,7 @@ protected:
 	map<int, int> countriesMap;			// first - external index, second - internal index
 	bool isAllocated;
 
-	int getElemendIdx(int countryIdx, int year)
+	virtual int getElemendIdx(int countryIdx, int year)
 	{
 		assert((year >= beginYear) && (year <= endYear));
 		map<int, int>::iterator found = countriesMap.find(countryIdx);
@@ -47,7 +47,7 @@ public:
 		allocate(countriesVector, beginYearIn, endYearIn);
 	}
 
-	void allocate(intVectorT &countriesVector, int beginYearIn, int endYearIn)
+	virtual void allocate(intVectorT &countriesVector, int beginYearIn, int endYearIn)
 	{
 		numCountries = countriesVector.size();
 		beginYear = beginYearIn;
@@ -66,7 +66,7 @@ public:
 		isAllocated = true;
 	}
 
-	~countrySummaryBaseT()
+	virtual ~countrySummaryBaseT()
 	{
 		dynamicFree(data);
 		dynamicFree(count);

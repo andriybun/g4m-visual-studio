@@ -16,7 +16,7 @@ int readInputs(inputFileInfoT info,
 	int xMax = 180;
 	int yMin = -69;
 	int yMax = 83;
-	int numCells = (xMax - xMin + 2) * (yMax - yMin + 2) * 4;
+	int numCells = (2 * (xMax - xMin) + 1) * (2 * (yMax - yMin) + 1);
 	int numCountries = 10;
 
 	inCommonData.beginYear = 2000;
