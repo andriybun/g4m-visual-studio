@@ -1,7 +1,7 @@
 #ifndef G4M_H_
 #define G4M_H_
 
-//#define DEBUG_ARRAYS
+#define DEBUG_ARRAYS
 //#define SERIAL_EXECUTION
 
 #include "jDataViewClasses.h"

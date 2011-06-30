@@ -76,12 +76,8 @@ int computeModel()
 		countrySummaryTable.pointPush(inCommonData.year);
 		parallelExecute< inCellDataT<realT>, inCommonDataT<realT>, outCellDataT<realT> > (
 			&computeCell<realT>, inCellData, inCommonData, outCellData, inCommonData.numCells, (void *)(& pHolder));
-		for (int countryIdx = 0; countryIdx < inCommonData.numCountries; countryIdx++)
-		{
-			countrySummaryTable.pointPush(countryIdx);
-			//countrySummaryWriter.writeData(outCountrySummaryData[countryIdx]);
-			countrySummaryTable.pointPop();
-		}
+
+		countrySummaryWriter.writeData(outCountrySummaryData, countries);
 
 		simuData.pointPop();
 		countrySummaryTable.pointPop();

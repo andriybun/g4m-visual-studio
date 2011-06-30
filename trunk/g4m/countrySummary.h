@@ -19,7 +19,15 @@ private:
 	int getElemendIdx(int countryIdx, int year)
 	{
 		assert((year >= beginYear) && (year <= endYear));
-		return countriesMap[countryIdx];
+		if (countriesMap[countryIdx] < 0)
+		{
+			return -1;
+		}
+		else
+		{
+			//return countriesMap[countryIdx] * numYears + year - beginYear;
+			return (year - beginYear) * numCountries + countriesMap[countryIdx];
+		}
 	}
 public:
 
