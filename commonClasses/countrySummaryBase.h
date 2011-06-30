@@ -33,7 +33,7 @@ protected:
 		}
 		else
 		{
-			return (found->second) * numYears + year - beginYear;
+			return (year - beginYear) * numCountries + (found->second);
 		}
 	}
 public:

@@ -3,9 +3,11 @@
 
 #include <string>
 #include <deque>
+#include <vector>
 #include <assert.h>
 
 #include "structWriter.h"
+#include "countrySummaryBase.h"
 #include "../jDataViewClasses/jDataViewClasses.h"
 
 template < typename structT >
@@ -38,6 +40,17 @@ public:
 			float output = getValue(mStruct, it);
 			tbData.insert(it->simuDataPos, output);
 			it++;
+		}
+	}
+
+	void writeData(countrySummaryBaseT< structT > & outCountrySummaryData, vector<int> & countries)
+	{
+		int year = atoi(tbData.point[tbData.point.size()-1].c_str());
+		for (int countryIdx = 0; countryIdx < countries.size(); countryIdx++)
+		{
+			tbData.pointPush(countryIdx);
+			writeData(outCountrySummaryData.get(countries[countryIdx], year));			
+			tbData.pointPop();
 		}
 	}
 };
