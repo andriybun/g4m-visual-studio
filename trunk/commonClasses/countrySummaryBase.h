@@ -25,6 +25,7 @@ protected:
 
 	int getElemendIdx(int countryIdx, int year)
 	{
+		assert((year >= beginYear) && (year <= endYear));
 		map<int, int>::iterator found = countriesMap.find(countryIdx);
 		if (found == countriesMap.end())
 		{
