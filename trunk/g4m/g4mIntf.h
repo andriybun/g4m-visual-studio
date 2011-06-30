@@ -6,6 +6,8 @@
 #define STRUCTDEF(NAME)				struct NAME
 #define CONSTDEF(NAME, VALUE)		const int NAME = VALUE;
 
+CONSTDEF(MAX_NUM_COUNTRIES, 300)
+
 template <class realT>
 STRUCTDEF(inCellDataT)
 {

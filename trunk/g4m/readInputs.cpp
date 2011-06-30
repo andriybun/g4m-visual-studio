@@ -8,7 +8,8 @@ int readInputs(inputFileInfoT info,
 			   dynamicArrayRef(inCellDataT<realT>, inCellData), 
 			   inCommonDataT<realT> &inCommonData,
 			   dynamicArrayRef(outCellDataT<realT>, outCellData),
-			   countrySummaryBaseT< outCellDataT<realT> > & outCountrySummaryData)
+			   //countrySummaryBaseT< outCellDataT<realT> > & outCountrySummaryData)
+			   countrySummaryT< outCellDataT<realT> > & outCountrySummaryData)
 {
 	// stopgap
 	int xMin = - 180;
@@ -51,10 +52,13 @@ template int readInputs<float>(inputFileInfoT info,
 							   dynamicArrayRef(inCellDataT<float>, inCellData), 
 							   inCommonDataT<float> &inCommonData,
 							   dynamicArrayRef(outCellDataT<float>, outCellData),
-							   countrySummaryBaseT< outCellDataT<float> > & outCountrySummaryData);
+							   //countrySummaryBaseT< outCellDataT<float> > & outCountrySummaryData);
+							   countrySummaryT< outCellDataT<float> > & outCountrySummaryData);
+
 template int readInputs<double>(inputFileInfoT info,
 								simUnitsData simuData,
 								dynamicArrayRef(inCellDataT<double>, inCellData),
 								inCommonDataT<double> &inCommonData, 
 								dynamicArrayRef(outCellDataT<double>, outCellData),
-								countrySummaryBaseT< outCellDataT<double> > & outCountrySummaryData);
+								//countrySummaryBaseT< outCellDataT<double> > & outCountrySummaryData);
+								countrySummaryT< outCellDataT<double> > & outCountrySummaryData);

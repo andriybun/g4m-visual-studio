@@ -18,15 +18,18 @@
 #include "inputFileInfo.h"
 #include "structToMapWriter.h"
 #include "structToTableWriter.h"
+#include "countrySummary.h"
 
 template <class realT>
 struct dataContainersHolder
 {
 	structToMapWriterT< outCellDataT<realT> > & simuWriter;
-	countrySummaryBaseT< outCellDataT<realT> > &outCountrySummaryData;
+	//countrySummaryBaseT< outCellDataT<realT> > &outCountrySummaryData;
+	countrySummaryT< outCellDataT<realT> > &outCountrySummaryData;
 
 	dataContainersHolder(structToMapWriterT< outCellDataT<realT> > & simuWriter /*= NULL*/
-		, countrySummaryBaseT< outCellDataT<realT> > &outCountrySummaryData /*= NULL*/
+		//, countrySummaryBaseT< outCellDataT<realT> > &outCountrySummaryData /*= NULL*/
+		, countrySummaryT< outCellDataT<realT> > &outCountrySummaryData /*= NULL*/
 		)
 		: simuWriter(simuWriter)
 		, outCountrySummaryData(outCountrySummaryData)
@@ -43,7 +46,8 @@ int readInputs(inputFileInfoT info,
 			   dynamicArrayRef(inCellDataT<realT>, inCellData), 
 			   inCommonDataT<realT> &inCommonData,
 			   dynamicArrayRef(outCellDataT<realT>, outCellData),
-			   countrySummaryBaseT< outCellDataT<realT> > & outCountrySummaryData);
+			   //countrySummaryBaseT< outCellDataT<realT> > & outCountrySummaryData);
+			   countrySummaryT< outCellDataT<realT> > & outCountrySummaryData);
 
 template <class realT>
 int computeCell(void * params,

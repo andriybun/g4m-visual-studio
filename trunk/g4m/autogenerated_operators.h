@@ -5,7 +5,6 @@
 
 #include "intf.h"
 
-
 template <class realT>
 inCellDataT<realT> operator + (inCellDataT<realT> & first, inCellDataT<realT> & second)
 {
