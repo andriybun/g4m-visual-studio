@@ -38,6 +38,7 @@ public:
 	dynamicArrayInternal(const dynamicArrayInternal & orig);
 	dynamicArrayInternal & operator = (const dynamicArrayInternal & orig);
 	void allocate(const int size);
+	void setZeros(const int size);
 	void allocateZeros(const int size);
 	void setMemoryReleasedFlag();
 	T & operator [] (int idx);

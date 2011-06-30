@@ -18,7 +18,6 @@ int computeCell(void * params, const inCellDataT<realT> &inCellData, const inCom
 	outCellData.forestArea = 20;
 	outCellData.forestShare = 40;
 	outCountrySummaryData.inc(inCellData.countryIdx, inCommonData.year, outCellData);
-	outCellDataT<realT> tst = outCountrySummaryData.get(inCellData.countryIdx, inCommonData.year);
 	// end stopgap
 
 	simuDataWriter.writeData(inCellData.x, inCellData.y, outCellData);
