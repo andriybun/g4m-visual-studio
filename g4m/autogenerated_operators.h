@@ -5,6 +5,9 @@
 
 #include "intf.h"
 
+#define xxx_min(x, y) ((x)<(y) ? (x):(y))
+#define xxx_max(x, y) ((x)<(y) ? (y):(x))
+
 template <class realT>
 inCellDataT<realT> operator + (inCellDataT<realT> & first, inCellDataT<realT> & second)
 {
@@ -12,16 +15,6 @@ inCellDataT<realT> operator + (inCellDataT<realT> & first, inCellDataT<realT> & 
 	result.x = first.x + second.x;
 	result.y = first.y + second.y;
 	result.countryIdx = first.countryIdx + second.countryIdx;
-	return result;
-}
-
-template <class realT, typename variableXxxType>
-inCellDataT<realT> operator + (inCellDataT<realT> & first, variableXxxType & second)
-{
-	inCellDataT<realT> result;
-	result.x = first.x + second;
-	result.y = first.y + second;
-	result.countryIdx = first.countryIdx + second;
 	return result;
 }
 
@@ -35,16 +28,6 @@ inCellDataT<realT> operator - (inCellDataT<realT> & first, inCellDataT<realT> & 
 	return result;
 }
 
-template <class realT, typename variableXxxType>
-inCellDataT<realT> operator - (inCellDataT<realT> & first, variableXxxType & second)
-{
-	inCellDataT<realT> result;
-	result.x = first.x - second;
-	result.y = first.y - second;
-	result.countryIdx = first.countryIdx - second;
-	return result;
-}
-
 template <class realT>
 inCellDataT<realT> operator * (inCellDataT<realT> & first, inCellDataT<realT> & second)
 {
@@ -52,16 +35,6 @@ inCellDataT<realT> operator * (inCellDataT<realT> & first, inCellDataT<realT> & 
 	result.x = first.x * second.x;
 	result.y = first.y * second.y;
 	result.countryIdx = first.countryIdx * second.countryIdx;
-	return result;
-}
-
-template <class realT, typename variableXxxType>
-inCellDataT<realT> operator * (inCellDataT<realT> & first, variableXxxType & second)
-{
-	inCellDataT<realT> result;
-	result.x = first.x * second;
-	result.y = first.y * second;
-	result.countryIdx = first.countryIdx * second;
 	return result;
 }
 
@@ -76,12 +49,82 @@ inCellDataT<realT> operator / (inCellDataT<realT> & first, inCellDataT<realT> & 
 }
 
 template <class realT, typename variableXxxType>
+inCellDataT<realT> operator + (inCellDataT<realT> & first, variableXxxType & second)
+{
+	inCellDataT<realT> result;
+	result.x = first.x + second;
+	result.y = first.y + second;
+	result.countryIdx = first.countryIdx + second;
+	return result;
+}
+
+template <class realT, typename variableXxxType>
+inCellDataT<realT> operator - (inCellDataT<realT> & first, variableXxxType & second)
+{
+	inCellDataT<realT> result;
+	result.x = first.x - second;
+	result.y = first.y - second;
+	result.countryIdx = first.countryIdx - second;
+	return result;
+}
+
+template <class realT, typename variableXxxType>
+inCellDataT<realT> operator * (inCellDataT<realT> & first, variableXxxType & second)
+{
+	inCellDataT<realT> result;
+	result.x = first.x * second;
+	result.y = first.y * second;
+	result.countryIdx = first.countryIdx * second;
+	return result;
+}
+
+template <class realT, typename variableXxxType>
 inCellDataT<realT> operator / (inCellDataT<realT> & first, variableXxxType & second)
 {
 	inCellDataT<realT> result;
 	result.x = first.x / second;
 	result.y = first.y / second;
 	result.countryIdx = first.countryIdx / second;
+	return result;
+}
+
+template <class realT>
+inCellDataT<realT> min(inCellDataT<realT> & first, inCellDataT<realT> & second)
+{
+	inCellDataT<realT> result;
+	result.x = xxx_min(first.x, second.x);
+	result.y = xxx_min(first.y, second.y);
+	result.countryIdx = xxx_min(first.countryIdx, second.countryIdx);
+	return result;
+}
+
+template <class realT>
+inCellDataT<realT> max(inCellDataT<realT> & first, inCellDataT<realT> & second)
+{
+	inCellDataT<realT> result;
+	result.x = xxx_max(first.x, second.x);
+	result.y = xxx_max(first.y, second.y);
+	result.countryIdx = xxx_max(first.countryIdx, second.countryIdx);
+	return result;
+}
+
+template <class realT, typename variableXxxType>
+inCellDataT<realT> min(inCellDataT<realT> & first, variableXxxType & second)
+{
+	inCellDataT<realT> result;
+	result.x = xxx_min(first.x, second);
+	result.y = xxx_min(first.y, second);
+	result.countryIdx = xxx_min(first.countryIdx, second);
+	return result;
+}
+
+template <class realT, typename variableXxxType>
+inCellDataT<realT> max(inCellDataT<realT> & first, variableXxxType & second)
+{
+	inCellDataT<realT> result;
+	result.x = xxx_max(first.x, second);
+	result.y = xxx_max(first.y, second);
+	result.countryIdx = xxx_max(first.countryIdx, second);
 	return result;
 }
 
@@ -97,18 +140,6 @@ inCommonDataT<realT> operator + (inCommonDataT<realT> & first, inCommonDataT<rea
 	return result;
 }
 
-template <class realT, typename variableXxxType>
-inCommonDataT<realT> operator + (inCommonDataT<realT> & first, variableXxxType & second)
-{
-	inCommonDataT<realT> result;
-	result.numCells = first.numCells + second;
-	result.numCountries = first.numCountries + second;
-	result.beginYear = first.beginYear + second;
-	result.endYear = first.endYear + second;
-	result.year = first.year + second;
-	return result;
-}
-
 template <class realT>
 inCommonDataT<realT> operator - (inCommonDataT<realT> & first, inCommonDataT<realT> & second)
 {
@@ -121,18 +152,6 @@ inCommonDataT<realT> operator - (inCommonDataT<realT> & first, inCommonDataT<rea
 	return result;
 }
 
-template <class realT, typename variableXxxType>
-inCommonDataT<realT> operator - (inCommonDataT<realT> & first, variableXxxType & second)
-{
-	inCommonDataT<realT> result;
-	result.numCells = first.numCells - second;
-	result.numCountries = first.numCountries - second;
-	result.beginYear = first.beginYear - second;
-	result.endYear = first.endYear - second;
-	result.year = first.year - second;
-	return result;
-}
-
 template <class realT>
 inCommonDataT<realT> operator * (inCommonDataT<realT> & first, inCommonDataT<realT> & second)
 {
@@ -142,18 +161,6 @@ inCommonDataT<realT> operator * (inCommonDataT<realT> & first, inCommonDataT<rea
 	result.beginYear = first.beginYear * second.beginYear;
 	result.endYear = first.endYear * second.endYear;
 	result.year = first.year * second.year;
-	return result;
-}
-
-template <class realT, typename variableXxxType>
-inCommonDataT<realT> operator * (inCommonDataT<realT> & first, variableXxxType & second)
-{
-	inCommonDataT<realT> result;
-	result.numCells = first.numCells * second;
-	result.numCountries = first.numCountries * second;
-	result.beginYear = first.beginYear * second;
-	result.endYear = first.endYear * second;
-	result.year = first.year * second;
 	return result;
 }
 
@@ -170,6 +177,42 @@ inCommonDataT<realT> operator / (inCommonDataT<realT> & first, inCommonDataT<rea
 }
 
 template <class realT, typename variableXxxType>
+inCommonDataT<realT> operator + (inCommonDataT<realT> & first, variableXxxType & second)
+{
+	inCommonDataT<realT> result;
+	result.numCells = first.numCells + second;
+	result.numCountries = first.numCountries + second;
+	result.beginYear = first.beginYear + second;
+	result.endYear = first.endYear + second;
+	result.year = first.year + second;
+	return result;
+}
+
+template <class realT, typename variableXxxType>
+inCommonDataT<realT> operator - (inCommonDataT<realT> & first, variableXxxType & second)
+{
+	inCommonDataT<realT> result;
+	result.numCells = first.numCells - second;
+	result.numCountries = first.numCountries - second;
+	result.beginYear = first.beginYear - second;
+	result.endYear = first.endYear - second;
+	result.year = first.year - second;
+	return result;
+}
+
+template <class realT, typename variableXxxType>
+inCommonDataT<realT> operator * (inCommonDataT<realT> & first, variableXxxType & second)
+{
+	inCommonDataT<realT> result;
+	result.numCells = first.numCells * second;
+	result.numCountries = first.numCountries * second;
+	result.beginYear = first.beginYear * second;
+	result.endYear = first.endYear * second;
+	result.year = first.year * second;
+	return result;
+}
+
+template <class realT, typename variableXxxType>
 inCommonDataT<realT> operator / (inCommonDataT<realT> & first, variableXxxType & second)
 {
 	inCommonDataT<realT> result;
@@ -182,20 +225,59 @@ inCommonDataT<realT> operator / (inCommonDataT<realT> & first, variableXxxType &
 }
 
 template <class realT>
+inCommonDataT<realT> min(inCommonDataT<realT> & first, inCommonDataT<realT> & second)
+{
+	inCommonDataT<realT> result;
+	result.numCells = xxx_min(first.numCells, second.numCells);
+	result.numCountries = xxx_min(first.numCountries, second.numCountries);
+	result.beginYear = xxx_min(first.beginYear, second.beginYear);
+	result.endYear = xxx_min(first.endYear, second.endYear);
+	result.year = xxx_min(first.year, second.year);
+	return result;
+}
+
+template <class realT>
+inCommonDataT<realT> max(inCommonDataT<realT> & first, inCommonDataT<realT> & second)
+{
+	inCommonDataT<realT> result;
+	result.numCells = xxx_max(first.numCells, second.numCells);
+	result.numCountries = xxx_max(first.numCountries, second.numCountries);
+	result.beginYear = xxx_max(first.beginYear, second.beginYear);
+	result.endYear = xxx_max(first.endYear, second.endYear);
+	result.year = xxx_max(first.year, second.year);
+	return result;
+}
+
+template <class realT, typename variableXxxType>
+inCommonDataT<realT> min(inCommonDataT<realT> & first, variableXxxType & second)
+{
+	inCommonDataT<realT> result;
+	result.numCells = xxx_min(first.numCells, second);
+	result.numCountries = xxx_min(first.numCountries, second);
+	result.beginYear = xxx_min(first.beginYear, second);
+	result.endYear = xxx_min(first.endYear, second);
+	result.year = xxx_min(first.year, second);
+	return result;
+}
+
+template <class realT, typename variableXxxType>
+inCommonDataT<realT> max(inCommonDataT<realT> & first, variableXxxType & second)
+{
+	inCommonDataT<realT> result;
+	result.numCells = xxx_max(first.numCells, second);
+	result.numCountries = xxx_max(first.numCountries, second);
+	result.beginYear = xxx_max(first.beginYear, second);
+	result.endYear = xxx_max(first.endYear, second);
+	result.year = xxx_max(first.year, second);
+	return result;
+}
+
+template <class realT>
 outCellDataT<realT> operator + (outCellDataT<realT> & first, outCellDataT<realT> & second)
 {
 	outCellDataT<realT> result;
 	result.forestArea = first.forestArea + second.forestArea;
 	result.forestShare = first.forestShare + second.forestShare;
-	return result;
-}
-
-template <class realT, typename variableXxxType>
-outCellDataT<realT> operator + (outCellDataT<realT> & first, variableXxxType & second)
-{
-	outCellDataT<realT> result;
-	result.forestArea = first.forestArea + second;
-	result.forestShare = first.forestShare + second;
 	return result;
 }
 
@@ -208,30 +290,12 @@ outCellDataT<realT> operator - (outCellDataT<realT> & first, outCellDataT<realT>
 	return result;
 }
 
-template <class realT, typename variableXxxType>
-outCellDataT<realT> operator - (outCellDataT<realT> & first, variableXxxType & second)
-{
-	outCellDataT<realT> result;
-	result.forestArea = first.forestArea - second;
-	result.forestShare = first.forestShare - second;
-	return result;
-}
-
 template <class realT>
 outCellDataT<realT> operator * (outCellDataT<realT> & first, outCellDataT<realT> & second)
 {
 	outCellDataT<realT> result;
 	result.forestArea = first.forestArea * second.forestArea;
 	result.forestShare = first.forestShare * second.forestShare;
-	return result;
-}
-
-template <class realT, typename variableXxxType>
-outCellDataT<realT> operator * (outCellDataT<realT> & first, variableXxxType & second)
-{
-	outCellDataT<realT> result;
-	result.forestArea = first.forestArea * second;
-	result.forestShare = first.forestShare * second;
 	return result;
 }
 
@@ -245,6 +309,33 @@ outCellDataT<realT> operator / (outCellDataT<realT> & first, outCellDataT<realT>
 }
 
 template <class realT, typename variableXxxType>
+outCellDataT<realT> operator + (outCellDataT<realT> & first, variableXxxType & second)
+{
+	outCellDataT<realT> result;
+	result.forestArea = first.forestArea + second;
+	result.forestShare = first.forestShare + second;
+	return result;
+}
+
+template <class realT, typename variableXxxType>
+outCellDataT<realT> operator - (outCellDataT<realT> & first, variableXxxType & second)
+{
+	outCellDataT<realT> result;
+	result.forestArea = first.forestArea - second;
+	result.forestShare = first.forestShare - second;
+	return result;
+}
+
+template <class realT, typename variableXxxType>
+outCellDataT<realT> operator * (outCellDataT<realT> & first, variableXxxType & second)
+{
+	outCellDataT<realT> result;
+	result.forestArea = first.forestArea * second;
+	result.forestShare = first.forestShare * second;
+	return result;
+}
+
+template <class realT, typename variableXxxType>
 outCellDataT<realT> operator / (outCellDataT<realT> & first, variableXxxType & second)
 {
 	outCellDataT<realT> result;
@@ -252,5 +343,43 @@ outCellDataT<realT> operator / (outCellDataT<realT> & first, variableXxxType & s
 	result.forestShare = first.forestShare / second;
 	return result;
 }
+
+template <class realT>
+outCellDataT<realT> min(outCellDataT<realT> & first, outCellDataT<realT> & second)
+{
+	outCellDataT<realT> result;
+	result.forestArea = xxx_min(first.forestArea, second.forestArea);
+	result.forestShare = xxx_min(first.forestShare, second.forestShare);
+	return result;
+}
+
+template <class realT>
+outCellDataT<realT> max(outCellDataT<realT> & first, outCellDataT<realT> & second)
+{
+	outCellDataT<realT> result;
+	result.forestArea = xxx_max(first.forestArea, second.forestArea);
+	result.forestShare = xxx_max(first.forestShare, second.forestShare);
+	return result;
+}
+
+template <class realT, typename variableXxxType>
+outCellDataT<realT> min(outCellDataT<realT> & first, variableXxxType & second)
+{
+	outCellDataT<realT> result;
+	result.forestArea = xxx_min(first.forestArea, second);
+	result.forestShare = xxx_min(first.forestShare, second);
+	return result;
+}
+
+template <class realT, typename variableXxxType>
+outCellDataT<realT> max(outCellDataT<realT> & first, variableXxxType & second)
+{
+	outCellDataT<realT> result;
+	result.forestArea = xxx_max(first.forestArea, second);
+	result.forestShare = xxx_max(first.forestShare, second);
+	return result;
+}
+
+#include "../commonClasses/struct_info.h"
 
 #endif

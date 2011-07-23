@@ -18,6 +18,7 @@
 #include "inputFileInfo.h"
 
 // data containers and writers
+#include "structGrid.h"
 #include "countrySummary.h"
 #include "structToMapWriter.h"
 #include "structToTableWriter.h"
@@ -25,15 +26,22 @@
 template <class realT>
 struct dataContainersHolder
 {
-	structToMapWriterT< outCellDataT<realT> > & simuWriter;
-	//countrySummaryBaseT< outCellDataT<realT> > &outCountrySummaryData;
+	simUnitsData & simuData;
+	tableData & countrySummaryTable;
+	structToMapWriterT< outCellDataT<realT> > & simuDataWriter;
+	structToTableWriterT< outCellDataT<realT> > & countrySummaryWriter;
 	countrySummaryT< outCellDataT<realT> > &outCountrySummaryData;
 
-	dataContainersHolder(structToMapWriterT< outCellDataT<realT> > & simuWriter /*= NULL*/
-		//, countrySummaryBaseT< outCellDataT<realT> > &outCountrySummaryData /*= NULL*/
+	dataContainersHolder(simUnitsData & simuData /*= NULL*/
+		, tableData & countrySummaryTable /*= NULL*/
+		, structToMapWriterT< outCellDataT<realT> > & simuDataWriter /*= NULL*/
+		, structToTableWriterT< outCellDataT<realT> > & countrySummaryWriter /*= NULL*/
 		, countrySummaryT< outCellDataT<realT> > &outCountrySummaryData /*= NULL*/
 		)
-		: simuWriter(simuWriter)
+		: simuData(simuData)
+		, countrySummaryTable(countrySummaryTable)
+		, simuDataWriter(simuDataWriter)
+		, countrySummaryWriter(countrySummaryWriter)
 		, outCountrySummaryData(outCountrySummaryData)
 	{}
 };
@@ -44,12 +52,11 @@ struct dataContainersHolder
 
 template <class realT>
 int readInputs(inputFileInfoT info,
-			   simUnitsData simuData,
+			   dataContainersHolder<realT> & pHolder,
+			   vector<int> countries,
 			   dynamicArrayRef(inCellDataT<realT>, inCellData), 
 			   inCommonDataT<realT> &inCommonData,
-			   dynamicArrayRef(outCellDataT<realT>, outCellData),
-			   //countrySummaryBaseT< outCellDataT<realT> > & outCountrySummaryData);
-			   countrySummaryT< outCellDataT<realT> > & outCountrySummaryData);
+			   dynamicArrayRef(outCellDataT<realT>, outCellData));
 
 template <class realT>
 int computeCell(void * params,
