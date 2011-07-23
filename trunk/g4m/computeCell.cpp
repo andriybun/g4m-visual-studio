@@ -10,7 +10,7 @@
 template <class realT>
 int computeCell(void * params, const inCellDataT<realT> &inCellData, const inCommonDataT<realT> &inCommonData, outCellDataT<realT> &outCellData)
 {
-	structToMapWriterT< outCellDataT<realT> > & simuDataWriter = (*((dataContainersHolder<realT> *)params)).simuWriter;
+	structToMapWriterT< outCellDataT<realT> > & simuDataWriter = (*((dataContainersHolder<realT> *)params)).simuDataWriter;
 	//countrySummaryBaseT< outCellDataT<realT> > & outCountrySummaryData = (*((dataContainersHolder<realT> *)params)).outCountrySummaryData;
 	countrySummaryT< outCellDataT<realT> > & outCountrySummaryData = (*((dataContainersHolder<realT> *)params)).outCountrySummaryData;
 

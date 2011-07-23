@@ -5,8 +5,8 @@
 
 #include "intf.h"
 
-const int ARRAY_SIZE = 20;
-const int NEW_CONST = ARRAY_SIZE+10;
+#define xxx_min(x, y) ((x)<(y) ? (x):(y))
+#define xxx_max(x, y) ((x)<(y) ? (y):(x))
 
 struct_one operator + (struct_one & first, struct_one & second)
 {
@@ -17,20 +17,6 @@ struct_one operator + (struct_one & first, struct_one & second)
 	for (int g00 = 0; g00 < ARRAY_SIZE; g00++)
 	{
 		result.arrayField[g00] = first.arrayField[g00] + second.arrayField[g00];
-	}
-	return result;
-}
-
-template <typename variableXxxType>
-struct_one operator + (struct_one & first, variableXxxType & second)
-{
-	struct_one result;
-	result.intField = first.intField + second;
-	result.floatField = first.floatField + second;
-	result.doubleField = first.doubleField + second;
-	for (int g00 = 0; g00 < ARRAY_SIZE; g00++)
-	{
-		result.arrayField[g00] = first.arrayField[g00] + second;
 	}
 	return result;
 }
@@ -48,20 +34,6 @@ struct_one operator - (struct_one & first, struct_one & second)
 	return result;
 }
 
-template <typename variableXxxType>
-struct_one operator - (struct_one & first, variableXxxType & second)
-{
-	struct_one result;
-	result.intField = first.intField - second;
-	result.floatField = first.floatField - second;
-	result.doubleField = first.doubleField - second;
-	for (int g00 = 0; g00 < ARRAY_SIZE; g00++)
-	{
-		result.arrayField[g00] = first.arrayField[g00] - second;
-	}
-	return result;
-}
-
 struct_one operator * (struct_one & first, struct_one & second)
 {
 	struct_one result;
@@ -71,20 +43,6 @@ struct_one operator * (struct_one & first, struct_one & second)
 	for (int g00 = 0; g00 < ARRAY_SIZE; g00++)
 	{
 		result.arrayField[g00] = first.arrayField[g00] * second.arrayField[g00];
-	}
-	return result;
-}
-
-template <typename variableXxxType>
-struct_one operator * (struct_one & first, variableXxxType & second)
-{
-	struct_one result;
-	result.intField = first.intField * second;
-	result.floatField = first.floatField * second;
-	result.doubleField = first.doubleField * second;
-	for (int g00 = 0; g00 < ARRAY_SIZE; g00++)
-	{
-		result.arrayField[g00] = first.arrayField[g00] * second;
 	}
 	return result;
 }
@@ -103,6 +61,48 @@ struct_one operator / (struct_one & first, struct_one & second)
 }
 
 template <typename variableXxxType>
+struct_one operator + (struct_one & first, variableXxxType & second)
+{
+	struct_one result;
+	result.intField = first.intField + second;
+	result.floatField = first.floatField + second;
+	result.doubleField = first.doubleField + second;
+	for (int g00 = 0; g00 < ARRAY_SIZE; g00++)
+	{
+		result.arrayField[g00] = first.arrayField[g00] + second;
+	}
+	return result;
+}
+
+template <typename variableXxxType>
+struct_one operator - (struct_one & first, variableXxxType & second)
+{
+	struct_one result;
+	result.intField = first.intField - second;
+	result.floatField = first.floatField - second;
+	result.doubleField = first.doubleField - second;
+	for (int g00 = 0; g00 < ARRAY_SIZE; g00++)
+	{
+		result.arrayField[g00] = first.arrayField[g00] - second;
+	}
+	return result;
+}
+
+template <typename variableXxxType>
+struct_one operator * (struct_one & first, variableXxxType & second)
+{
+	struct_one result;
+	result.intField = first.intField * second;
+	result.floatField = first.floatField * second;
+	result.doubleField = first.doubleField * second;
+	for (int g00 = 0; g00 < ARRAY_SIZE; g00++)
+	{
+		result.arrayField[g00] = first.arrayField[g00] * second;
+	}
+	return result;
+}
+
+template <typename variableXxxType>
 struct_one operator / (struct_one & first, variableXxxType & second)
 {
 	struct_one result;
@@ -112,6 +112,60 @@ struct_one operator / (struct_one & first, variableXxxType & second)
 	for (int g00 = 0; g00 < ARRAY_SIZE; g00++)
 	{
 		result.arrayField[g00] = first.arrayField[g00] / second;
+	}
+	return result;
+}
+
+struct_one min(struct_one & first, struct_one & second)
+{
+	struct_one result;
+	result.intField = xxx_min(first.intField, second.intField);
+	result.floatField = xxx_min(first.floatField, second.floatField);
+	result.doubleField = xxx_min(first.doubleField, second.doubleField);
+	for (int g00 = 0; g00 < ARRAY_SIZE; g00++)
+	{
+		result.arrayField[g00] = xxx_min(first.arrayField[g00], second.arrayField[g00]);
+	}
+	return result;
+}
+
+struct_one max(struct_one & first, struct_one & second)
+{
+	struct_one result;
+	result.intField = xxx_max(first.intField, second.intField);
+	result.floatField = xxx_max(first.floatField, second.floatField);
+	result.doubleField = xxx_max(first.doubleField, second.doubleField);
+	for (int g00 = 0; g00 < ARRAY_SIZE; g00++)
+	{
+		result.arrayField[g00] = xxx_max(first.arrayField[g00], second.arrayField[g00]);
+	}
+	return result;
+}
+
+template <typename variableXxxType>
+struct_one min(struct_one & first, variableXxxType & second)
+{
+	struct_one result;
+	result.intField = xxx_min(first.intField, second);
+	result.floatField = xxx_min(first.floatField, second);
+	result.doubleField = xxx_min(first.doubleField, second);
+	for (int g00 = 0; g00 < ARRAY_SIZE; g00++)
+	{
+		result.arrayField[g00] = xxx_min(first.arrayField[g00], second);
+	}
+	return result;
+}
+
+template <typename variableXxxType>
+struct_one max(struct_one & first, variableXxxType & second)
+{
+	struct_one result;
+	result.intField = xxx_max(first.intField, second);
+	result.floatField = xxx_max(first.floatField, second);
+	result.doubleField = xxx_max(first.doubleField, second);
+	for (int g00 = 0; g00 < ARRAY_SIZE; g00++)
+	{
+		result.arrayField[g00] = xxx_max(first.arrayField[g00], second);
 	}
 	return result;
 }
@@ -128,18 +182,6 @@ template_struct<realT> operator + (template_struct<realT> & first, template_stru
 	return result;
 }
 
-template <class realT, typename variableXxxType>
-template_struct<realT> operator + (template_struct<realT> & first, variableXxxType & second)
-{
-	template_struct<realT> result;
-	result.realField = first.realField + second;
-	for (int g00 = 0; g00 < NEW_CONST; g00++)
-	{
-		result.realArray[g00] = first.realArray[g00] + second;
-	}
-	return result;
-}
-
 template <class realT>
 template_struct<realT> operator - (template_struct<realT> & first, template_struct<realT> & second)
 {
@@ -152,18 +194,6 @@ template_struct<realT> operator - (template_struct<realT> & first, template_stru
 	return result;
 }
 
-template <class realT, typename variableXxxType>
-template_struct<realT> operator - (template_struct<realT> & first, variableXxxType & second)
-{
-	template_struct<realT> result;
-	result.realField = first.realField - second;
-	for (int g00 = 0; g00 < NEW_CONST; g00++)
-	{
-		result.realArray[g00] = first.realArray[g00] - second;
-	}
-	return result;
-}
-
 template <class realT>
 template_struct<realT> operator * (template_struct<realT> & first, template_struct<realT> & second)
 {
@@ -172,18 +202,6 @@ template_struct<realT> operator * (template_struct<realT> & first, template_stru
 	for (int g00 = 0; g00 < NEW_CONST; g00++)
 	{
 		result.realArray[g00] = first.realArray[g00] * second.realArray[g00];
-	}
-	return result;
-}
-
-template <class realT, typename variableXxxType>
-template_struct<realT> operator * (template_struct<realT> & first, variableXxxType & second)
-{
-	template_struct<realT> result;
-	result.realField = first.realField * second;
-	for (int g00 = 0; g00 < NEW_CONST; g00++)
-	{
-		result.realArray[g00] = first.realArray[g00] * second;
 	}
 	return result;
 }
@@ -201,6 +219,42 @@ template_struct<realT> operator / (template_struct<realT> & first, template_stru
 }
 
 template <class realT, typename variableXxxType>
+template_struct<realT> operator + (template_struct<realT> & first, variableXxxType & second)
+{
+	template_struct<realT> result;
+	result.realField = first.realField + second;
+	for (int g00 = 0; g00 < NEW_CONST; g00++)
+	{
+		result.realArray[g00] = first.realArray[g00] + second;
+	}
+	return result;
+}
+
+template <class realT, typename variableXxxType>
+template_struct<realT> operator - (template_struct<realT> & first, variableXxxType & second)
+{
+	template_struct<realT> result;
+	result.realField = first.realField - second;
+	for (int g00 = 0; g00 < NEW_CONST; g00++)
+	{
+		result.realArray[g00] = first.realArray[g00] - second;
+	}
+	return result;
+}
+
+template <class realT, typename variableXxxType>
+template_struct<realT> operator * (template_struct<realT> & first, variableXxxType & second)
+{
+	template_struct<realT> result;
+	result.realField = first.realField * second;
+	for (int g00 = 0; g00 < NEW_CONST; g00++)
+	{
+		result.realArray[g00] = first.realArray[g00] * second;
+	}
+	return result;
+}
+
+template <class realT, typename variableXxxType>
 template_struct<realT> operator / (template_struct<realT> & first, variableXxxType & second)
 {
 	template_struct<realT> result;
@@ -208,6 +262,54 @@ template_struct<realT> operator / (template_struct<realT> & first, variableXxxTy
 	for (int g00 = 0; g00 < NEW_CONST; g00++)
 	{
 		result.realArray[g00] = first.realArray[g00] / second;
+	}
+	return result;
+}
+
+template <class realT>
+template_struct<realT> min(template_struct<realT> & first, template_struct<realT> & second)
+{
+	template_struct<realT> result;
+	result.realField = xxx_min(first.realField, second.realField);
+	for (int g00 = 0; g00 < NEW_CONST; g00++)
+	{
+		result.realArray[g00] = xxx_min(first.realArray[g00], second.realArray[g00]);
+	}
+	return result;
+}
+
+template <class realT>
+template_struct<realT> max(template_struct<realT> & first, template_struct<realT> & second)
+{
+	template_struct<realT> result;
+	result.realField = xxx_max(first.realField, second.realField);
+	for (int g00 = 0; g00 < NEW_CONST; g00++)
+	{
+		result.realArray[g00] = xxx_max(first.realArray[g00], second.realArray[g00]);
+	}
+	return result;
+}
+
+template <class realT, typename variableXxxType>
+template_struct<realT> min(template_struct<realT> & first, variableXxxType & second)
+{
+	template_struct<realT> result;
+	result.realField = xxx_min(first.realField, second);
+	for (int g00 = 0; g00 < NEW_CONST; g00++)
+	{
+		result.realArray[g00] = xxx_min(first.realArray[g00], second);
+	}
+	return result;
+}
+
+template <class realT, typename variableXxxType>
+template_struct<realT> max(template_struct<realT> & first, variableXxxType & second)
+{
+	template_struct<realT> result;
+	result.realField = xxx_max(first.realField, second);
+	for (int g00 = 0; g00 < NEW_CONST; g00++)
+	{
+		result.realArray[g00] = xxx_max(first.realArray[g00], second);
 	}
 	return result;
 }

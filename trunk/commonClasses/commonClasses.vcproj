@@ -211,6 +211,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\structGrid.h"
+				>
+			</File>
+			<File
 				RelativePath=".\structToMapWriter.h"
 				>
 			</File>

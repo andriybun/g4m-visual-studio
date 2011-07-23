@@ -13,6 +13,7 @@ struct dirInfoT
 
 struct fileInfoT
 {
+	std::string simuBinFileName;
 	std::string cellDataTxt;
 };
 
