@@ -31,18 +31,21 @@ struct dataContainersHolder
 	structToMapWriterT< outCellDataT<realT> > & simuDataWriter;
 	structToTableWriterT< outCellDataT<realT> > & countrySummaryWriter;
 	countrySummaryT< outCellDataT<realT> > &outCountrySummaryData;
+	structGrid< outCellDataT<realT> > & structGridOut;
 
 	dataContainersHolder(simUnitsData & simuData /*= NULL*/
 		, tableData & countrySummaryTable /*= NULL*/
 		, structToMapWriterT< outCellDataT<realT> > & simuDataWriter /*= NULL*/
 		, structToTableWriterT< outCellDataT<realT> > & countrySummaryWriter /*= NULL*/
 		, countrySummaryT< outCellDataT<realT> > &outCountrySummaryData /*= NULL*/
+		, structGrid< outCellDataT<realT> > & structGridOut /*= NULL*/
 		)
 		: simuData(simuData)
 		, countrySummaryTable(countrySummaryTable)
 		, simuDataWriter(simuDataWriter)
 		, countrySummaryWriter(countrySummaryWriter)
 		, outCountrySummaryData(outCountrySummaryData)
+		, structGridOut(structGridOut)
 	{}
 };
 
@@ -53,16 +56,16 @@ struct dataContainersHolder
 template <class realT>
 int readInputs(inputFileInfoT info,
 			   dataContainersHolder<realT> & pHolder,
-			   vector<int> countries,
+			   vector<int> & countries,
 			   dynamicArrayRef(inCellDataT<realT>, inCellData), 
 			   inCommonDataT<realT> &inCommonData,
 			   dynamicArrayRef(outCellDataT<realT>, outCellData));
 
 template <class realT>
-int computeCell(void * params,
-				const inCellDataT<realT> &inCellData,
+int computeCell(const inCellDataT<realT> &inCellData,
 				const inCommonDataT<realT> &inCommonData,
-				outCellDataT<realT> &outCellData);
+				outCellDataT<realT> &outCellData,
+				void * params);
 
 
 #endif

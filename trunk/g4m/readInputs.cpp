@@ -5,7 +5,7 @@
 template <class realT>
 int readInputs(inputFileInfoT info,
 			   dataContainersHolder<realT> & pHolder,
-			   vector<int> countries,
+			   vector<int> & countries,
 			   dynamicArrayRef(inCellDataT<realT>, inCellData), 
 			   inCommonDataT<realT> &inCommonData,
 			   dynamicArrayRef(outCellDataT<realT>, outCellData))
@@ -53,10 +53,6 @@ int readInputs(inputFileInfoT info,
 		it++;
 		itDistr++;
 	}
-	//pHolder.simuDataWriter.addOutputParam("forestArea", DISTRIBUTE_PROPORTIONALLY);
-	//pHolder.simuDataWriter.addOutputParam("forestShare", IS_CONSTANT);
-	//pHolder.countrySummaryWriter.addOutputParam("forestArea");
-	//pHolder.countrySummaryWriter.addOutputParam("forestShare");
 
 	pHolder.outCountrySummaryData.allocate(countries, inCommonData.beginYear, inCommonData.endYear);
 
@@ -88,14 +84,14 @@ int readInputs(inputFileInfoT info,
 
 template int readInputs<float>(inputFileInfoT info,
 							   dataContainersHolder<float> & pHolder,
-							   vector<int> countries,
+							   vector<int> & countries,
 							   dynamicArrayRef(inCellDataT<float>, inCellData), 
 							   inCommonDataT<float> &inCommonData,
 							   dynamicArrayRef(outCellDataT<float>, outCellData));
 
 template int readInputs<double>(inputFileInfoT info,
 								dataContainersHolder<double> & pHolder,
-								vector<int> countries,
+								vector<int> & countries,
 								dynamicArrayRef(inCellDataT<double>, inCellData),
 								inCommonDataT<double> &inCommonData, 
 								dynamicArrayRef(outCellDataT<double>, outCellData));

@@ -163,6 +163,19 @@ void simUnitsData::clear()
 
 bool simUnitsData::SaveToFile(std::string outDir, std::string fileName)
 {
+	//*******************************
+	//**** Writing hierarchy.mth ****
+	//*******************************
+	string fileNameTmp = outDir + pathSeparator + "hierarchy.mth";
+	ofstream f;
+	f.open(fileNameTmp.c_str(), ios::out | ios::binary);
+	if (f.is_open())
+	{
+		f << "<g> WORLD\n";
+		f << "\t<i> " << fileName << " World\n";
+		f << "</g>\n";
+		f.close();
+	}
 	//****************************
 	//**** Writimg *.MSU file ****
 	//****************************
@@ -172,9 +185,8 @@ bool simUnitsData::SaveToFile(std::string outDir, std::string fileName)
 		cout << fileName << ": Error! Attempt to write empty data." << endl;
 		return false;
 	}
-	ofstream f;
 	fileName = outDir + pathSeparator + fileName;
-	string fileNameTmp = fileName + ".msu";
+	fileNameTmp = fileName + ".msu";
 	f.open(fileNameTmp.c_str(), ios::out | ios::binary);
 	if (f.is_open())
 	{

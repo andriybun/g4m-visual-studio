@@ -8,10 +8,12 @@
 #define max(x, y) ((x)<(y) ? (y):(x))
 
 template <class realT>
-int computeCell(void * params, const inCellDataT<realT> &inCellData, const inCommonDataT<realT> &inCommonData, outCellDataT<realT> &outCellData)
+int computeCell(const inCellDataT<realT> &inCellData,
+				const inCommonDataT<realT> &inCommonData,
+				outCellDataT<realT> &outCellData,
+				void * params)
 {
 	structToMapWriterT< outCellDataT<realT> > & simuDataWriter = (*((dataContainersHolder<realT> *)params)).simuDataWriter;
-	//countrySummaryBaseT< outCellDataT<realT> > & outCountrySummaryData = (*((dataContainersHolder<realT> *)params)).outCountrySummaryData;
 	countrySummaryT< outCellDataT<realT> > & outCountrySummaryData = (*((dataContainersHolder<realT> *)params)).outCountrySummaryData;
 
 	// Stopgap:
@@ -25,5 +27,11 @@ int computeCell(void * params, const inCellDataT<realT> &inCellData, const inCom
 	return 0;
 }
 
-template int computeCell<float>(void * params, const inCellDataT<float> &inCellData, const inCommonDataT<float> &inCommonData, outCellDataT<float> &outCellData);
-template int computeCell<double>(void * params, const inCellDataT<double> &inCellData, const inCommonDataT<double> &inCommonData, outCellDataT<double> &outCellData);
+template int computeCell<float>(const inCellDataT<float> &inCellData,
+								const inCommonDataT<float> &inCommonData, 
+								outCellDataT<float> &outCellData,
+								void * params);
+template int computeCell<double>(const inCellDataT<double> &inCellData,
+								 const inCommonDataT<double> &inCommonData,
+								 outCellDataT<double> &outCellData,
+								 void * params);
