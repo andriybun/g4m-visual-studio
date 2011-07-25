@@ -15,6 +15,9 @@ struct fileInfoT
 {
 	std::string simuBinFileName;
 	std::string cellDataTxt;
+
+	std::string outMapFileName;
+	std::string outTableFileName;
 };
 
 class inputFileInfoT

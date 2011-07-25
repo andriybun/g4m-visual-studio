@@ -34,14 +34,18 @@ int computeModel()
 	vector<int> countries;
 	structToMapWriterT< outCellDataT<realT> > simuDataWriter(simuData);
 	structToTableWriterT< outCellDataT<realT> > countrySummaryWriter(countrySummaryTable);
-	countrySummaryT< outCellDataT<realT> > outCountrySummaryData;			// data by countries (like countryData)
+	// data by countries (like countryData)
+	countrySummaryT< outCellDataT<realT> > outCountrySummaryData;
+	// data for entire Earth grid (like griddata)
+	structGrid< outCellDataT<realT> > structGridOut;
 
 	// Holder of data classes and structs
 	dataContainersHolder<realT> pHolder(simuData, 
 		countrySummaryTable, 
 		simuDataWriter, 
 		countrySummaryWriter, 
-		outCountrySummaryData);
+		outCountrySummaryData,
+		structGridOut);
 	
 	// Initialize data
 	dynamicArray(inCellDataT<realT>, inCellData);
@@ -49,8 +53,6 @@ int computeModel()
 	inCommonDataT<realT> inCommonData;
 
 	readInputs<realT>(info, pHolder, countries, inCellData, inCommonData, outCellData);
-
-	structGrid< outCellDataT<realT> > structGridOut;
 
 	// main by-years loop
 	for (inCommonData.year = inCommonData.beginYear; inCommonData.year <= inCommonData.endYear; inCommonData.year++)
@@ -69,8 +71,8 @@ int computeModel()
 	dynamicFree(inCellData);
 	dynamicFree(outCellData);
 
-	simuData.SaveToFile("..\\GLOBIOM GUI\\data\\maps", "my_test_map");
-	countrySummaryTable.SaveToFile("..\\GLOBIOM GUI\\data\\tables", "my_test_table");
+	simuData.SaveToFile(info.folders.outputDir, info.files.outMapFileName);
+	countrySummaryTable.SaveToFile(info.folders.outputDir, info.files.outTableFileName);
 
 	return 0;
 };
