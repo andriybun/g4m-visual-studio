@@ -29,24 +29,12 @@ int computeModel()
 	inputFileInfoT info(guiFile);
 
 	// Declaring outputs and writers of outputs
-	simUnitsData simuData(info.files.simuBinFileName);
-	tableData countrySummaryTable;
 	vector<int> countries;
-	structToMapWriterT< outCellDataT<realT> > simuDataWriter(simuData);
-	//structToMapWriterT< outCellDataT<realT> > * simuDataWriter = NULL;
-	structToTableWriterT< outCellDataT<realT> > countrySummaryWriter(countrySummaryTable);
-	// data by countries (like countryData)
-	countrySummaryT< outCellDataT<realT> > outCountrySummaryData;
 	// data for entire Earth grid (like griddata)
 	structGrid< outCellDataT<realT> > structGridOut;
 
 	// Holder of data classes and structs
-	dataContainersHolder<realT> pHolder(simuData, 
-		countrySummaryTable, 
-		simuDataWriter, 
-		countrySummaryWriter, 
-		outCountrySummaryData,
-		structGridOut);
+	dataContainersHolder<realT> pHolder(structGridOut);
 	
 	// Initialize data
 	dynamicArray(inCellDataT<realT>, inCellData);
@@ -58,22 +46,36 @@ int computeModel()
 	// main by-years loop
 	for (inCommonData.year = inCommonData.beginYear; inCommonData.year <= inCommonData.endYear; inCommonData.year++)
 	{
-		simuData.pointPush(inCommonData.year);
-		countrySummaryTable.pointPush(inCommonData.year);
+		pHolder.simuData->pointPush(inCommonData.year);
+		pHolder.countrySummaryTable->pointPush(inCommonData.year);
 		parallelExecute< inCellDataT<realT>, inCommonDataT<realT>, outCellDataT<realT> > (
 			&computeCell<realT>, inCellData, inCommonData, outCellData, inCommonData.numCells, (void *)(& pHolder));
 
-		countrySummaryWriter.writeData(outCountrySummaryData, countries);
+		if (pHolder.countrySummaryWriter)
+		{
+			pHolder.countrySummaryWriter->writeData(*pHolder.outCountrySummaryData, countries);
+		}
 
-		simuData.pointPop();
-		countrySummaryTable.pointPop();
+		pHolder.simuData->pointPop();
+		pHolder.countrySummaryTable->pointPop();
 	}
 
 	dynamicFree(inCellData);
 	dynamicFree(outCellData);
 
-	simuData.SaveToFile(info.folders.outputDir, info.files.outMapFileName);
-	countrySummaryTable.SaveToFile(info.folders.outputDir, info.files.outTableFileName);
+	if (pHolder.simuDataWriter)
+	{
+		pHolder.simuData->SaveToFile(info.folders.outputDir, info.files.outMapFileName);
+		delete pHolder.simuData;
+		delete pHolder.simuDataWriter;
+	}
+	if (pHolder.countrySummaryWriter)
+	{
+		pHolder.countrySummaryTable->SaveToFile(info.folders.outputDir, info.files.outTableFileName);
+		delete pHolder.countrySummaryTable;
+		delete pHolder.countrySummaryWriter;
+		delete pHolder.outCountrySummaryData;
+	}
 
 	return 0;
 };

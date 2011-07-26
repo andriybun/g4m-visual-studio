@@ -213,7 +213,7 @@ bool MDT::updateDimEl(string dimName, int posEl, string element)
 				return false;
 			}  
 
-			for (int j = 0; j < dimElements[i].size(); j++)
+			for (unsigned int j = 0; j < dimElements[i].size(); j++)
 			{
 				if ((dimElements[i][j] == element) &&(j != posEl))
 				{  
@@ -253,7 +253,7 @@ long long MDT::getHash(str_vector_t elements)
 {
 	if (nDims < elements.size())
 	{
-		for (int i = nDims; i < elements.size(); i++)
+		for (unsigned int i = nDims; i < elements.size(); i++)
 		{
 			addDimEl("Dimension " + IntToStr(i + 1), elements[i]);
 		}
@@ -312,7 +312,7 @@ MDT::int_vector_t MDT::getCoordsByHash(long long hashValue)
 
 int MDT::getCoordinate(int dim, string element)
 {
-	for (int i = 0; i < dimElements[dim].size(); i++)
+	for (unsigned int i = 0; i < dimElements[dim].size(); i++)
 	{
 		if (dimElements[dim][i] == element) return i;
 	}
@@ -323,7 +323,7 @@ void MDT::SaveToFile(string fileName, string mode)
 {
 	ofstream f;
 	if (mode == "MAP") fileName += ".mdt";
-	for (int i = 0; i < dimNames.size(); i++)
+	for (unsigned int i = 0; i < dimNames.size(); i++)
 	{
 		cout << dimNames[i] << " - " << dimCardinals[i] << endl;
 	}

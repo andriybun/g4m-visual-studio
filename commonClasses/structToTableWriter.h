@@ -46,7 +46,7 @@ public:
 	void writeData(countrySummaryT< structT > & outCountrySummaryData, vector<int> & countries)
 	{
 		int year = atoi(tbData.point[tbData.point.size()-1].c_str());
-		for (int countryIdx = 0; countryIdx < countries.size(); countryIdx++)
+		for (unsigned int countryIdx = 0; countryIdx < countries.size(); countryIdx++)
 		{
 			tbData.pointPush(countryIdx);
 			writeData(outCountrySummaryData.get(countries[countryIdx], year));			
