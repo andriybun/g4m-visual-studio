@@ -33,6 +33,7 @@ int computeModel()
 	tableData countrySummaryTable;
 	vector<int> countries;
 	structToMapWriterT< outCellDataT<realT> > simuDataWriter(simuData);
+	//structToMapWriterT< outCellDataT<realT> > * simuDataWriter = NULL;
 	structToTableWriterT< outCellDataT<realT> > countrySummaryWriter(countrySummaryTable);
 	// data by countries (like countryData)
 	countrySummaryT< outCellDataT<realT> > outCountrySummaryData;
