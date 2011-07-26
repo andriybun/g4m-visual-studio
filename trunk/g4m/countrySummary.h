@@ -15,7 +15,7 @@ class countrySummaryT : public countrySummaryBaseT<structT>
 private:
 	dynamicArray(int, countriesMap);
 
-	virtual int getElemendIdx(int countryIdx, int year)
+	int getElemendIdx(int countryIdx, int year)
 	{
 		assert((year >= beginYear) && (year <= endYear));
 		if (countriesMap[countryIdx] < 0)
@@ -29,14 +29,14 @@ private:
 	}
 public:
 
-	virtual ~countrySummaryT()
+	/*virtual */~countrySummaryT()
 	{
-		dynamicFree(data);
-		dynamicFree(count);
+		//dynamicFree(data);
+		//dynamicFree(count);
 		dynamicFree(countriesMap);
 	}
 
-	virtual void allocate(intVectorT &countriesVector, int beginYearIn, int endYearIn)
+	void allocate(intVectorT &countriesVector, int beginYearIn, int endYearIn)
 	{
 		numCountries = countriesVector.size();
 		beginYear = beginYearIn;
