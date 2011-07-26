@@ -314,4 +314,6 @@ template_struct<realT> max(template_struct<realT> & first, variableXxxType & sec
 	return result;
 }
 
+#include "../commonClasses/struct_info.h"
+
 #endif
