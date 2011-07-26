@@ -30,7 +30,7 @@ template <class T>
 void vector2d<T>::push(vector<T> input)
 {
 	tmpVector = new T[dimSize];
-	for (int i = 0; i < dimSize; i++)
+	for (unsigned int i = 0; i < dimSize; i++)
 	{
 		if (i >= input.size())
 			tmpVector[i] = 0;
@@ -73,7 +73,7 @@ bool vector2d<T>::saveToFile(string fileName)
 		int tmp = allData.size();
 		f.write(reinterpret_cast<char *>(&tmp), sizeof(int));
 		f.write(reinterpret_cast<char *>(&dimSize), sizeof(int));
-		for (int i = 0; i < allData.size(); i++)
+		for (unsigned int i = 0; i < allData.size(); i++)
 		{
 			f.write(reinterpret_cast<char *>(allData[i]), sizeof(T)*dimSize);
 		}

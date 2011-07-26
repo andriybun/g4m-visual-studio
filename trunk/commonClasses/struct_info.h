@@ -152,7 +152,7 @@ public:
 
 	size_t get_var_offset(std::string var_name, size_t idx = 0)
 	{
-		for (int i = 0; i < struct_var_info.size(); i++)
+		for (unsigned int i = 0; i < struct_var_info.size(); i++)
 		{
 			if (struct_var_info[i].name == var_name)
 			{
@@ -166,7 +166,7 @@ public:
 
 	size_t get_var_type_id(std::string var_name)
 	{
-		for (int i = 0; i < struct_var_info.size(); i++)
+		for (unsigned int i = 0; i < struct_var_info.size(); i++)
 		{
 			if (struct_var_info[i].name == var_name)
 			{

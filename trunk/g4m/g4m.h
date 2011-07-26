@@ -26,19 +26,19 @@
 template <class realT>
 struct dataContainersHolder
 {
-	simUnitsData & simuData;
-	tableData & countrySummaryTable;
-	structToMapWriterT< outCellDataT<realT> > & simuDataWriter;
-	structToTableWriterT< outCellDataT<realT> > & countrySummaryWriter;
-	countrySummaryT< outCellDataT<realT> > &outCountrySummaryData;
 	structGrid< outCellDataT<realT> > & structGridOut;
+	simUnitsData * simuData;
+	tableData * countrySummaryTable;
+	structToMapWriterT< outCellDataT<realT> > * simuDataWriter;
+	structToTableWriterT< outCellDataT<realT> > * countrySummaryWriter;
+	countrySummaryT< outCellDataT<realT> > * outCountrySummaryData;
 
-	dataContainersHolder(simUnitsData & simuData /*= NULL*/
-		, tableData & countrySummaryTable /*= NULL*/
-		, structToMapWriterT< outCellDataT<realT> > & simuDataWriter /*= NULL*/
-		, structToTableWriterT< outCellDataT<realT> > & countrySummaryWriter /*= NULL*/
-		, countrySummaryT< outCellDataT<realT> > &outCountrySummaryData /*= NULL*/
-		, structGrid< outCellDataT<realT> > & structGridOut /*= NULL*/
+	dataContainersHolder(structGrid< outCellDataT<realT> > & structGridOut /*= NULL*/
+		, simUnitsData * simuData = NULL
+		, tableData * countrySummaryTable = NULL
+		, structToMapWriterT< outCellDataT<realT> > * simuDataWriter = NULL
+		, structToTableWriterT< outCellDataT<realT> > * countrySummaryWriter = NULL
+		, countrySummaryT< outCellDataT<realT> > * outCountrySummaryData = NULL
 		)
 		: simuData(simuData)
 		, countrySummaryTable(countrySummaryTable)

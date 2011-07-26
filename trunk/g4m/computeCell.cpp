@@ -13,16 +13,22 @@ int computeCell(const inCellDataT<realT> &inCellData,
 				outCellDataT<realT> &outCellData,
 				void * params)
 {
-	structToMapWriterT< outCellDataT<realT> > & simuDataWriter = (*((dataContainersHolder<realT> *)params)).simuDataWriter;
-	countrySummaryT< outCellDataT<realT> > & outCountrySummaryData = (*((dataContainersHolder<realT> *)params)).outCountrySummaryData;
+	structToMapWriterT< outCellDataT<realT> > * simuDataWriter = (*((dataContainersHolder<realT> *)params)).simuDataWriter;
+	countrySummaryT< outCellDataT<realT> > * outCountrySummaryData = (*((dataContainersHolder<realT> *)params)).outCountrySummaryData;
 
 	// Stopgap:
 	outCellData.forestArea = 20;
 	outCellData.forestShare = 40;
-	outCountrySummaryData.inc(inCellData.countryIdx, inCommonData.year, outCellData);
+	if (outCountrySummaryData)
+	{
+		outCountrySummaryData->inc(inCellData.countryIdx, inCommonData.year, outCellData);
+	}
 	// end stopgap
 
-	simuDataWriter.writeData(inCellData.x, inCellData.y, outCellData);
+	if (simuDataWriter)
+	{
+		simuDataWriter->writeData(inCellData.x, inCellData.y, outCellData);
+	}
 
 	return 0;
 }

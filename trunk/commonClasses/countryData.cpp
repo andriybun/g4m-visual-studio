@@ -64,7 +64,7 @@ countryData<realT> countryData<realT>::getSmoothAvg(int timePeriodWidth, int tim
 	int sumValues = 0;
 	int sumCount = 0;
 
-	for (int countryIdx = 0; countryIdx < values.size(); countryIdx++)
+	for (unsigned int countryIdx = 0; countryIdx < values.size(); countryIdx++)
 	{
 		if (values[countryIdx].aMap.size() > 0)
 		{
