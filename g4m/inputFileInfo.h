@@ -28,6 +28,9 @@ public:
 	dirInfoT folders;
 	fileInfoT files;
 
+	bool produceMaps;
+	bool produceTables;
+
 	inputFileInfoT(std::string infoFile);
 	~inputFileInfoT();
 };

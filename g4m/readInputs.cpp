@@ -22,13 +22,6 @@ int readInputs(inputFileInfoT info,
 	inCommonData.endYear = 2010;
 	// end stopgap
 
-	// Initialize data containers and writers to maps/tables
-	pHolder.simuData = new simUnitsData(info.files.simuBinFileName);
-	pHolder.simuDataWriter = new structToMapWriterT< outCellDataT<realT> >(*pHolder.simuData);
-	pHolder.countrySummaryTable = new tableData;
-	pHolder.countrySummaryWriter = new structToTableWriterT< outCellDataT<realT> >(*pHolder.countrySummaryTable);
-	pHolder.outCountrySummaryData = new countrySummaryT< outCellDataT<realT> >();
-
 	// Helper sets
 	vector<int> years;
 	years.push_back(2000);
@@ -42,25 +35,43 @@ int readInputs(inputFileInfoT info,
 	resultsDistribution.push_back(IS_CONSTANT);
 	countries.push_back(1);
 	countries.push_back(2);
-	// Initialize dimensions of SIMU data class
-	pHolder.simuData->addDim("year", years);
-	pHolder.simuData->addDim("value", results);
-	// Initialize dimensions of table data class
-	pHolder.countrySummaryTable->addDim("year", years);
-	pHolder.countrySummaryTable->addDim("country", countries);
-	pHolder.countrySummaryTable->addDim("value", results);
-	// Initialize writers of outputs
-	vector<string>::iterator it = results.begin();
-	vector<distribute_value_t>::iterator itDistr = resultsDistribution.begin();
-	while (it != results.end())
-	{
-		pHolder.simuDataWriter->addOutputParam(*it, *itDistr);
-		pHolder.countrySummaryWriter->addOutputParam(*it);
-		it++;
-		itDistr++;
-	}
 
-	pHolder.outCountrySummaryData->allocate(countries, inCommonData.beginYear, inCommonData.endYear);
+	// Initialize data containers and writers to maps/tables
+	if (info.produceMaps)
+	{
+		pHolder.simuData = new simUnitsData(info.files.simuBinFileName);
+		pHolder.simuDataWriter = new structToMapWriterT< outCellDataT<realT> >(*pHolder.simuData);
+		// Initialize dimensions of SIMU data class
+		pHolder.simuData->addDim("year", years);
+		pHolder.simuData->addDim("value", results);
+		// Initialize writers of outputs
+		vector<string>::iterator it = results.begin();
+		vector<distribute_value_t>::iterator itDistr = resultsDistribution.begin();
+		while (it != results.end())
+		{
+			pHolder.simuDataWriter->addOutputParam(*it, *itDistr);
+			it++;
+			itDistr++;
+		}
+	}
+	if (info.produceTables)
+	{
+		pHolder.countrySummaryTable = new tableData;
+		pHolder.countrySummaryWriter = new structToTableWriterT< outCellDataT<realT> >(*pHolder.countrySummaryTable);
+		pHolder.outCountrySummaryData = new countrySummaryT< outCellDataT<realT> >;
+		pHolder.outCountrySummaryData->allocate(countries, inCommonData.beginYear, inCommonData.endYear);
+		// Initialize dimensions of table data class
+		pHolder.countrySummaryTable->addDim("year", years);
+		pHolder.countrySummaryTable->addDim("country", countries);
+		pHolder.countrySummaryTable->addDim("value", results);
+		// Initialize writers of outputs
+		vector<string>::iterator it = results.begin();
+		while (it != results.end())
+		{
+			pHolder.countrySummaryWriter->addOutputParam(*it);
+			it++;
+		}
+	}
 
 	dynamicAllocate(inCellDataT<realT>, inCellData, numCells);
 	dynamicAllocate(outCellDataT<realT>, outCellData, numCells);

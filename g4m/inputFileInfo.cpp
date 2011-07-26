@@ -10,6 +10,9 @@ inputFileInfoT::inputFileInfoT(std::string infoFile)
 	files.simuBinFileName = folders.inputDir + "simu.bin";
 	files.outMapFileName = /*folders.outputDir +*/ "my_test_map";
 	files.outTableFileName = /*folders.outputDir +*/ "my_test_table";
+
+	produceMaps = true;
+	produceTables = true;
 }
 
 inputFileInfoT::~inputFileInfoT()
