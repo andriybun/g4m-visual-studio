@@ -14,7 +14,10 @@ STRUCTDEF(inCellDataT)
 	realT x;
 	realT y;
 
+	int simu;
 	int countryIdx;
+
+	realT area;
 };
 
 template <class realT>
