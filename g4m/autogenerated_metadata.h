@@ -15,7 +15,9 @@ void struct_info_t< inCellDataT<double> >::define_metadata()
 {
 	add_variable(m_struct.x);		// double
 	add_variable(m_struct.y);		// double
+	add_variable(m_struct.simu);		// int
 	add_variable(m_struct.countryIdx);		// int
+	add_variable(m_struct.area);		// double
 }
 
 template <>
@@ -40,7 +42,9 @@ void struct_info_t< inCellDataT<float> >::define_metadata()
 {
 	add_variable(m_struct.x);		// float
 	add_variable(m_struct.y);		// float
+	add_variable(m_struct.simu);		// int
 	add_variable(m_struct.countryIdx);		// int
+	add_variable(m_struct.area);		// float
 }
 
 template <>

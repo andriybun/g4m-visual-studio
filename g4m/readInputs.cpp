@@ -11,16 +11,15 @@ int readInputs(inputFileInfoT info,
 			   dynamicArrayRef(outCellDataT<realT>, outCellData))
 {
 	// stopgap:
-	int xMin = - 180;
+	int xMin = - 179;
 	int xMax = 180;
-	int yMin = -69;
+	int yMin = -55;
 	int yMax = 83;
-	int numCells = (2 * (xMax - xMin) + 1) * (2 * (yMax - yMin) + 1);
-	int numCountries = 10;
+	//int numCells = (2 * (xMax - xMin) + 1) * (2 * (yMax - yMin) + 1);
+	//int numCountries = 10;
 
 	inCommonData.beginYear = 2000;
 	inCommonData.endYear = 2010;
-	// end stopgap
 
 	// Helper sets
 	vector<int> years;
@@ -35,6 +34,15 @@ int readInputs(inputFileInfoT info,
 	resultsDistribution.push_back(IS_CONSTANT);
 	countries.push_back(1);
 	countries.push_back(2);
+	countries.push_back(3);
+	countries.push_back(4);
+	countries.push_back(5);
+	countries.push_back(6);
+	countries.push_back(7);
+	countries.push_back(8);
+	countries.push_back(9);
+	countries.push_back(0);
+	// end stopgap
 
 	// Initialize data containers and writers to maps/tables
 	if (info.produceMaps)
@@ -72,29 +80,74 @@ int readInputs(inputFileInfoT info,
 			it++;
 		}
 	}
+	
+	// Helper vectors and variables needed for filtering cells for active countries
+	vector< inCellDataT<realT> > tmpData;
+	vector<bool> useCell;
+	int numActiveCountries = countries.size();
+	int numActiveCells = 0;
 
-	dynamicAllocate(inCellDataT<realT>, inCellData, numCells);
-	dynamicAllocate(outCellDataT<realT>, outCellData, numCells);
+	// Creating a helper set with indices of active countries to simplify search of a country idx
+	set<int> countriesSet;
+	for (unsigned int idx = 0; idx < countries.size(); idx++)
+	{
+		countriesSet.insert(countries[idx]);
+	}
 
 	// stopgap:
-	int cellIdx = 0;
+	int numCells = 0;
 
+	// First we fill in temporary data for all countries
 	for (int x = xMin * (realT)2; x <= xMax * (realT)2; x++)
 	{
 		for (int y = yMin * (realT)2; y <= yMax * (realT)2; y++)
 		{
 			double xx = x / (realT)2;
 			double yy = y / (realT)2;
-			inCellData[cellIdx].x = xx;
-			inCellData[cellIdx].y = yy;
-			inCellData[cellIdx].countryIdx = fabs((realT)(((x + y) / 10) % 10));
-			cellIdx++;
+			inCellDataT<realT> cell;
+			cell.x = xx;
+			cell.y = yy;
+			cell.countryIdx = fabs((realT)(((x + y) / 10) % 10));
+			//cell.simu = pHolder.simuData->getSimUnitsMap().getSimu(cell.x, cell.y);
+			vector<simUnitsMap::simu_info_struct_t> cellSimuInfo;
+			pHolder.simuData->getSimUnitsMap().getSimuInfoByXY(cell.x, cell.y, cellSimuInfo);
+			for (unsigned int simuIdx = 0; simuIdx < cellSimuInfo.size(); simuIdx++)
+			{
+				cell.simu = cellSimuInfo[simuIdx].simu;
+				cell.area = cellSimuInfo[simuIdx].simuFraction;
+				tmpData.push_back(cell);
+				useCell.push_back(false);
+				numCells++;
+				// get number of cells belonging to active countries
+				if (countriesSet.find(cell.countryIdx) != countriesSet.end())
+				{
+					numActiveCells++;
+					useCell[numCells-1] = true;
+				}
+			}
 		}
 	}
 
-	inCommonData.numCells = numCells;
-	inCommonData.numCountries = numCountries;
 	// end stopgap
+
+	// Filling data containers with input data
+	inCommonData.numCells = numActiveCells;
+	inCommonData.numCountries = numActiveCells;
+
+	// Allocate memory only for active cells
+	dynamicAllocate(inCellDataT<realT>, inCellData, numActiveCells);
+	dynamicAllocate(outCellDataT<realT>, outCellData, numActiveCells);
+
+	// Fill in cell data only for active cells
+	unsigned int activeCellIdx = 0;
+	for (unsigned int cellIdx = 0; cellIdx < numCells; cellIdx++)
+	{
+		if (useCell[cellIdx])
+		{
+			inCellData[activeCellIdx] = tmpData[cellIdx];
+			activeCellIdx++;
+		}
+	}
 
 	return 0;
 }

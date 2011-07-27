@@ -18,16 +18,19 @@ int computeCell(const inCellDataT<realT> &inCellData,
 
 	// Stopgap:
 	outCellData.forestArea = 20;
-	outCellData.forestShare = 40;
-	if (outCountrySummaryData)
-	{
-		outCountrySummaryData->inc(inCellData.countryIdx, inCommonData.year, outCellData);
-	}
+	outCellData.forestShare = outCellData.forestArea * inCellData.area;
 	// end stopgap
 
 	if (simuDataWriter)
 	{
-		simuDataWriter->writeData(inCellData.x, inCellData.y, outCellData);
+		// Two ways are possible  /* not proved yet!!! */, however latter one is almost 2 times faster
+		//simuDataWriter->writeData(inCellData.x, inCellData.y, outCellData);
+		simuDataWriter->writeData(inCellData.simu, outCellData);
+	}
+
+	if (outCountrySummaryData)
+	{
+		outCountrySummaryData->inc(inCellData.countryIdx, inCommonData.year, outCellData);
 	}
 
 	return 0;

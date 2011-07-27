@@ -14,7 +14,9 @@ inCellDataT<realT> operator + (inCellDataT<realT> & first, inCellDataT<realT> & 
 	inCellDataT<realT> result;
 	result.x = first.x + second.x;
 	result.y = first.y + second.y;
+	result.simu = first.simu + second.simu;
 	result.countryIdx = first.countryIdx + second.countryIdx;
+	result.area = first.area + second.area;
 	return result;
 }
 
@@ -24,7 +26,9 @@ inCellDataT<realT> operator - (inCellDataT<realT> & first, inCellDataT<realT> & 
 	inCellDataT<realT> result;
 	result.x = first.x - second.x;
 	result.y = first.y - second.y;
+	result.simu = first.simu - second.simu;
 	result.countryIdx = first.countryIdx - second.countryIdx;
+	result.area = first.area - second.area;
 	return result;
 }
 
@@ -34,7 +38,9 @@ inCellDataT<realT> operator * (inCellDataT<realT> & first, inCellDataT<realT> & 
 	inCellDataT<realT> result;
 	result.x = first.x * second.x;
 	result.y = first.y * second.y;
+	result.simu = first.simu * second.simu;
 	result.countryIdx = first.countryIdx * second.countryIdx;
+	result.area = first.area * second.area;
 	return result;
 }
 
@@ -44,7 +50,9 @@ inCellDataT<realT> operator / (inCellDataT<realT> & first, inCellDataT<realT> & 
 	inCellDataT<realT> result;
 	result.x = first.x / second.x;
 	result.y = first.y / second.y;
+	result.simu = first.simu / second.simu;
 	result.countryIdx = first.countryIdx / second.countryIdx;
+	result.area = first.area / second.area;
 	return result;
 }
 
@@ -54,7 +62,9 @@ inCellDataT<realT> operator + (inCellDataT<realT> & first, variableXxxType & sec
 	inCellDataT<realT> result;
 	result.x = first.x + second;
 	result.y = first.y + second;
+	result.simu = first.simu + second;
 	result.countryIdx = first.countryIdx + second;
+	result.area = first.area + second;
 	return result;
 }
 
@@ -64,7 +74,9 @@ inCellDataT<realT> operator - (inCellDataT<realT> & first, variableXxxType & sec
 	inCellDataT<realT> result;
 	result.x = first.x - second;
 	result.y = first.y - second;
+	result.simu = first.simu - second;
 	result.countryIdx = first.countryIdx - second;
+	result.area = first.area - second;
 	return result;
 }
 
@@ -74,7 +86,9 @@ inCellDataT<realT> operator * (inCellDataT<realT> & first, variableXxxType & sec
 	inCellDataT<realT> result;
 	result.x = first.x * second;
 	result.y = first.y * second;
+	result.simu = first.simu * second;
 	result.countryIdx = first.countryIdx * second;
+	result.area = first.area * second;
 	return result;
 }
 
@@ -84,7 +98,9 @@ inCellDataT<realT> operator / (inCellDataT<realT> & first, variableXxxType & sec
 	inCellDataT<realT> result;
 	result.x = first.x / second;
 	result.y = first.y / second;
+	result.simu = first.simu / second;
 	result.countryIdx = first.countryIdx / second;
+	result.area = first.area / second;
 	return result;
 }
 
@@ -94,7 +110,9 @@ inCellDataT<realT> min(inCellDataT<realT> & first, inCellDataT<realT> & second)
 	inCellDataT<realT> result;
 	result.x = xxx_min(first.x, second.x);
 	result.y = xxx_min(first.y, second.y);
+	result.simu = xxx_min(first.simu, second.simu);
 	result.countryIdx = xxx_min(first.countryIdx, second.countryIdx);
+	result.area = xxx_min(first.area, second.area);
 	return result;
 }
 
@@ -104,7 +122,9 @@ inCellDataT<realT> max(inCellDataT<realT> & first, inCellDataT<realT> & second)
 	inCellDataT<realT> result;
 	result.x = xxx_max(first.x, second.x);
 	result.y = xxx_max(first.y, second.y);
+	result.simu = xxx_max(first.simu, second.simu);
 	result.countryIdx = xxx_max(first.countryIdx, second.countryIdx);
+	result.area = xxx_max(first.area, second.area);
 	return result;
 }
 
@@ -114,7 +134,9 @@ inCellDataT<realT> min(inCellDataT<realT> & first, variableXxxType & second)
 	inCellDataT<realT> result;
 	result.x = xxx_min(first.x, second);
 	result.y = xxx_min(first.y, second);
+	result.simu = xxx_min(first.simu, second);
 	result.countryIdx = xxx_min(first.countryIdx, second);
+	result.area = xxx_min(first.area, second);
 	return result;
 }
 
@@ -124,7 +146,9 @@ inCellDataT<realT> max(inCellDataT<realT> & first, variableXxxType & second)
 	inCellDataT<realT> result;
 	result.x = xxx_max(first.x, second);
 	result.y = xxx_max(first.y, second);
+	result.simu = xxx_max(first.simu, second);
 	result.countryIdx = xxx_max(first.countryIdx, second);
+	result.area = xxx_max(first.area, second);
 	return result;
 }
 
