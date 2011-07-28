@@ -13,6 +13,11 @@ int main(int argc, char * argv[])
 	Timer stopwatch;
 	stopwatch.start();
 
+	if (argc < 2)
+	{
+		printf("Working directory not specified!\n");
+		return 1;
+	}
 	string workingDir = argv[1];
 
 	computeModel<float>(workingDir);
