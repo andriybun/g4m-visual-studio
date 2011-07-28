@@ -1,10 +1,10 @@
 #include "inputFileInfo.h"
 
-inputFileInfoT::inputFileInfoT(std::string infoFile)
+inputFileInfoT::inputFileInfoT(std::string infoFile, std::string & workingDir)
 {
 	// TODO: setting up input file names and (maybe) other parameters passed from GUI
-	folders.inputDir = "data/";
-	folders.outputDir = "../GLOBIOM GUI/data/g4m/";
+	folders.inputDir = workingDir + "data/";
+	folders.outputDir = workingDir + "../GLOBIOM GUI/data/g4m/";
 
 	// File names
 	files.simuBinFileName = folders.inputDir + "simu.bin";

@@ -31,7 +31,7 @@ public:
 	bool produceMaps;
 	bool produceTables;
 
-	inputFileInfoT(std::string infoFile);
+	inputFileInfoT(std::string infoFile, std::string & workingDir);
 	~inputFileInfoT();
 };
 

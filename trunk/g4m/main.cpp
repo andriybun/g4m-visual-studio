@@ -6,14 +6,16 @@
 //#include "structToMapWriter.h"
 
 template <class realT>
-int computeModel();
+int computeModel(string & workingDir);
 
 int main(int argc, char * argv[])
 {
 	Timer stopwatch;
 	stopwatch.start();
 
-	computeModel<float>();
+	string workingDir = argv[1];
+
+	computeModel<float>(workingDir);
 
 	stopwatch.stop();
 	printf("Working time: %f\n", stopwatch.elapsedSeconds());
@@ -22,11 +24,11 @@ int main(int argc, char * argv[])
 }
 
 template <class realT>
-int computeModel()
+int computeModel(string & workingDir)
 {
 	// Struct with paths to input files and configs
-	std::string guiFile = "data/gui_file.txt";
-	inputFileInfoT info(guiFile);
+	std::string guiFile = workingDir + "data/gui_file.txt";
+	inputFileInfoT info(guiFile, workingDir);
 
 	// Declaring outputs and writers of outputs
 	vector<int> countries;
