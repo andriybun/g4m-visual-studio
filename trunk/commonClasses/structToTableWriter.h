@@ -51,7 +51,9 @@ public:
 		for (unsigned int countryIdx = 0; countryIdx < countries.size(); countryIdx++)
 		{
 			tbData.pointPush(countryIdx);
-			writeData(outCountrySummaryData.get(countries[countryIdx], year));			
+			//structT tmpSummary = outCountrySummaryData.get(countries[countryIdx], year);
+			//writeData(tmpSummary);
+			writeData(outCountrySummaryData.get(countries[countryIdx], year));
 			tbData.pointPop();
 		}
 	}
