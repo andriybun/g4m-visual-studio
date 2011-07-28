@@ -98,13 +98,13 @@ public:
 		return 0;
 	}
 
-	structT get(int countryIdx, int year)
+	structT & get(int countryIdx, int year)
 	{
 		int idx = getElemendIdx(countryIdx, year);
 		return data[idx];
 	}
 
-	structT getAvg(int countryIdx, int year)
+	structT & getAvg(int countryIdx, int year)
 	{
 		int idx = getElemendIdx(countryIdx, year);
 		return data[idx] / count[idx];
