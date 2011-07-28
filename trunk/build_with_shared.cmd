@@ -1,7 +1,7 @@
 echo off
 
 set GCC_PATH="C:\ProgramFiles\MinGW\bin\g++"
-set STARTUP_PROJECT_NAME=model
+set STARTUP_PROJECT_NAME=g4m
 set OUT_BINARY_DIR=Bin_gcc
 set SOLUTION_NAME=g4m
 

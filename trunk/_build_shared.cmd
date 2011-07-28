@@ -14,5 +14,3 @@ if not exist %BIN_PATH% (
 del *.o
 
 popd
-
-

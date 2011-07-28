@@ -15,6 +15,8 @@ class structToTableWriterT : public structWriterT<structT>
 {
 private:
 	tableData & tbData;
+
+	using structWriterT<structT>::varsInfoHolder;
 public:
 	structToTableWriterT(tableData & tbData): tbData(tbData) {}
 	~structToTableWriterT(void) {}

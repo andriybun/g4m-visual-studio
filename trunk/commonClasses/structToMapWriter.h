@@ -13,6 +13,8 @@ class structToMapWriterT : public structWriterT<structT>
 {
 private:
 	simUnitsData & simuData;
+
+	using structWriterT<structT>::varsInfoHolder;
 public:
 	structToMapWriterT(simUnitsData & simuData): simuData(simuData) {}
 	~structToMapWriterT(void) {}

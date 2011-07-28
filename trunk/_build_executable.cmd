@@ -8,8 +8,8 @@ if not exist %BIN_PATH% (
     md %BIN_PATH%
 )
 
-%GCC_PATH% -fPIC -c *.cpp || exit /b 1
-%GCC_PATH% -o %BIN_PATH%\%PROJECT_NAME%.exe *.o || exit /b 2
+%GCC_PATH% -c *.cpp || exit /b 1
+%GCC_PATH% -o %BIN_PATH%\%PROJECT_NAME% *.o || exit /b 2
 
 del *.o
 
