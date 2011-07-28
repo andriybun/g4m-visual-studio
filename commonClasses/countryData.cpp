@@ -58,8 +58,8 @@ countryData<realT> countryData<realT>::getSmoothAvg(int timePeriodWidth, int tim
 		return result;
 	}
 
-	map<int, realT>::iterator valuesIter, valuesIterLastEl;
-	map<int, int>::iterator countIter, countIterLastEl;
+	typename map<int, realT>::iterator valuesIter, valuesIterLastEl;
+	typename map<int, int>::iterator countIter, countIterLastEl;
 
 	int sumValues = 0;
 	int sumCount = 0;

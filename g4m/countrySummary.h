@@ -14,6 +14,15 @@ class countrySummaryT : public countrySummaryBaseT<structT>
 {
 private:
 	dynamicArray(int, countriesMap);
+	typedef typename countrySummaryBaseT<structT>::intVectorT intVectorT;
+
+	using countrySummaryBaseT<structT>::data;
+	using countrySummaryBaseT<structT>::count;
+	using countrySummaryBaseT<structT>::numYears;
+	using countrySummaryBaseT<structT>::beginYear;
+	using countrySummaryBaseT<structT>::endYear;
+	using countrySummaryBaseT<structT>::numCountries;
+	using countrySummaryBaseT<structT>::isAllocated;
 
 	int getElemendIdx(int countryIdx, int year)
 	{
@@ -49,8 +58,8 @@ public:
 		{
 			countriesMap[i] = -1;
 		}
-		intVectorT::iterator currElem = countriesVector.begin();
-		intVectorT::iterator vectorEnd = countriesVector.end();
+		typename intVectorT::iterator currElem = countriesVector.begin();
+		typename intVectorT::iterator vectorEnd = countriesVector.end();
 		int internalIdx = 0;
 		while (currElem != vectorEnd)
 		{

@@ -20,7 +20,7 @@ namespace g4m
 	class ipol		//Interpolate: idxT .. Index, realT .. Value
 	{
 	public:
-		template <class realT> friend class ::countryData;
+		template <class realTp> friend class ::countryData;
 		void insert(idxT, realT);
 		void inc(idxT, realT);
 		realT v(const idxT i = 0);   //returns the value
