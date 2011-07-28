@@ -49,7 +49,7 @@ public:
         state_ = stopped;
     }
     
-    long double elapsedSeconds()
+    double elapsedSeconds()
     {
         assert(state_ == stopped);
         return t2_ - t1_;
@@ -59,14 +59,14 @@ private:
     Timer(Timer&) { }
     void operator=(Timer&) { }
 
-    long double systemTime()
+    double systemTime()
     {
-        return clock() / (long double) CLOCKS_PER_SEC;
+        return clock() / (double) CLOCKS_PER_SEC;
     }
 
     enum { uninitialized, running, stopped } state_;
 
-    long double t1_, t2_;
+    double t1_, t2_;
 };
 
 #endif // BZ_TIMER_H
