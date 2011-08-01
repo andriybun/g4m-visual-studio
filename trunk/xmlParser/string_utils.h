@@ -6,6 +6,13 @@
 
 using namespace std;
 
+enum isTagT
+{
+	IS_TAG,
+	IS_NOT_TAG,
+	SAME_AS_BEFORE
+};
+
 int RemoveComments(string fileName, string outFileName)
 {
 	ifstream file;
@@ -96,6 +103,58 @@ void Tokenize(const string& str,
 	{
 		// Found a token, add it to the vector.
 		tokens.push_back(str.substr(lastPos, pos - lastPos));
+		// Skip delimiters.  Note the "not_of"
+		lastPos = str.find_first_not_of(delimiters, pos);
+		// Find next "non-delimiter"
+		if (string::npos != lastPos)
+		{
+			if (str[lastPos] != '\"')
+			{
+				pos = str.find_first_of(delimiters, lastPos);
+			}
+			else
+			{
+				pos = str.find_first_of("\"", lastPos+1)+1;
+			}
+		}
+		else
+		{
+			pos = string::npos;
+		}
+	}
+}
+
+void Tokenize(const string & str,
+			  vector<string> & tokens,
+			  vector<isTagT> & tokensSwitchTag,
+			  const string & delimiters = " ")
+{
+	// Skip delimiters at beginning.
+	string::size_type lastPos = str.find_first_not_of(delimiters, 0);
+	// Find first "non-delimiter".
+	string::size_type pos     = str.find_first_of(delimiters, lastPos);
+	isTagT isTag;
+
+	while (string::npos != pos || string::npos != lastPos)
+	{
+		if (string::npos != pos && string::npos != lastPos)
+		{
+			if ((str[lastPos-1] == '<') && (str[pos] == '>'))
+			{
+				isTag = IS_TAG;
+			}
+			else
+			{
+				isTag = IS_NOT_TAG;
+			}
+		}
+		else
+		{
+			isTag = IS_NOT_TAG;
+		}
+		// Found a token, add it to the vector.
+		tokens.push_back(str.substr(lastPos, pos - lastPos));
+		tokensSwitchTag.push_back(isTag);
 		// Skip delimiters.  Note the "not_of"
 		lastPos = str.find_first_not_of(delimiters, pos);
 		// Find next "non-delimiter"
