@@ -2,6 +2,15 @@
 #define INPUT_FILE_INFO_H_
 
 #include <string>
+#include <assert.h>
+
+#include "xmlParser.h"
+
+#define getValueFromXml(NAME, PATH)						\
+	execResult = pathsParser.getValue(NAME, pathStr);	\
+	assert(execResult == EXECUTION_RESULT_OK);			\
+	PATH = pathStr;
+
 
 // These structures should contain all file names used within the model
 

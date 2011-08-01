@@ -32,7 +32,7 @@ template <class realT>
 int computeModel(string & workingDir)
 {
 	// Struct with paths to input files and configs
-	std::string guiFile = workingDir + "data/gui_file.txt";
+	std::string guiFile = workingDir + "data/paths.xml";
 	inputFileInfoT info(guiFile, workingDir);
 
 	// Declaring outputs and writers of outputs

@@ -2,14 +2,18 @@
 
 inputFileInfoT::inputFileInfoT(std::string infoFile, std::string & workingDir)
 {
+	xmlParser pathsParser(infoFile);
+	string pathStr;
+	xmlParser::executionResultT execResult;
+
 	// TODO: setting up input file names and (maybe) other parameters passed from GUI
-	folders.inputDir = workingDir + "data/";
-	folders.outputDir = workingDir + "../GLOBIOM GUI/data/g4m/";
+	getValueFromXml("input_dir", folders.inputDir);
+	getValueFromXml("output_dir", folders.outputDir);
 
 	// File names
-	files.simuBinFileName = folders.inputDir + "simu.bin";
-	files.outMapFileName = /*folders.outputDir +*/ "my_test_map";
-	files.outTableFileName = /*folders.outputDir +*/ "my_test_table";
+	getValueFromXml("simu_bin_file", files.simuBinFileName);
+	getValueFromXml("out_map_name", files.outMapFileName);
+	getValueFromXml("out_table_name", files.outTableFileName);
 
 	produceMaps = true;
 	produceTables = true;
