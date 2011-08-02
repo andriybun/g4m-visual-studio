@@ -17,6 +17,7 @@
 #include <sstream>
 #include <cstdlib>
 #include <string>
+#include <string.h>
 #include <vector>
 #include <set>
 #include <map>

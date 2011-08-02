@@ -1,6 +1,8 @@
 #ifndef STRUCT_INFO_H_
 #define STRUCT_INFO_H_
 
+#include <string.h>
+
 #include "staticArray.h"
 
 #define add_variable(x) _add_struct_variable(x,#x);

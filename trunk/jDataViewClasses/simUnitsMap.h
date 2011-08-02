@@ -13,6 +13,7 @@
 #include <set>
 #include <fstream>
 #include <string>
+#include <string.h>
 #include <cmath>
 
 #define X_RES				4320		// Longitude resolution 
