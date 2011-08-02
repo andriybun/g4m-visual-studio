@@ -10,6 +10,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <string.h>
 #include <string>
 #include <sstream>
 #include <cmath>
@@ -64,7 +65,7 @@ public:
 	// dimensions are created
 	long long getHash(str_vector_t elements);
 	// Returns hash value for a vector of integer coordinates
-	long long MDT::getHashByCoords(int_vector_t coords);
+	long long getHashByCoords(int_vector_t coords);
 	// Returns coordinates by hash value
 	int_vector_t getCoordsByHash(long long hashValue);
 	// Returns coordinate of "element" in dimension "dim". If "element" doesn't

@@ -77,7 +77,7 @@ countryData<realT> countryData<realT>::getSmoothAvg(int timePeriodWidth, int tim
 			int numYears = lastYear - firstYear + 1;
 			realT *valuesByYears = new realT[numYears];
 			int *countByYears = new int[numYears];
-			memset(countByYears, 0, numYears * sizeof(int));
+			memset(reinterpret_cast<char *>(countByYears), 0, numYears * sizeof(int));
 
 			do
 			{

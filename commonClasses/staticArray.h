@@ -11,6 +11,7 @@
 #else
 	#define SERIAL_EXECUTION
 
+	#include <string.h>
 	#include <assert.h>
 
 	#define array(TYPE, NAME, DIM1)				staticArray<TYPE> NAME(DIM1)

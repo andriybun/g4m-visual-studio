@@ -1,6 +1,8 @@
 #ifndef DYNAMIC_ARRAYS_H_
 #define DYNAMIC_ARRAYS_H_
 
+#include <string.h>
+
 #if !defined DEBUG_ARRAYS
 
 #define dynamicArray(TYPE, NAME)					TYPE * NAME

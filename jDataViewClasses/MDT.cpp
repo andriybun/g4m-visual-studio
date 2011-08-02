@@ -149,7 +149,7 @@ bool MDT::addDim(string dimName, str_vector_t elements)
 	{
 		if (dimNames[i] == dimName)      // verifying if a dimension with the specified name exists;
 		{
-			printf("Dimension %s already exists! New dimension is not created.\n", dimName);
+			printf("Dimension %s already exists! New dimension is not created.\n", dimName.c_str());
 			return false;                  // if exists, return false;
 		}
 	}
@@ -176,7 +176,7 @@ bool MDT::addDimEl(string dimName, string element)
 			}										// verifying if an element with the specified name exists within dimension;
 			if (elementExists)						// if exists, don't add new element and return false;
 			{
-				printf("Element %s already exists in dimension %s! The element is not updated.\n", element, dimName);
+				printf("Element %s already exists in dimension %s! The element is not updated.\n", element.c_str(), dimName.c_str());
 				return false;
 			}
 			else
@@ -217,7 +217,7 @@ bool MDT::updateDimEl(string dimName, int posEl, string element)
 			{
 				if ((dimElements[i][j] == element) &&(j != posEl))
 				{  
-					printf("Element %s already exists in dimension %s! The element is not updated.\n", element, dimName);
+					printf("Element %s already exists in dimension %s! The element is not updated.\n", element.c_str(), dimName.c_str());
 					return false;
 				}
 			}
@@ -229,7 +229,7 @@ bool MDT::updateDimEl(string dimName, int posEl, string element)
 
 	if (!dimExists)
 	{
-        printf("The dimension %s doesn't exist! The element is not updated\n", dimName);
+        printf("The dimension %s doesn't exist! The element is not updated\n", dimName.c_str());
 		return false;
 	}
 }
