@@ -4,11 +4,13 @@
 xmlParser::xmlParser(void)
 {
 	isInitialized = false;
+	currIdx = 0;
 }
 
 xmlParser::xmlParser(string fileName)
 {
 	isInitialized = false;
+	currIdx = 0;
 	isInitialized = initialize(fileName);
 }
 
@@ -76,7 +78,7 @@ xmlParser::executionResultT xmlParser::getValue(const string & tagName, string &
 	{
 		if (fileContentsIsTag[idx] && (fileContents[idx].substr(0, tagNameSize) == tagName))
 		{
-			parseParams(idx, paramsMap);
+			parseStringToParams(fileContents[idx], paramsMap);
 			idx++;
 			while(fileContents[idx] != "/" + tagName)
 			{
@@ -89,13 +91,12 @@ xmlParser::executionResultT xmlParser::getValue(const string & tagName, string &
 	return EXECUTION_RESULT_VALUE_NOT_FOUND;
 }
 
-void xmlParser::parseParams(size_t idx, map<string, string> & paramsMap)
+void xmlParser::parseStringToParams(string & tag, map<string, string> & paramsMap)
 {
-	string tag = fileContents[idx];
 	vector<string> tokens;
 	SurroundMarksWithSpaces("=", tag);
 	Tokenize(tag, tokens, " ");
-	idx = 1;
+	size_t idx = 1;
 	while (idx < tokens.size())
 	{
 		assert(idx + 3 <= tokens.size());
@@ -103,4 +104,25 @@ void xmlParser::parseParams(size_t idx, map<string, string> & paramsMap)
 		paramsMap.insert(pair<string, string>(tokens[idx], tokens[idx+2]));
 		idx += 3;
 	}
+}
+
+xmlParser::executionResultT xmlParser::parseContentsToSubtags(size_t startFromIdx, const string & tagName, vector<string> & valueVector)
+{
+	//size_t tagNameSize = tagName.size();
+	//for (size_t idx = 0; idx < fileContents.size(); idx++)
+	//{
+	//	if (fileContentsIsTag[idx] && (fileContents[idx].substr(0, tagNameSize) == tagName))
+	//	{
+	//		parseStringToParams(fileContents[idx], paramsMap);
+	//		idx++;
+	//		while(fileContents[idx] != "/" + tagName)
+	//		{
+	//			val += fileContents[idx];
+	//			idx++;
+	//		}
+	//		return EXECUTION_RESULT_OK;
+	//	}
+	//}
+
+	return EXECUTION_RESULT_OK;
 }

@@ -6,10 +6,9 @@
 
 #include "xmlParser.h"
 
-#define getValueFromXml(NAME, PATH)						\
-	execResult = pathsParser.getValue(NAME, pathStr);	\
-	assert(execResult == EXECUTION_RESULT_OK);			\
-	PATH = pathStr;
+#define getValueOrInvalidate(NAME, DEST_VAR)				\
+	execResult = pathsParser.getValue(NAME, DEST_VAR);		\
+	assert(execResult == xmlParser::EXECUTION_RESULT_OK);
 
 
 // These structures should contain all file names used within the model
