@@ -10,26 +10,28 @@
 
 using namespace std;
 
-enum xmlParserExecutionResultT
-{
-	EXECUTION_RESULT_OK,
-	EXECUTION_RESULT_VALUE_NOT_FOUND
-};
-
 class xmlParser
 {
-private:
-	bool isInitialized;
-	vector<string> fileContents;
-	vector<bool> fileContentsIsTag;
-
-	void parseParams(size_t idx, map<string, string> & paramsMap);
 public:
 	enum executionResultT
 	{
 		EXECUTION_RESULT_OK,
 		EXECUTION_RESULT_VALUE_NOT_FOUND
 	};
+private:
+	bool isInitialized;
+	vector<string> fileContents;
+	vector<bool> fileContentsIsTag;
+	size_t currIdx;
+
+	void parseStringToParams(string & tag, map<string, string> & paramsMap);
+	executionResultT parseContentsToSubtags(size_t startFromIdx, const string & tagName, vector<string> & valueVector);
+public:
+	//enum executionResultT
+	//{
+	//	EXECUTION_RESULT_OK,
+	//	EXECUTION_RESULT_VALUE_NOT_FOUND
+	//};
 
 	xmlParser(void);
 	xmlParser(string fileName);
