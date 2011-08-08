@@ -1,0 +1,131 @@
+#include "xmlData.h"
+
+xmlData::xmlData(void)
+{
+	top = new node;
+	top->name = "root";
+	currPos = top;
+}
+
+xmlData::~xmlData(void)
+{
+	deleteBranch(top);
+}
+
+void xmlData::addBranch(string name)
+{
+	assert(currPos->upAddr != NULL);
+	node * newBranchTop = new node;
+	newBranchTop->name = name;
+	newBranchTop->upAddr = currPos->upAddr;
+	newBranchTop->upIdx = currPos->upIdx;
+	newBranchTop->currIdx = currPos->currIdx + 1;
+	currPos->upAddr->downAddr.push_back(newBranchTop);
+	currPos = newBranchTop;
+}
+
+void xmlData::branchPush(string name)
+{
+	node * newNode = new node;
+	newNode->name = name;
+	newNode->upAddr = currPos;
+	newNode->upIdx = currPos->downAddr.size();
+	newNode->currIdx = 0;
+	currPos->downAddr.push_back(newNode);
+	currPos = newNode;
+}
+
+string xmlData::getName(xmlData::node * nodePtr)
+{
+	if (nodePtr == NULL)
+	{
+		return currPos->name;
+	}
+	else
+	{
+		nodePtr->name;
+	}
+}
+
+xmlData::node * xmlData::navigateUp()
+{
+	if (currPos->upAddr == NULL)
+	{
+		// TODO: maybe assert here?
+		return NULL;
+	}
+	else
+	{
+		return currPos = currPos->upAddr;
+	}
+	
+}
+
+xmlData::node * xmlData::navigateNext()
+{
+	size_t newIdx = currPos->upIdx+1;
+	if (newIdx >= currPos->upAddr->downAddr.size())
+	{
+		// TODO: maybe assert here?
+		return NULL;
+	}
+	else
+	{
+		return currPos = currPos->upAddr->downAddr[newIdx];
+	}
+}
+
+xmlData::node * xmlData::navigatePrev()
+{
+	if (currPos->upIdx == 0)
+	{
+		// TODO: maybe assert here?
+		return NULL;
+	}
+	else
+	{
+		size_t newIdx = currPos->upIdx-1;
+		return currPos = currPos->upAddr->downAddr[newIdx];
+	}
+}
+
+xmlData::node * xmlData::navigateDown(size_t idx)
+{
+	if ((currPos->downAddr.size() == 0) || (idx >= currPos->downAddr.size()-1))
+	{
+		// TODO: maybe assert here?
+		return NULL;
+	}
+	else
+	{
+		return currPos = currPos->downAddr[idx];
+	}
+
+}
+
+void xmlData::deleteBranch(node * branchTop)
+{
+	while (branchTop->downAddr.size() > 0)
+	{
+		node * nodeToDelete = branchTop->downAddr[branchTop->downAddr.size()-1];
+		deleteBranch(nodeToDelete);
+		branchTop->downAddr.pop_back();
+	}
+	delete branchTop;
+}
+
+void xmlData::print()
+{
+	printBranch(top, 0);	
+}
+
+void xmlData::printBranch(node * branchTop, size_t depth)
+{
+	for (size_t tb = 0; tb < depth; tb++) printf("\t");
+	printf("%s\n", branchTop->name.c_str());
+	for (size_t idx = 0; idx < branchTop->downAddr.size(); idx++)
+	{
+		node * nodeToPrint = branchTop->downAddr[idx];
+		printBranch(nodeToPrint, depth+1);
+	}
+}

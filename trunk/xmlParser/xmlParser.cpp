@@ -78,7 +78,8 @@ xmlParser::executionResultT xmlParser::getValue(const string & tagName, string &
 	{
 		if (fileContentsIsTag[idx] && (fileContents[idx].substr(0, tagNameSize) == tagName))
 		{
-			parseStringToParams(fileContents[idx], paramsMap);
+			string tagName;
+			parseStringToParams(fileContents[idx], tagName, paramsMap);
 			idx++;
 			while(fileContents[idx] != "/" + tagName)
 			{
@@ -91,11 +92,13 @@ xmlParser::executionResultT xmlParser::getValue(const string & tagName, string &
 	return EXECUTION_RESULT_VALUE_NOT_FOUND;
 }
 
-void xmlParser::parseStringToParams(string & tag, map<string, string> & paramsMap)
+void xmlParser::parseStringToParams(const string & inFullTag, string & tagName, map<string, string> & paramsMap)
 {
 	vector<string> tokens;
-	SurroundMarksWithSpaces("=", tag);
-	Tokenize(tag, tokens, " ");
+	string tmpTag = inFullTag;
+	SurroundMarksWithSpaces("=", tmpTag);
+	Tokenize(tmpTag, tokens, " ");
+	tagName = tokens[0];
 	size_t idx = 1;
 	while (idx < tokens.size())
 	{
@@ -106,23 +109,54 @@ void xmlParser::parseStringToParams(string & tag, map<string, string> & paramsMa
 	}
 }
 
-xmlParser::executionResultT xmlParser::parseContentsToSubtags(size_t startFromIdx, const string & tagName, vector<string> & valueVector)
+size_t xmlParser::getTag(size_t startIdx)
 {
-	//size_t tagNameSize = tagName.size();
-	//for (size_t idx = 0; idx < fileContents.size(); idx++)
-	//{
-	//	if (fileContentsIsTag[idx] && (fileContents[idx].substr(0, tagNameSize) == tagName))
-	//	{
-	//		parseStringToParams(fileContents[idx], paramsMap);
-	//		idx++;
-	//		while(fileContents[idx] != "/" + tagName)
-	//		{
-	//			val += fileContents[idx];
-	//			idx++;
-	//		}
-	//		return EXECUTION_RESULT_OK;
-	//	}
-	//}
+	string inFullTag = fileContents[startIdx];
+	string tagName;
+	map<string, string> params;
+	if (fileContentsIsTag[startIdx])
+	{
+		parseStringToParams(inFullTag, tagName, params);
+		xmlTree.branchPush(tagName);
+		if (params.size() > 0)
+		{
+			xmlTree.branchPush(params["name"]);
+		}
+		tagStack.push_back("/" + tagName);
+		while (!(fileContentsIsTag[++startIdx] && (fileContents[startIdx] == tagStack[tagStack.size()-1])))
+		{
+			startIdx = getTag(startIdx);
+		}
+		if (params.size() > 0)
+		{
+			xmlTree.navigateUp();
+		}
+		xmlTree.navigateUp();
+		tagStack.pop_back();
+	}
+	else
+	{
+		while (!fileContentsIsTag[startIdx])
+		{
+			xmlTree.branchPush(fileContents[startIdx++]);
+			xmlTree.navigateUp();
+		}
+		startIdx--;
+	}
+	return startIdx;
+}
 
-	return EXECUTION_RESULT_OK;
+void xmlParser::parseXmlTree()
+{
+	size_t idx = 0;
+	while (idx < fileContents.size())
+	{
+		idx = getTag(idx);
+		idx++;		
+	}
+}
+
+void xmlParser::printXmlTree()
+{
+	xmlTree.print();
 }
