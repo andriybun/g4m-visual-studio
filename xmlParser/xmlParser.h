@@ -8,6 +8,8 @@
 #include <map>
 #include <assert.h>
 
+#include "xmlData.h"
+
 using namespace std;
 
 class xmlParser
@@ -23,9 +25,12 @@ private:
 	vector<string> fileContents;
 	vector<bool> fileContentsIsTag;
 	size_t currIdx;
+	vector<string> tagStack;
+	xmlData xmlTree;
 
-	void parseStringToParams(string & tag, map<string, string> & paramsMap);
-	executionResultT parseContentsToSubtags(size_t startFromIdx, const string & tagName, vector<string> & valueVector);
+	void parseStringToParams(const string & inFullTag, string & tagName, map<string, string> & paramsMap);
+	size_t getTag(size_t startIdx);
+
 public:
 	//enum executionResultT
 	//{
@@ -40,6 +45,8 @@ public:
 	bool initialize(string fileName);
 	executionResultT getValue(const string & tagName, string & val);
 	executionResultT getValue(const string & tagName, string & val, map<string, string> & paramsMap);
+	void parseXmlTree();
+	void printXmlTree();
 };
 
 #endif

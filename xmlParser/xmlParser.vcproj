@@ -149,6 +149,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\xmlData.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\xmlParser.cpp"
 				>
 			</File>
@@ -160,6 +164,10 @@
 			>
 			<File
 				RelativePath=".\string_utils.h"
+				>
+			</File>
+			<File
+				RelativePath=".\xmlData.h"
 				>
 			</File>
 			<File
