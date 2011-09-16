@@ -45,7 +45,8 @@ bool xmlParser::initialize(string fileName)
 	}
 	else
 	{
-		printf("Error! Can not open file.\n");
+		printf("Error! Can not open xml file: %s\n", fileName.c_str());
+		assert(false);
 		return false;
 	}
 }
