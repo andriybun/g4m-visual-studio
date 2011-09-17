@@ -78,7 +78,7 @@ void griddataLite<T>::PrintToFile(string fileName, string rastrType = "ESRI")
 	}
 	else
 	{
-		cout << "Unable to save to file!" << endl;
+		cout << "Unable to save to file! (griddataLite3)" << endl;
 	}
 }
 

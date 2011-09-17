@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="g4m"
 	ProjectGUID="{8BE9BFBC-B655-4332-86A8-9DE40590A559}"
 	RootNamespace="g4m"
