@@ -42,11 +42,11 @@ MDT::MDT(string fileName)
 		setHashOffsets();
 
 		f.close();
-		cout << "Successfully read file: " << fileName << endl;
+		cout << "(MDT.cpp) Successfully read file: " << fileName << endl;
 	}
 	else
 	{
-		cout << "Unable to open file!" << endl;
+		cout << "(MDT.cpp) Unable to open file! " << fileName << endl;
 	}
 }
 
@@ -82,7 +82,7 @@ MDT::MDT(string fileName, int_vector_t dimCardinalsIn)
 	}
 	else
 	{
-		cout << "Unable to open file!" << endl;
+		cout << "(MDT.cpp) Unable to open file! " << fileName << endl;
 	}
 }
 
@@ -141,7 +141,7 @@ bool MDT::addDim(string dimName, str_vector_t elements)
 {
 	if (elements.size() == 0)
 	{
-		printf("Trying to create empty dimension! New dimension is not created.\n");
+		printf("(MDT.cpp) Trying to create empty dimension! New dimension is not created.\n");
 		return false;
 	}
 
@@ -149,7 +149,7 @@ bool MDT::addDim(string dimName, str_vector_t elements)
 	{
 		if (dimNames[i] == dimName)      // verifying if a dimension with the specified name exists;
 		{
-			printf("Dimension %s already exists! New dimension is not created.\n", dimName.c_str());
+			printf("(MDT.cpp) Dimension %s already exists! New dimension is not created.\n", dimName.c_str());
 			return false;                  // if exists, return false;
 		}
 	}
@@ -176,7 +176,7 @@ bool MDT::addDimEl(string dimName, string element)
 			}										// verifying if an element with the specified name exists within dimension;
 			if (elementExists)						// if exists, don't add new element and return false;
 			{
-				printf("Element %s already exists in dimension %s! The element is not updated.\n", element.c_str(), dimName.c_str());
+				printf("(MDT.cpp) Element %s already exists in dimension %s! The element is not updated.\n", element.c_str(), dimName.c_str());
 				return false;
 			}
 			else
@@ -209,7 +209,7 @@ bool MDT::updateDimEl(string dimName, int posEl, string element)
 
 			if (posEl >= dimElements[i].size())
 			{
-				printf("Index out of range! Trying to update %d-th element of %d-element vector.\n", posEl, dimElements[i].size());
+				printf("(MDT.cpp) Index out of range! Trying to update %d-th element of %d-element vector.\n", posEl, dimElements[i].size());
 				return false;
 			}  
 
@@ -217,7 +217,7 @@ bool MDT::updateDimEl(string dimName, int posEl, string element)
 			{
 				if ((dimElements[i][j] == element) &&(j != posEl))
 				{  
-					printf("Element %s already exists in dimension %s! The element is not updated.\n", element.c_str(), dimName.c_str());
+					printf("(MDT.cpp) Element %s already exists in dimension %s! The element is not updated.\n", element.c_str(), dimName.c_str());
 					return false;
 				}
 			}
@@ -229,7 +229,7 @@ bool MDT::updateDimEl(string dimName, int posEl, string element)
 
 	if (!dimExists)
 	{
-        printf("The dimension %s doesn't exist! The element is not updated\n", dimName.c_str());
+        printf("(MDT.cpp) The dimension %s doesn't exist! The element is not updated\n", dimName.c_str());
 		return false;
 	}
 }
@@ -341,7 +341,7 @@ void MDT::SaveToFile(string fileName, string mode)
 					f << dimElements[i][j] << endl;
 				}
 			}
-			cout << "Successfully written to file: " << fileName << endl;
+			cout << "(MDT.cpp) Successfully written to file: " << fileName << endl;
 		}
 		else if (mode == "TABLE")
 		{
@@ -354,17 +354,17 @@ void MDT::SaveToFile(string fileName, string mode)
 					f << dimElements[i][j] << endl;
 				}
 			}
-			cout << "Successfully written to file: " << fileName << endl;
+			cout << "(MDT.cpp) Successfully written to file: " << fileName << endl;
 		}
 		else
 		{
-			cout << "Error writing to file! Wrong mode!" << endl;
+			cout << "(MDT.cpp) Error writing to file! Wrong mode!" << endl;
 		}
 		f.close();
 	}
 	else
 	{
-		cout << "Unable to save to file: " << fileName << endl;
+		cout << "(MDT.cpp) Unable to save to file: " << fileName << endl;
 	}
 }
 

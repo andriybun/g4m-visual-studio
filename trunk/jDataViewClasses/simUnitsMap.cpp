@@ -77,11 +77,11 @@ simUnitsMap::simUnitsMap(string fileName)
 			ptr[i] = ptr[i-1] + ptr[i];
 		}
 		f.close();
-		cout << "Successfully read from binary file: " << fileName << endl;
+		cout << "(simUnitsMap.cpp) Successfully read from binary file: " << fileName << endl;
 	}
 	else
 	{
-		cout << "Unable to open file!" << endl;
+		cout << "(simUnitsMap.cpp) Unable to open file! " << fileName<< endl;
 	}
 }
 
