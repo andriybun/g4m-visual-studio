@@ -55,10 +55,10 @@ int computeModel(string & workingDir)
 	{
 		pHolder.simuData->pointPush(inCommonData.year);
 		pHolder.countrySummaryTable->pointPush(inCommonData.year);
-cout<<"year = \t"<<inCommonData.year<<endl;
+		printf("year = %d\n", inCommonData.year);
 		parallelExecute< inCellDataT<realT>, inCommonDataT<realT>, outCellDataT<realT> > (
 			&computeCell<realT>, inCellData, inCommonData, outCellData, inCommonData.numCells, (void *)(& pHolder));
-cout<<"finished parallelExecute for current year"<<endl;
+
 		if (pHolder.countrySummaryWriter)
 		{
 			pHolder.countrySummaryWriter->writeData(*pHolder.outCountrySummaryData, countries);
