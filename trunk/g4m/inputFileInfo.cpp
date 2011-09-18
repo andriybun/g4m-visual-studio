@@ -8,6 +8,9 @@ inputFileInfoT::inputFileInfoT(std::string infoFile, std::string & workingDir)
 	// TODO: setting up input file names and (maybe) other parameters passed from GUI
 	getValueOrInvalidate("input_dir", folders.inputDir);
 	getValueOrInvalidate("output_dir", folders.outputDir);
+	folders.inputDir = workingDir + folders.inputDir;
+	folders.outputDir = workingDir + folders.outputDir;
+	folders.workingDir = workingDir;
 
 	// File names
 	getValueOrInvalidate("simu_bin_file", files.simuBinFileName);

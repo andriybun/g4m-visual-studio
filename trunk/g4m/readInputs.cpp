@@ -47,7 +47,7 @@ int readInputs(inputFileInfoT info,
 	// Initialize data containers and writers to maps/tables
 	if (info.produceMaps)
 	{
-		pHolder.simuData = new simUnitsData(info.files.simuBinFileName);
+		pHolder.simuData = new simUnitsData(info.folders.workingDir + info.files.simuBinFileName);
 		pHolder.simuDataWriter = new structToMapWriterT< outCellDataT<realT> >(*pHolder.simuData);
 		// Initialize dimensions of SIMU data class
 		pHolder.simuData->addDim("year", years);
