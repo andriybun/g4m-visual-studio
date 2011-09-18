@@ -141,7 +141,7 @@ public:
 //	}
 //	else
 //	{
-//		cout << "Unable to save to file!" << endl;
+//		cout << "(structGrid.h) Unable to save to file! "<<fileName << endl;
 //	}
 //}
 //
@@ -201,7 +201,7 @@ public:
 //	}
 //	else
 //	{
-//		cout << "Unable to save to file!" << endl;
+//		cout << "(structGrid.h) Unable to save to file!"<<fileName << endl;
 //	}
 //} 
 

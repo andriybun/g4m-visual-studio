@@ -100,7 +100,7 @@ void griddata2<T>::PrintToFile(string fileName, string rastrType)
 	}
 	else
 	{
-		cout << "Unable to save to file!" << endl;
+		cout << "(griddata2.cpp) Unable to save to file! " <<fileName << endl;
 	}
 }
 
@@ -160,7 +160,7 @@ void griddata2<T>::PrintToFilePrev(string fileName, string rastrType)
 	}
 	else
 	{
-		cout << "Unable to save to file!" << endl;
+		cout <<"(griddata2.cpp) Unable to save to file! " <<fileName << endl;
 	}
 } 
 

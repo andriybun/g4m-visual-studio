@@ -214,11 +214,11 @@ bool simUnitsData::SaveToFile(std::string outDir, std::string fileName)
 			it++;
 		}
 		f.close();
-		cout << "Successfully written to binary file: " << fileNameTmp << endl;
+		cout << "(simUnitsData.cpp) Successfully written to binary file: " << fileNameTmp << endl;
 	}
 	else
 	{
-		cout << "Unable to save to file!" << endl;
+		cout << "(simUnitsData.cpp) Unable to save to file! " <<fileNameTmp<< endl;
 		return false;
 	}
 	//****************************
@@ -256,11 +256,11 @@ bool simUnitsData::SaveToFile(std::string outDir, std::string fileName)
 		}
 		printf("written %d bytes to mdc-file\n", bytesWritten);
 		f.close();
-		cout << "Successfully written to binary file: " << fileNameTmp << endl;
+		cout << "(simUnitsData.cpp) Successfully written to binary file: " << fileNameTmp << endl;
 	}
 	else
 	{
-		cout << "Unable to save to file!" << endl;
+		cout << "(simUnitsData.cpp) Unable to save to file! " <<fileNameTmp<< endl;
 		return false;
 	}
 	descr.SaveToFile(outDir + pathSeparator + "main", "MAP");
