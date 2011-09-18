@@ -1,0 +1,1 @@
+copy simu.bin and paths.xml to this folder
