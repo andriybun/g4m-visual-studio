@@ -17,6 +17,7 @@ struct dirInfoT
 {
 	std::string inputDir;
 	std::string outputDir;
+	std::string workingDir;
 };
 
 struct fileInfoT
