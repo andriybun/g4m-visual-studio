@@ -232,11 +232,11 @@ bool tableData::SaveToFile(std::string outDir, std::string fileName)
 		delete []vl;
 		delete []vf;
 		f.close();
-		cout << "Successfully written to binary file: " << fileNameTmp << endl;
+		cout << "(tableData.cpp) Successfully written to binary file: " << fileNameTmp << endl;
 	}
 	else
 	{
-		cout << "Unable to save to file!" << endl;
+		cout << "(tableData.cpp) Unable to save to file! " << fileNameTmp<< endl;
 		return false;
 	}
 	//****************************

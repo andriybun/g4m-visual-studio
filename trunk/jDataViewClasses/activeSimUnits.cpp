@@ -43,8 +43,8 @@ void activeSimUnits::saveToFile(string fileName)
       f.write(reinterpret_cast<char *>(&tmp), sizeof(int));
     }
     f.close();
-    cout << "Successfully written to binary file: " << fileName << endl;
+    cout << "(activeSimUnits.cpp) Successfully written to binary file: " << fileName << endl;
   } else {
-    cout << "Unable to save to file!" << endl;
+    cout << "(activeSimUnits.cpp) Unable to save to file!" << fileName<< endl;
   }
  }

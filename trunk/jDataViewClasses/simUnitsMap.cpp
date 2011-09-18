@@ -245,11 +245,11 @@ void simUnitsMap::saveToFile()
 		f.write(reinterpret_cast<char *>(ptr), (NSIMU + 1) * sizeof(int));
 		f.write(reinterpret_cast<char *>(v), vSize * sizeof(int));
 		f.close();
-		cout << "Successfully written to binary file: " << fileName << endl;
+		cout << "(simUnitsMap.cpp) Successfully written to binary file: " << fileName << endl;
 	}
 	else
 	{
-		cout << "Unable to save to file!" << endl;
+		cout << "(simUnitsMap.cpp) Unable to save to file!" <<fileName<< endl;
 	}
 	delete []v;
 }
@@ -277,10 +277,10 @@ void simUnitsMap::saveToFile_ESRIGrid()
 			f << endl;
 		}
 		f.close();     
-		cout << "Successfully written to binary file: " << fileName << endl;
+		cout << "(simUnitsMap.cpp) Successfully written to binary file: " << fileName << endl;
 	}
 	else
 	{
-		cout << "Unable to save to file!" << endl;
+		cout << "(simUnitsMap.cpp) Unable to save to file! " << fileName<< endl;
 	}
 }

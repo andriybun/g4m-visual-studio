@@ -184,7 +184,7 @@ void countryData<realT>::printToFile(string fileName, int firstYear, int lastYea
 	}
 	else
 	{
-		cout << "Unable to save to file!" << endl;
+		cout << "(countryData.cpp) Unable to save to file! " <<fileName << endl;
 	}
 }
 
