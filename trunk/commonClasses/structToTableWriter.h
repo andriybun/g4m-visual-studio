@@ -21,7 +21,7 @@ public:
 	structToTableWriterT(tableData & tbData): tbData(tbData) {}
 	~structToTableWriterT(void) {}
 
-	void addOutputParam(std::string param_name/*, distribute_value_t distribute_value = DISTRIBUTE_PROPORTIONALLY*/)
+	void addOutputParam(std::string param_name, distribute_value_t distribute_value = DISTRIBUTE_PROPORTIONALLY)
 	{
 		var_info_lite_t varInfo;
 		struct_info_t< structT > mStructInfo;
@@ -29,17 +29,26 @@ public:
 		varInfo.type_id = mStructInfo.get_var_type_id(param_name);
 		varInfo.simuDataPos = tbData.descr.getCoordinate(tbData.descr.getNDims()-1, param_name);
 		assert(varInfo.simuDataPos >= 0);
-		//varInfo.distribute_value = distribute_value;
+		varInfo.distribute_value = distribute_value;
 		varsInfoHolder.push_back(varInfo);
 	}
 
-	void writeData(structT &mStruct)
+	void writeData(structT &mStruct, structT &mStructAvg)
 	{
 		std::deque<var_info_lite_t>::iterator firstVar = varsInfoHolder.begin();
 		std::deque<var_info_lite_t>::iterator it = firstVar;
 		while (it != varsInfoHolder.end())
 		{
-			float output = getValue(mStruct, it);
+			float output;
+			switch(it->distribute_value)
+			{
+			case DISTRIBUTE_PROPORTIONALLY:
+				output = getValue(mStruct, it);
+				break;
+			case DISTRIBUTE_EQUAL:
+				output = getValue(mStructAvg, it);
+				break;
+			}
 			tbData.insert(it->simuDataPos, output);
 			it++;
 		}
@@ -51,7 +60,7 @@ public:
 		for (unsigned int countryIdx = 0; countryIdx < countries.size(); countryIdx++)
 		{
 			tbData.pointPush(countryIdx);
-			writeData(outCountrySummaryData.get(countries[countryIdx], year));
+			writeData(outCountrySummaryData.get(countries[countryIdx], year), outCountrySummaryData.getAvg(countries[countryIdx], year));
 			tbData.pointPop();
 		}
 	}

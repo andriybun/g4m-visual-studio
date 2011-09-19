@@ -23,7 +23,7 @@ protected:
 	map<int, int> countriesMap;			// first - external index, second - internal index
 	bool isAllocated;
 
-	int getElemendIdx(int countryIdx, int year)
+	virtual int getElemendIdx(int countryIdx, int year)
 	{
 		assert((year >= beginYear) && (year <= endYear));
 		map<int, int>::iterator found = countriesMap.find(countryIdx);

@@ -24,7 +24,7 @@ private:
 	using countrySummaryBaseT<structT>::numCountries;
 	using countrySummaryBaseT<structT>::isAllocated;
 
-	int getElemendIdx(int countryIdx, int year)
+	virtual int getElemendIdx(int countryIdx, int year)
 	{
 		assert((year >= beginYear) && (year <= endYear));
 		if (countriesMap[countryIdx] < 0)
