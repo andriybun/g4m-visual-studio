@@ -41,6 +41,7 @@ bool xmlParser::initialize(string fileName)
 			}
 		}
 		f.close();
+		parseXmlTree();
 		return true;
 	}
 	else
@@ -118,20 +119,16 @@ size_t xmlParser::getTag(size_t startIdx)
 	if (fileContentsIsTag[startIdx])
 	{
 		parseStringToParams(inFullTag, tagName, params);
-		xmlTree.branchPush(tagName);
-		if (params.size() > 0)
-		{
-			xmlTree.branchPush(params["name"]);
-		}
+		xmlTree.branchPush(tagName, params);
 		tagStack.push_back("/" + tagName);
 		while (!(fileContentsIsTag[++startIdx] && (fileContents[startIdx] == tagStack[tagStack.size()-1])))
 		{
 			startIdx = getTag(startIdx);
 		}
-		if (params.size() > 0)
-		{
-			xmlTree.navigateUp();
-		}
+		//if (params.size() > 0)
+		//{
+		//	xmlTree.navigateUp();
+		//}
 		xmlTree.navigateUp();
 		tagStack.pop_back();
 	}
