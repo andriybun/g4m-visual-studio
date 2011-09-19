@@ -26,7 +26,6 @@ private:
 	vector<bool> fileContentsIsTag;
 	size_t currIdx;
 	vector<string> tagStack;
-	xmlData xmlTree;
 
 	void parseStringToParams(const string & inFullTag, string & tagName, map<string, string> & paramsMap);
 	size_t getTag(size_t startIdx);
@@ -37,6 +36,8 @@ public:
 	//	EXECUTION_RESULT_OK,
 	//	EXECUTION_RESULT_VALUE_NOT_FOUND
 	//};
+
+	xmlData xmlTree;
 
 	xmlParser(void);
 	xmlParser(string fileName);

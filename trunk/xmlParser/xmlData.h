@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string> 
 #include <vector>
+#include <map>
 
 #include <assert.h>
 
@@ -11,10 +12,13 @@ using namespace std;
 
 class xmlData
 {
+public:
+	typedef map<string, string> paramsMapT;
 private:
 	struct node
 	{
 		string name;
+		paramsMapT params;
 		node * upAddr;
 		size_t upIdx;
 		size_t currIdx;
@@ -25,6 +29,7 @@ private:
 	node * top;
 
 	void deleteBranch(node * branchTop);
+	void printMap(const map<string, string> & stringMap);
 	void printBranch(node * branchTop, size_t depth);
 public:
 	xmlData(void);
@@ -33,9 +38,11 @@ public:
 	string getName(node * nodePtr = NULL);
 
 	// add new branch at the same level as currPos
-	void addBranch(string name);
+	void addBranch(const string & name);
+	void addBranch(const string & name, const paramsMapT & paramsMap);
 	// add new node below currPos
-	void branchPush(string name);
+	void branchPush(const string & name);
+	void branchPush(const string & name, const paramsMapT & paramsMap);
 
 	// navigate over the tree
 	node * navigateUp();

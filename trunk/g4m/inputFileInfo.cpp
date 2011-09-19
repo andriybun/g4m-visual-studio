@@ -13,9 +13,13 @@ inputFileInfoT::inputFileInfoT(std::string infoFile, std::string & workingDir)
 	folders.workingDir = workingDir;
 
 	// File names
+	getValueOrInvalidate("output_parameters_file", files.outputParametersFileName);
 	getValueOrInvalidate("simu_bin_file", files.simuBinFileName);
 	getValueOrInvalidate("out_map_name", files.outMapFileName);
 	getValueOrInvalidate("out_table_name", files.outTableFileName);
+
+	files.outputParametersFileName = workingDir + files.outputParametersFileName;
+	files.simuBinFileName = workingDir + files.simuBinFileName;
 
 	produceMaps = true;
 	produceTables = true;

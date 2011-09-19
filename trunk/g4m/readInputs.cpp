@@ -21,6 +21,15 @@ int readInputs(inputFileInfoT info,
 	inCommonData.beginYear = 2000;
 	inCommonData.endYear = 2010;
 
+	xmlParser paramsParser(info.files.outputParametersFileName);
+	paramsParser.printXmlTree();
+	string dummy;
+	map<string, string> dummyMap;
+	paramsParser.getValue("dim", dummy, dummyMap);
+	cout << dummyMap["name"] << endl;
+	paramsParser.getValue("value", dummy);
+	cout << dummy << endl;
+
 	// Helper sets
 	vector<int> years;
 	years.push_back(2000);
@@ -47,7 +56,7 @@ int readInputs(inputFileInfoT info,
 	// Initialize data containers and writers to maps/tables
 	if (info.produceMaps)
 	{
-		pHolder.simuData = new simUnitsData(info.folders.workingDir + info.files.simuBinFileName);
+		pHolder.simuData = new simUnitsData(info.files.simuBinFileName);
 		pHolder.simuDataWriter = new structToMapWriterT< outCellDataT<realT> >(*pHolder.simuData);
 		// Initialize dimensions of SIMU data class
 		pHolder.simuData->addDim("year", years);

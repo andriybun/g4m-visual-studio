@@ -22,6 +22,7 @@ struct dirInfoT
 
 struct fileInfoT
 {
+	std::string outputParametersFileName;
 	std::string simuBinFileName;
 	std::string cellDataTxt;
 

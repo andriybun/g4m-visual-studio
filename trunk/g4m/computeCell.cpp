@@ -20,7 +20,7 @@ int computeCell(const inCellDataT<realT> &inCellData,
 
 	if (simuDataWriter)
 	{
-		// Two ways are possible  /* not proved yet!!! */, however latter one is almost 2 times faster
+		// Two ways are possible, however latter one is almost 2 times faster /* not proved yet!!! */
 		//simuDataWriter->writeData(inCellData.x, inCellData.y, outCellData);
 		simuDataWriter->writeData(inCellData.simu, outCellData);
 	}
