@@ -29,7 +29,7 @@
 enum distribute_value_t 
 {
 	DISTRIBUTE_PROPORTIONALLY,
-	IS_CONSTANT
+	DISTRIBUTE_EQUAL
 };
 
 template < typename structT > class structToMapWriterT;

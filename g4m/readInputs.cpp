@@ -31,7 +31,7 @@ int readInputs(inputFileInfoT info,
 	results.push_back("forestArea");
 	resultsDistribution.push_back(DISTRIBUTE_PROPORTIONALLY);
 	results.push_back("forestShare");
-	resultsDistribution.push_back(IS_CONSTANT);
+	resultsDistribution.push_back(DISTRIBUTE_EQUAL);
 	countries.push_back(1);
 	countries.push_back(2);
 	countries.push_back(3);
@@ -74,10 +74,12 @@ int readInputs(inputFileInfoT info,
 		pHolder.countrySummaryTable->addDim("value", results);
 		// Initialize writers of outputs
 		vector<string>::iterator it = results.begin();
+		vector<distribute_value_t>::iterator itDistr = resultsDistribution.begin();
 		while (it != results.end())
 		{
-			pHolder.countrySummaryWriter->addOutputParam(*it);
+			pHolder.countrySummaryWriter->addOutputParam(*it, *itDistr);
 			it++;
+			itDistr++;
 		}
 	}
 	

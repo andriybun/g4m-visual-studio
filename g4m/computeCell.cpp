@@ -16,10 +16,7 @@ int computeCell(const inCellDataT<realT> &inCellData,
 	structToMapWriterT< outCellDataT<realT> > * simuDataWriter = (*((dataContainersHolder<realT> *)params)).simuDataWriter;
 	countrySummaryT< outCellDataT<realT> > * outCountrySummaryData = (*((dataContainersHolder<realT> *)params)).outCountrySummaryData;
 
-	// Stopgap:
-	outCellData.forestArea = 20;
-	outCellData.forestShare = outCellData.forestArea * inCellData.area;
-	// end stopgap
+	g4mCompute(inCellData, inCommonData, outCellData);
 
 	if (simuDataWriter)
 	{

@@ -68,4 +68,14 @@ int computeCell(const inCellDataT<realT> &inCellData,
 				void * params);
 
 
+//////////////////////////////////////////////////////////////////////////
+// Model specific functions that should be modified
+//////////////////////////////////////////////////////////////////////////
+
+template <class realT>
+int g4mCompute(const inCellDataT<realT> &inCellData,
+			   const inCommonDataT<realT> &inCommonData,
+			   outCellDataT<realT> &outCellData);
+
+
 #endif

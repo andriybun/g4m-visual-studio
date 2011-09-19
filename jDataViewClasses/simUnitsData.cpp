@@ -67,7 +67,7 @@ bool simUnitsData::insert(double x, double y, float val, distribute_value_t dist
 			case DISTRIBUTE_PROPORTIONALLY:
 				result = insert(unitsInCell[i].simu, unitsInCell[i].simuFraction * val);
 				break;
-			case IS_CONSTANT:
+			case DISTRIBUTE_EQUAL:
 				result = insert(unitsInCell[i].simu, val);
 				break;
 			default:
@@ -92,7 +92,7 @@ bool simUnitsData::insert(double x, double y, float val, std::string paramName, 
 		case DISTRIBUTE_PROPORTIONALLY:
 			result = insert(unitsInCell[i].simu, unitsInCell[i].simuFraction * val);
 			break;
-		case IS_CONSTANT:
+		case DISTRIBUTE_EQUAL:
 			result = insert(unitsInCell[i].simu, val);
 			break;
 		default:
@@ -134,7 +134,7 @@ bool simUnitsData::insertByLastCoord(double x, double y, int coord, float val, d
 		case DISTRIBUTE_PROPORTIONALLY:
 			result = insertByLastCoord(unitsInCell[i].simu, coord, unitsInCell[i].simuFraction * val);
 			break;
-		case IS_CONSTANT:
+		case DISTRIBUTE_EQUAL:
 			result = insertByLastCoord(unitsInCell[i].simu, coord, val);
 			break;
 		default:
