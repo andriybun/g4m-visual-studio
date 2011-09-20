@@ -94,6 +94,32 @@ xmlParser::executionResultT xmlParser::getValue(const string & tagName, string &
 	return EXECUTION_RESULT_VALUE_NOT_FOUND;
 }
 
+xmlParser::executionResultT xmlParser::getSubtags(const string & tagName,
+												  vector<string> & result,
+												  vector<xmlData::paramsMapT> & resultParams,
+												  const pair<string, string> & paramsMask,
+												  const string & skipTag)
+{
+	xmlTree.getSubtags(tagName, result, resultParams, paramsMask, skipTag);
+	return EXECUTION_RESULT_OK;
+}
+
+xmlParser::executionResultT xmlParser::getSubtags(const string & tagName,
+												  vector<int> & result,
+												  vector<xmlData::paramsMapT> & resultParams,
+												  const pair<string, string> & paramsMask,
+												  const string & skipTag)
+{
+	vector<string> resultStr;
+	getSubtags(tagName, resultStr, resultParams, paramsMask, skipTag);
+	for (size_t idx = 0; idx < resultStr.size(); idx++)
+	{
+		result.push_back(atoi(resultStr[idx].c_str()));
+	}
+	return EXECUTION_RESULT_OK;
+}
+
+
 void xmlParser::parseStringToParams(const string & inFullTag, string & tagName, map<string, string> & paramsMap)
 {
 	vector<string> tokens;
@@ -106,6 +132,7 @@ void xmlParser::parseStringToParams(const string & inFullTag, string & tagName, 
 	{
 		assert(idx + 3 <= tokens.size());
 		assert(tokens[idx+1] == "=");
+		FindAndReplaceAll(tokens[idx+2], "\"", "");
 		paramsMap.insert(pair<string, string>(tokens[idx], tokens[idx+2]));
 		idx += 3;
 	}

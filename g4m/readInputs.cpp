@@ -21,37 +21,31 @@ int readInputs(inputFileInfoT info,
 	inCommonData.beginYear = 2000;
 	inCommonData.endYear = 2010;
 
+	// Read parameters of the current run from *.xml file
 	xmlParser paramsParser(info.files.outputParametersFileName);
-	paramsParser.printXmlTree();
-	string dummy;
-	map<string, string> dummyMap;
-	paramsParser.getValue("dim", dummy, dummyMap);
-	cout << dummyMap["name"] << endl;
-	paramsParser.getValue("value", dummy);
-	cout << dummy << endl;
-
-	// Helper sets
 	vector<int> years;
-	years.push_back(2000);
-	years.push_back(2005);
-	years.push_back(2010);
 	vector<string> results;
 	vector<distribute_value_t> resultsDistribution;
-	results.push_back("forestArea");
-	resultsDistribution.push_back(DISTRIBUTE_PROPORTIONALLY);
-	results.push_back("forestShare");
-	resultsDistribution.push_back(DISTRIBUTE_EQUAL);
-	countries.push_back(1);
-	countries.push_back(2);
-	countries.push_back(3);
-	countries.push_back(4);
-	countries.push_back(5);
-	countries.push_back(6);
-	countries.push_back(7);
-	countries.push_back(8);
-	countries.push_back(9);
-	countries.push_back(0);
-	// end stopgap
+	vector<xmlData::paramsMapT> dummy;
+	vector<xmlData::paramsMapT> resultsDistributionRaw;
+	paramsParser.getSubtags("dim", years, dummy, pair<string, string>("name", "years"), "value");
+	paramsParser.getSubtags("dim", countries, dummy, pair<string, string>("name", "countries"), "value");
+	paramsParser.getSubtags("dim", results, resultsDistributionRaw, pair<string, string>("name", "params"), "value");
+	for (size_t idx = 0; idx < resultsDistributionRaw.size(); idx++)
+	{
+		if (resultsDistributionRaw[idx]["distribute"] == "proportionally")
+		{
+			resultsDistribution.push_back(DISTRIBUTE_PROPORTIONALLY);
+		}
+		else if (resultsDistributionRaw[idx]["distribute"] == "equal")
+		{
+			resultsDistribution.push_back(DISTRIBUTE_EQUAL);
+		}
+		else
+		{
+			assert(false);
+		}
+	}
 
 	// Initialize data containers and writers to maps/tables
 	if (info.produceMaps)

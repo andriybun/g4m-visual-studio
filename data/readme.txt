@@ -1,1 +1,4 @@
-copy simu.bin and paths.xml to this folder
+copy following files to this folder:
+	- simu.bin
+	- paths.xml
+	- parameters.xml

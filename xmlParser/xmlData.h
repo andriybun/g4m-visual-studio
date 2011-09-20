@@ -50,6 +50,13 @@ public:
 	node * navigatePrev();
 	node * navigateDown(size_t idx = 0);
 
+	// get subtags of the specified tag
+	void getSubtags(const string & tagName,
+		vector<string> & result,
+		vector<xmlData::paramsMapT> & resultParams,
+		const pair<string, string> & paramsMask = pair<string, string>("", ""),
+		const string & skipTag = "");
+
 	void print();
 };
 

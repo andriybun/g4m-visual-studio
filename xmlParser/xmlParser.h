@@ -18,7 +18,8 @@ public:
 	enum executionResultT
 	{
 		EXECUTION_RESULT_OK,
-		EXECUTION_RESULT_VALUE_NOT_FOUND
+		EXECUTION_RESULT_VALUE_NOT_FOUND,
+		EXECUTION_RESULT_INVALID_TYPE
 	};
 private:
 	bool isInitialized;
@@ -26,6 +27,7 @@ private:
 	vector<bool> fileContentsIsTag;
 	size_t currIdx;
 	vector<string> tagStack;
+	xmlData xmlTree;
 
 	void parseStringToParams(const string & inFullTag, string & tagName, map<string, string> & paramsMap);
 	size_t getTag(size_t startIdx);
@@ -37,8 +39,6 @@ public:
 	//	EXECUTION_RESULT_VALUE_NOT_FOUND
 	//};
 
-	xmlData xmlTree;
-
 	xmlParser(void);
 	xmlParser(string fileName);
 	~xmlParser(void);
@@ -46,6 +46,16 @@ public:
 	bool initialize(string fileName);
 	executionResultT getValue(const string & tagName, string & val);
 	executionResultT getValue(const string & tagName, string & val, map<string, string> & paramsMap);
+	executionResultT getSubtags(const string & tagName,
+		vector<string> & result,
+		vector<xmlData::paramsMapT> & resultParams, 
+		const pair<string, string> & paramsMask = pair<string, string>("", ""),
+		const string & skipTag = "");
+	executionResultT getSubtags(const string & tagName,
+		vector<int> & result,
+		vector<xmlData::paramsMapT> & resultParams, 
+		const pair<string, string> & paramsMask = pair<string, string>("", ""),
+		const string & skipTag = "");
 	void parseXmlTree();
 	void printXmlTree();
 };
