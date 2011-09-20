@@ -66,13 +66,21 @@ int RemoveComments(string fileName, string outFileName)
 	return 0;
 }
 
-void FindAndReplace(string &base, string strToReplace, string strReplacement)
+bool FindAndReplace(string &base, const string & strToReplace, const string & strReplacement)
 {
 	if (base.find(strToReplace) != string::npos)
 	{
 		base.replace(base.find(strToReplace), strToReplace.size(), strReplacement);
+		return true;
 	}
+	return false;
 }
+
+void FindAndReplaceAll(string &base, const string & strToReplace, const string & strReplacement)
+{
+	while (FindAndReplace(base, strToReplace, strReplacement)) {}
+}
+
 
 void SurroundMarksWithSpaces(const string & marks, string & str)
 {

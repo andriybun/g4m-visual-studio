@@ -172,3 +172,36 @@ void xmlData::printMap(const map<string, string> & stringMap)
 	}
 	printf(")");
 }
+
+void xmlData::getSubtags(const string & tagName, 
+						 vector<string> & result,
+						 vector<xmlData::paramsMapT> & resultParams,
+						 const pair<string, string> & paramsMask, 
+						 const string & skipTag)
+{
+	result.clear();
+	for (size_t idx = 0; idx < top->downAddr.size(); idx++)
+	{
+		node * searchNode = top->downAddr[idx];
+		if ((searchNode->name == tagName) && 
+			((paramsMask.first.size() == 0) ||
+			(searchNode->params[paramsMask.first] == paramsMask.second)))
+		{
+			for (size_t subIdx = 0; subIdx < searchNode->downAddr.size(); subIdx++)
+			{
+				string valueStr;
+				if (searchNode->downAddr[subIdx]->name == skipTag)
+				{
+					valueStr = searchNode->downAddr[subIdx]->downAddr[0]->name;
+				}
+				else
+				{
+					valueStr = searchNode->downAddr[subIdx]->name;
+				}
+				result.push_back(valueStr);
+				resultParams.push_back(searchNode->downAddr[subIdx]->params);
+			}
+		}
+	}
+
+}

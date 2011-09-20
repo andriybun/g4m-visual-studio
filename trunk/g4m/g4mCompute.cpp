@@ -6,7 +6,7 @@ int g4mCompute(const inCellDataT<realT> &inCellData,
 				outCellDataT<realT> &outCellData)
 {
 	// Stopgap:
-	outCellData.forestArea = 20;
+	outCellData.forestArea = 70;
 	outCellData.forestShare = outCellData.forestArea * inCellData.area;
 	// end stopgap
 
