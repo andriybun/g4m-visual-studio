@@ -73,6 +73,15 @@ int computeCell(const inCellDataT<realT> &inCellData,
 //////////////////////////////////////////////////////////////////////////
 
 template <class realT>
+int g4mLoad(const set<int> & countriesSet,
+			const dataContainersHolder<realT> & pHolder,
+			inCommonDataT<realT> & inCommonData,
+			vector< inCellDataT<realT> > & tmpData,
+			vector<bool> & useCell,
+			int & numActiveCells,
+			int & numCells);
+
+template <class realT>
 int g4mCompute(const inCellDataT<realT> &inCellData,
 			   const inCommonDataT<realT> &inCommonData,
 			   outCellDataT<realT> &outCellData);
