@@ -60,7 +60,9 @@ public:
 		for (unsigned int countryIdx = 0; countryIdx < countries.size(); countryIdx++)
 		{
 			tbData.pointPush(countryIdx);
-			writeData(outCountrySummaryData.get(countries[countryIdx], year), outCountrySummaryData.getAvg(countries[countryIdx], year));
+			structT countrySummary = outCountrySummaryData.get(countries[countryIdx], year);
+			structT countrySummaryAvg = outCountrySummaryData.getAvg(countries[countryIdx], year);
+			writeData(countrySummary, countrySummaryAvg);
 			tbData.pointPop();
 		}
 	}

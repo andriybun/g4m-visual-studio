@@ -107,7 +107,8 @@ public:
 	structT & getAvg(int countryIdx, int year)
 	{
 		int idx = getElemendIdx(countryIdx, year);
-		return data[idx] / count[idx];
+		structT res = data[idx] / count[idx];
+		return res;
 	}
 };
 
