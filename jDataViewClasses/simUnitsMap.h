@@ -3,6 +3,9 @@
 //  Date:           04.11.09
 //  Description:    class for (pre-)processing binary maps of simulation units in 
 //                  GLOBIOM GUI format
+//  Modified by Mykola Gusti 22 June 2012 - correction of 0.5x0.5 SIMU shift by one 5-min cell row up; correction of one 5-min cell to the right.
+//                                          correction of ASCII grid left corner coordinates
+
 
 #ifndef SIMUNITSMAP_H_
 #define SIMUNITSMAP_H_
